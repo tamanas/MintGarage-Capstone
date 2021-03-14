@@ -19,9 +19,12 @@ namespace MintGarage.Models
 
         public double ProductPrice { get; set; }
 
-        public virtual ICollection<Description> Description { get; set; }
+        //public virtual ICollection<Description> Description { get; set; }
 
         [ForeignKey("Description")]
         public int? DescriptionID { get; set; }
+
+        public virtual Description Description { get; set; }
+
     }
 }

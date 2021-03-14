@@ -1,0 +1,37 @@
+﻿@model IQueryable<Product>
+
+
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product p in Model)
+        {
+            <tr>
+                <td>@p.ProductID</td>
+                <td>@p.ProductName</td>
+                <td>@p.ProductName</td>
+                <td>@p.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@foreach (Product p in Model)
+{
+    <div class="card">
+        <img src="" alt="" style="width:100%">
+        <h1>@p.ProductName</h1>
+        <p class="price">@p.ProductPrice.ToString("c")</p>
+        <p>@p.DescriptionID</p>
+        <p><button>Add to Cart</button></p>
+    </div>
+}
+
+
