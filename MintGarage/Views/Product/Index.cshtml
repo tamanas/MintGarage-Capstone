@@ -1,38 +1,54 @@
-﻿@*@model IQueryable<Product>
+﻿@model IEnumerable<Product>
 
-
-<table class="table table-bordered table-sm table-striped">
-    <thead>
-        <tr>
-            <th>Product ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Product p in Model)
-        {
-            <tr>
-                <td>@p.ProductID</td>
-                <td>@p.ProductName</td>
-                <td>@p.ProductName</td>
-                <td>@p.Quantity</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@foreach (Product p in Model)
-{
-    <div class="card">
-        <img src="" alt="" style="width:100%">
-        <h1>@p.ProductName</h1>
-        <p class="price">@p.ProductPrice.ToString("c")</p>
-        <p>@p.DescriptionID</p>
-        <p><button>Add to Cart</button></p>
-    </div>
+@{
+    Layout = Layout;
 }
 
+@*@foreach (var item in Model)
+    {
 
-*@
+    }*@
+
+<!--start Gallary-->
+<div class="container-fluid">
+    <div class="px-lg-5">
+
+        <form>
+            <label for="sort">Sort By: </label>
+            <select name="sort" id="sort">
+                <option value="A">A-Z</option>
+                <option value="Z">Z-A</option>
+                <option value="High">Highest Price</option>
+                <option value="Low">Lowest Price</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+
+
+        <div class="row">
+            @for (var i = 0; i < 10; i++)
+            {
+                <!--Gallary Item-->
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="bg-white rounded shadow-sm">
+                        <img src="~/Images/6GripHook.jpg" alt="Hook" class="img-fluid card-img-top" />
+                        <div class="p-4">
+                            <h5><a class="text-dark">Hook</a></h5>
+                            <p class="small text-muted mb-0"> Lorem ipsum dolar sit amet, consecute</p>
+                            <p>$14.99</p>
+                            <div class="d-flex align-items-center justify-content-between px-3 py-2 mt-4">
+                                <div class="btn btn-success px-5 py-3 rounded-pill"> Add to Cart</div>
+                                <div class="btn btn-info px-5 py-3 rounded-pill">Details </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Gallary Item End-->
+
+            }
+
+        </div>
+    </div>
+</div>
+

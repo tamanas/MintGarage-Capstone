@@ -17,7 +17,8 @@ namespace MintGarage.Controllers
         }
         public IActionResult Index()
         {
-            return View(productRepo.Products);
+            var list = productRepo.Products;
+            return View(list);
         }
     }
 }
