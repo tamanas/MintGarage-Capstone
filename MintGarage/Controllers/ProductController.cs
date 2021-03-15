@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models;
+using MintGarage.Models.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
