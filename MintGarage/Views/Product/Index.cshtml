@@ -1,48 +1,41 @@
-﻿@model IEnumerable<Product>
+﻿@model ProductCategory
 
 @{
     Layout = Layout;
+    
 }
 
-@*@foreach (var item in Model)
-    {
-
-    }*@
 
 <!--start Gallary-->
 
 
-    
-</div>
 <div class="container-fluid">
     <div class="px-lg-5">
 
-        <form>
-
-            <input type/>
-
-            <label for="sort">Sort By: </label>
-            <select name="sort" id="sort">
-                <option value="name_asc"><a asp-action="Index" asp-router-sortOrder="name_asc">Alphabetical  A - Z</a></option>
-                <option value="name_desc"><a asp-action="Index" asp-router-sortOrder="name_desc">Alphabetical Z - A</a>Z-A</option>
-                <option value="price_asc"><a asp-action="Index" asp-router-sortOrder="price_asc">Highest Price</a></option>
-                <option value="price_desc"><a asp-action="Index" asp-router-sortOrder="price_desc">Lowest Price</a></option>
+        <form asp-action="Index" asp-method="Post">
+            <label>Sort By: </label>
+            <select asp-for="@Model.SortFilterSearch.SortBy">
+                <option value="name_asc">SortBy A - Z</option>
+                <option value="name_desc">SortBy Z - A</option>
+                <option value="price_asc">Lowest - Highest Price</option>
+                <option value="price_desc">Highest - Lowest Price</option>
             </select>
-            <br><br>
+            <br>
 
-                <select name="filterItem">
-                    @foreach (var item in ViewBag.Categories)
-                    {
-                        <option value="@item.CategoryID">@item.Name</option>
-                    }
-                </select>
-
-            <input type="submit" value="Submit">
+            <label>Filter By: </label>
+            <select asp-for="@Model.SortFilterSearch.FilterID">
+                @foreach (Category item in Model.Categories)
+                {
+                    <option value="@item.CategoryID">@item.Name</option>
+                }
+            </select>
+            <input asp-for="@Model.SortFilterSearch.SearchValue" />
+            <input class="btn btn-primary" type="submit" value="Search" />
         </form>
 
 
         <div class="row" style="height:120px">
-            @foreach (Product item in Model)
+            @foreach (Product item in Model.Products)
             {
                 <!--Gallary Item-->
                 <div class="col-xl-2 col-lg-3 col-md-4 mb-4">
