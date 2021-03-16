@@ -11,28 +11,44 @@
 
 <div class="container-fluid">
     <div class="px-lg-5">
+        
+        <div class="row m-4">
 
-        <form asp-action="Index" asp-method="Post">
-            <label>Sort By: </label>
-            <select asp-for="@Model.SortFilterSearch.SortBy">
-                <option value="name_asc">SortBy A - Z</option>
-                <option value="name_desc">SortBy Z - A</option>
-                <option value="price_asc">Lowest - Highest Price</option>
-                <option value="price_desc">Highest - Lowest Price</option>
-            </select>
-            <br>
+            <form asp-action="Index" asp-method="Post">
 
-            <label>Filter By: </label>
-            <select asp-for="@Model.SortFilterSearch.FilterID">
-                @foreach (Category item in Model.Categories)
-                {
-                    <option value="@item.CategoryID">@item.Name</option>
-                }
-            </select>
-            <input asp-for="@Model.SortFilterSearch.SearchValue" />
-            <input class="btn btn-primary" type="submit" value="Search" />
-        </form>
+                <span class="col-lg-3">
+                    <input asp-for="@Model.SortFilterSearch.SearchValue" placeholder="Search by name..." />
 
+                </span>
+
+                <span class="col-lg-3">
+
+                    <label>Sort By: </label>
+                    <select asp-for="@Model.SortFilterSearch.SortBy">
+                        <option value="name_asc">SortBy A - Z</option>
+                        <option value="name_desc">SortBy Z - A</option>
+                        <option value="price_asc">Lowest - Highest Price</option>
+                        <option value="price_desc">Highest - Lowest Price</option>
+                    </select>
+                </span>
+
+                <span class="col-lg-3">
+
+                    <label>Filter By: </label>
+                    <select asp-for="@Model.SortFilterSearch.FilterID">
+                        @foreach (Category item in Model.Categories)
+                        {
+                            <option value="@item.CategoryID">@item.Name</option>
+                        }
+                    </select>
+                </span>
+
+                <span class="col-lg-3">
+
+                    <input class="btn btn-primary" type="submit" value="Search" />
+                    </span>
+            </form>
+        </div>
 
         <div class="row" style="height:120px">
             @foreach (Product item in Model.Products)
