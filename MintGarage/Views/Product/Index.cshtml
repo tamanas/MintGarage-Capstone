@@ -5,10 +5,6 @@
     
 }
 
-@*@foreach (var item in Model)
-    {
-
-    }*@
 
 <!--start Gallary-->
 
@@ -17,26 +13,24 @@
     <div class="px-lg-5">
 
         <form asp-action="Index" asp-method="Post">
-
-            <label for="sort">Sort By: </label>
-            <select asp-for="@Model.SortFilterSearch.SortBy" id="sort">
-                <option value="name_asc">Alphabetical  A - Z</option>
-                <option value="name_desc">Alphabetical Z - A</option>
-                <option value="price_asc">Highest Price</option>
-                <option value="price_desc">Lowest Price</option>
+            <label>Sort By: </label>
+            <select asp-for="@Model.SortFilterSearch.SortBy">
+                <option value="name_asc">SortBy A - Z</option>
+                <option value="name_desc">SortBy Z - A</option>
+                <option value="price_asc">Highest - Lowest Price</option>
+                <option value="price_desc">Lowest - Highest Price</option>
             </select>
             <br>
 
+            <label>Filter By: </label>
             <select asp-for="@Model.SortFilterSearch.FilterID">
                 @foreach (Category item in Model.Categories)
                 {
                     <option value="@item.CategoryID">@item.Name</option>
                 }
             </select>
-
-            <input asp-for="@Model.SortFilterSearch.SearchValue"/>
-
-            <input class="btn btn-primary" type="submit" value="Sort"/>
+            <input asp-for="@Model.SortFilterSearch.SearchValue" />
+            <input class="btn btn-primary" type="submit" value="Search" />
         </form>
 
 
