@@ -8,22 +8,19 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div>
-        <h1 style="text-align: center;"> SRMS</h1>
-
-
-
-        <nav style="text-align: center;">
-            <a asp-controller="Product" asp-action="Index"> Products</a>
-            @*            <a asp-controller="Courses" asp-action="Index"> Course</a>
-            *@
-        </nav>
-        <hr />
-
-
-
-
+    <div class="container-fluid">
+        <h3 class="m-3">Mint Garage</h3>
     </div>
+
+    <nav class="nav border-bottom text-center  mb-5">
+        <div class="container-fluid">
+            <a asp-controller="Product" asp-action="Index">Navigation</a>
+        </div>
+    </nav>
+
+
+
+
     @* <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container">
@@ -51,11 +48,11 @@
         </main>
     </div>
 
-    @*  <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2021 - MintGarage - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>*@
+    <footer class="border-top text-center footer ">
+        <div class="container-fluid">
+            &copy; 2021 - MintGarage - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
