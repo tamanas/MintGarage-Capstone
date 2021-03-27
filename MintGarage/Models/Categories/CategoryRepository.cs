@@ -13,6 +13,6 @@ namespace MintGarage.Models.Categories
         {
             context = ctx;
         }
-        public IQueryable<Category> Cateogries => context.Category;
+        public IQueryable<Category> Categories => context.Category;
     }
 }

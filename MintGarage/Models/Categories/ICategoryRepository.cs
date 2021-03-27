@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MintGarage.Models.Categories
 {
-    public class ICategoryRepository
+    public interface ICategoryRepository
     {
         public IQueryable<Category> Categories { get; }
     }
