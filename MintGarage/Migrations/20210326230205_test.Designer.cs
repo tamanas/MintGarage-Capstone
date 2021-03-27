@@ -10,8 +10,8 @@ using MintGarage.Database;
 namespace MintGarage.Migrations
 {
     [DbContext(typeof(MintGarageContext))]
-    [Migration("20210315160404_Initial")]
-    partial class Initial
+    [Migration("20210326230205_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

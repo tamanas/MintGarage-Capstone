@@ -32,12 +32,13 @@ namespace MintGarage
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:MintGarageConnStr"]);
             });
+            services.AddScoped<IMintGarageDBInitializer, MintGarageDBInitializer>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMintGarageDBInitializer mintGarageDBInitializer)
         {
             app.UseDeveloperExceptionPage();
 
@@ -51,12 +52,11 @@ namespace MintGarage
                  // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                  app.UseHsts();
              }*/
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+          //  mintGarageDBInitializer.Initialize();
 
             app.UseEndpoints(endpoints =>
             {

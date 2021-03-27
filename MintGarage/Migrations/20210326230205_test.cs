@@ -2,7 +2,7 @@
 
 namespace MintGarage.Migrations
 {
-    public partial class Initial : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
