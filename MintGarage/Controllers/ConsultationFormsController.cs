@@ -63,6 +63,8 @@ namespace MintGarage.Controllers
             {
                 _context.Add(consultationForm);
                 await _context.SaveChangesAsync();
+                SendEmail sendEmail = new SendEmail(
+                    consultationForm.EmailAddress, consultationForm.FormDescription, "Placeholder Service Type");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ServiceID"] = new SelectList(_context.TypeService, "ServiceID", "ServiceID", consultationForm.ServiceID);
