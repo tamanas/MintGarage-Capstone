@@ -22,8 +22,7 @@ namespace MintGarage.Controllers
         // GET: ConsultationForms
         public async Task<IActionResult> Index()
         {
-            var mintGarageContext = _context.ConsultationForm.Include(c => c.TypeService);
-            return View(await mintGarageContext.ToListAsync());
+            return View(await _context.ConsultationForm.ToListAsync());
         }
 
         // GET: ConsultationForms/Details/5
@@ -35,7 +34,6 @@ namespace MintGarage.Controllers
             }
 
             var consultationForm = await _context.ConsultationForm
-                .Include(c => c.TypeService)
                 .FirstOrDefaultAsync(m => m.ConsultationFormID == id);
             if (consultationForm == null)
             {
@@ -48,7 +46,6 @@ namespace MintGarage.Controllers
         // GET: ConsultationForms/Create
         public IActionResult Create()
         {
-            ViewData["ServiceID"] = new SelectList(_context.TypeService, "ServiceID", "ServiceID");
             return View();
         }
 
@@ -57,17 +54,14 @@ namespace MintGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,ServiceID")] ConsultationForm consultationForm)
+        public async Task<IActionResult> Create([Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,TypeService")] ConsultationForm consultationForm)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(consultationForm);
                 await _context.SaveChangesAsync();
-                SendEmail sendEmail = new SendEmail(
-                    consultationForm.EmailAddress, consultationForm.FormDescription, "Placeholder Service Type");
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceID"] = new SelectList(_context.TypeService, "ServiceID", "ServiceID", consultationForm.ServiceID);
             return View(consultationForm);
         }
 
@@ -84,7 +78,6 @@ namespace MintGarage.Controllers
             {
                 return NotFound();
             }
-            ViewData["ServiceID"] = new SelectList(_context.TypeService, "ServiceID", "ServiceID", consultationForm.ServiceID);
             return View(consultationForm);
         }
 
@@ -93,7 +86,7 @@ namespace MintGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,ServiceID")] ConsultationForm consultationForm)
+        public async Task<IActionResult> Edit(int id, [Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,TypeService")] ConsultationForm consultationForm)
         {
             if (id != consultationForm.ConsultationFormID)
             {
@@ -120,7 +113,6 @@ namespace MintGarage.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceID"] = new SelectList(_context.TypeService, "ServiceID", "ServiceID", consultationForm.ServiceID);
             return View(consultationForm);
         }
 
@@ -133,7 +125,6 @@ namespace MintGarage.Controllers
             }
 
             var consultationForm = await _context.ConsultationForm
-                .Include(c => c.TypeService)
                 .FirstOrDefaultAsync(m => m.ConsultationFormID == id);
             if (consultationForm == null)
             {

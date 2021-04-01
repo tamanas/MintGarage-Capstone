@@ -3,7 +3,6 @@ using MintGarage.Models;
 using MintGarage.Models.Categories;
 using MintGarage.Models.ConsultationForms;
 using MintGarage.Models.Products;
-using MintGarage.Models.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +20,6 @@ namespace MintGarage.Database
         public DbSet<Category> Category { get; set; }
 
         public DbSet<ConsultationForm> ConsultationForm { get; set; }
-        public DbSet<TypeService> TypeService { get; set; }
 
     }
 }

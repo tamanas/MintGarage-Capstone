@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using MintGarage.Models.Service;
+
 
 namespace MintGarage.Models.ConsultationForms
 {
@@ -32,11 +32,9 @@ namespace MintGarage.Models.ConsultationForms
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Must be 10 digits")]
         public string PhoneNumber { get; set; }
 
-       
-        [ForeignKey("Service")]
-        public int? ServiceID { get; set; }
+        [Display(Name = "Type Of Service")]
+        public string TypeService { get; set; }
 
-        public virtual TypeService TypeService { get; set; }
     }
 }
 

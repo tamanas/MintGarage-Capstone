@@ -9,7 +9,6 @@ using MintGarage.Database;
 using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
 using MintGarage.Models.ConsultationForms;
-using MintGarage.Models.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +38,6 @@ namespace MintGarage
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             // Customer Form
             services.AddScoped<IConsultationFormRepository, ConsultationFormRepository>();
-            services.AddScoped<ITypeServiceRepository, TypeServiceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,7 +66,7 @@ namespace MintGarage
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Product}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
