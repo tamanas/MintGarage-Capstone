@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using MintGarage.Database;
 using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
+using MintGarage.Models.ConsultationForms;
+using MintGarage.Models.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +34,12 @@ namespace MintGarage
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:MintGarageConnStr"]);
             });
+            // Products
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            // Customer Form
+            services.AddScoped<IConsultationFormRepository, ConsultationFormRepository>();
+            services.AddScoped<ITypeServiceRepository, TypeServiceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
