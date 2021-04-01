@@ -25,15 +25,16 @@ namespace MintGarage.Models.ConsultationForms
         [Required(ErrorMessage = "Email Required")]
         public string EmailAddress { get; set; }
 
-        [Display(Name = "Description")]
-        public string FormDescription { get; set; }
-
         [Display(Name = "Phone Number")]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Must be 10 digits")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Type Of Service")]
-        public string TypeService { get; set; }
+        [Display(Name = "Service Type")]
+        [Required(ErrorMessage = "Service Type Required")]
+        public string ServiceType { get; set; }
+
+        [Display(Name = "Description")]
+        public string FormDescription { get; set; }
 
     }
 }

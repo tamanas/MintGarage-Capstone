@@ -10,23 +10,31 @@ namespace MintGarage.Controllers
 {
     public class SendEmail
     {
-
+        private string firstName;
+        private string lastName;
         private string email;
         private string service;
         private string description;
 
-        public SendEmail(string e, string d, string s)
+        public SendEmail(string fName, string lName, string emailAddress, string desc, string serv)
         {
-            email = e;
-            service = s;
-            description = d;
+            firstName = fName;
+            lastName = lName;
+            email = emailAddress;
+            description = desc;
+            service = serv;
             string messageBody = description;
-            MailAddress from = new MailAddress("anonymous.testicle@gmail.com");
-            MailAddress to = new MailAddress(email);
+            messageBody = "Hello Mint Construction Team,\n\n" +
+                "This is a consultation request from:\nName: " + firstName + " " + lastName +
+                "\nEmail: " + email + 
+                "\nService: " + service + 
+                "\n\nDO NOT REPLY: Sent as automated email";
+            MailAddress to = new MailAddress("anon.maltese@gmail.com");
+            MailAddress from = new MailAddress("anon.maltese@gmail.com");
             MailMessage mail = new MailMessage();
             mail.From = from;
             mail.To.Add(to);
-            mail.Subject = "Mint Construction Consultation Request: " + service;
+            mail.Subject = "Do Not Reply - Mint Construction Consultation Request: " + service;
             mail.Body = messageBody;
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
@@ -35,7 +43,7 @@ namespace MintGarage.Controllers
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential(from.Address, "an0n1234");
 
-            mail.IsBodyHtml = true;
+            //mail.IsBodyHtml = true;
             try
             {
                 client.Send(mail);
