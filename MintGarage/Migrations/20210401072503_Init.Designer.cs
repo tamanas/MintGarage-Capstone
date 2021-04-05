@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MintGarage.Database;
 
 namespace MintGarage.Migrations
 {
     [DbContext(typeof(MintGarageContext))]
-    partial class MintGarageContextModelSnapshot : ModelSnapshot
+    [Migration("20210401072503_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,8 +62,7 @@ namespace MintGarage.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("ServiceType")
-                        .IsRequired()
+                    b.Property<string>("TypeService")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ConsultationFormID");

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MintGarage.Database;
 
 namespace MintGarage.Migrations
 {
     [DbContext(typeof(MintGarageContext))]
-    partial class MintGarageContextModelSnapshot : ModelSnapshot
+    [Migration("20210326050603_Initializ")]
+    partial class Initializ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,29 +44,26 @@ namespace MintGarage.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("EmailAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FormDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("ServiceType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ServiceID")
+                        .HasColumnType("int");
+
                     b.HasKey("ConsultationFormID");
+
+                    b.HasIndex("ServiceID");
 
                     b.ToTable("ConsultationForm");
                 });
@@ -119,6 +118,30 @@ namespace MintGarage.Migrations
                     b.ToTable("Product");
                 });
 
+            modelBuilder.Entity("MintGarage.Models.Service.TypeService", b =>
+                {
+                    b.Property<int>("ServiceID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ServiceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ServiceID");
+
+                    b.ToTable("TypeService");
+                });
+
+            modelBuilder.Entity("MintGarage.Models.ConsultationForms.ConsultationForm", b =>
+                {
+                    b.HasOne("MintGarage.Models.Service.TypeService", "TypeService")
+                        .WithMany("ConsultationForm")
+                        .HasForeignKey("ServiceID");
+
+                    b.Navigation("TypeService");
+                });
+
             modelBuilder.Entity("MintGarage.Models.Products.Product", b =>
                 {
                     b.HasOne("MintGarage.Models.Categories.Category", "Category")
@@ -131,6 +154,11 @@ namespace MintGarage.Migrations
             modelBuilder.Entity("MintGarage.Models.Categories.Category", b =>
                 {
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MintGarage.Models.Service.TypeService", b =>
+                {
+                    b.Navigation("ConsultationForm");
                 });
 #pragma warning restore 612, 618
         }
