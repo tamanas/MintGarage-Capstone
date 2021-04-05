@@ -56,7 +56,10 @@ namespace MintGarage
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
-          //  mintGarageDBInitializer.Initialize();
+            using (var scope = app.ApplicationServices.CreateScope())
+            using (var context = scope.ServiceProvider.GetService<MintGarageContext>())
+                context.Database.Migrate();
+            //  mintGarageDBInitializer.Initialize();
 
             app.UseEndpoints(endpoints =>
             {
