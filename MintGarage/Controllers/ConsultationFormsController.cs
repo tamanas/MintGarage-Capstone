@@ -41,9 +41,7 @@ namespace MintGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                new SendEmail(consultationForm.FirstName, consultationForm.LastName, 
-                    consultationForm.EmailAddress, consultationForm.FormDescription, 
-                    consultationForm.ServiceType);
+                new EmailController(consultationForm).SendEmail();
                 _context.Add(consultationForm);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
