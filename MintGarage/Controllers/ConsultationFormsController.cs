@@ -13,17 +13,18 @@ namespace MintGarage.Controllers
     public class ConsultationFormsController : Controller
     {
         private readonly MintGarageContext _context;
-        private IConsultationFormRepository consultationRepo;
+        public  IConsultationFormRepository consultationRepository;
 
-        public ConsultationFormsController(MintGarageContext context)
+        public ConsultationFormsController(IConsultationFormRepository consultationRepo, MintGarageContext context)
         {
             _context = context;
+            consultationRepository = consultationRepo;
         }
 
         // GET: ConsultationForms
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ConsultationForm.ToListAsync());
+            return View(await consultationRepository.ConsultationForms.ToListAsync());
         }
 
         // GET: ConsultationForms/Create
@@ -42,8 +43,7 @@ namespace MintGarage.Controllers
             if (ModelState.IsValid)
             {
                 new EmailController(consultationForm).SendEmail();
-                _context.Add(consultationForm);
-                await _context.SaveChangesAsync();
+                consultationRepository.AddConsultationForm(consultationForm);
                 return RedirectToAction(nameof(Index));
             }
             return View(consultationForm);
