@@ -23,6 +23,7 @@ namespace MintGarage.Models.ConsultationForms
 
         [Display(Name = "Email Address")]
         [Required(ErrorMessage = "Email Required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string EmailAddress { get; set; }
 
         [Display(Name = "Phone Number")]
