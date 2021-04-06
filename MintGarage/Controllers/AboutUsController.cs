@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MintGarage.Controllers
 {
-    public class AboutUs : Controller
+    public class AboutUsController : Controller
     {
         public IActionResult Index()
         {

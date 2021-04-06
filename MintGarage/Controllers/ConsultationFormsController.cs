@@ -12,18 +12,17 @@ namespace MintGarage.Controllers
 {
     public class ConsultationFormsController : Controller
     {
-        private readonly MintGarageContext _context;
-        private IConsultationFormRepository consultationRepo;
+        public  IConsultationFormRepository consultationRepository;
 
-        public ConsultationFormsController(MintGarageContext context)
+        public ConsultationFormsController(IConsultationFormRepository consultationRepo)
         {
-            _context = context;
+            consultationRepository = consultationRepo;
         }
 
         // GET: ConsultationForms
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ConsultationForm.ToListAsync());
+            return View(await consultationRepository.ConsultationForms.ToListAsync());
         }
 
         // GET: ConsultationForms/Create
@@ -37,23 +36,16 @@ namespace MintGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,ServiceType")] ConsultationForm consultationForm)
+        public IActionResult Create([Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,ServiceType")] ConsultationForm consultationForm)
         {
             if (ModelState.IsValid)
             {
-                new SendEmail(consultationForm.FirstName, consultationForm.LastName, 
-                    consultationForm.EmailAddress, consultationForm.FormDescription, 
-                    consultationForm.ServiceType);
-                _context.Add(consultationForm);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                new Email(consultationForm).SendEmail();
+                consultationRepository.AddConsultationForm(consultationForm);
+                return RedirectToAction("Index");
             }
             return View(consultationForm);
         }
 
-        private bool ConsultationFormExists(int id)
-        {
-            return _context.ConsultationForm.Any(e => e.ConsultationFormID == id);
-        }
     }
 }

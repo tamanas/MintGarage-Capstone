@@ -8,6 +8,9 @@ namespace MintGarage.Models.ConsultationForms
     public interface IConsultationFormRepository
     {
         IQueryable<ConsultationForm> ConsultationForms { get; }
+        void AddConsultationForm(ConsultationForm consultationForm);
+        void SaveConsultationForm();           
+
     }
 }
 

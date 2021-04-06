@@ -5,25 +5,27 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using MintGarage.Models.ConsultationForms;
 
 namespace MintGarage.Controllers
 {
-    public class SendEmail
+    public class Email
     {
-        private string firstName;
-        private string lastName;
-        private string email;
-        private string service;
-        private string description;
+        private ConsultationForm consultationForm;
 
-        public SendEmail(string fName, string lName, string emailAddress, string desc, string serv)
+        public Email(ConsultationForm c)
         {
-            firstName = fName;
-            lastName = lName;
-            email = emailAddress;
-            description = desc;
-            service = serv;
-            string messageBody = description;
+            consultationForm = c;
+        }
+
+        public void SendEmail()
+        {
+            string firstName = consultationForm.FirstName;
+            string lastName = consultationForm.LastName;
+            string email = consultationForm.EmailAddress;
+            string description = consultationForm.FormDescription;
+            string service = consultationForm.ServiceType;
+            string messageBody = consultationForm.FormDescription;
             messageBody = "Hello Mint Construction Team,\n\n" +
                 "This is a consultation request from:\nName: " + firstName + " " + lastName +
                 "\nEmail: " + email + 

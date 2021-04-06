@@ -8,53 +8,61 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div class="container-fluid">
-        <h3 style="text-align:center" class="m-3">Mint Garage</h3>
-    </div>
-
-    <nav class="nav border-bottom text-center  mb-5">
-        <div class="container-fluid">
-            <a asp-controller="Home" asp-action="Index">Home</a> &nbsp;&nbsp;
-            <a asp-controller="Product" asp-action="Index">Products</a> &nbsp;&nbsp;
-            <a asp-controller="Portfolio" asp-action="Index">Portfolio</a> &nbsp;&nbsp;
-            <a asp-controller="ConsultationForms" asp-action="Create">Free Consultation</a> &nbsp;&nbsp;
-            <a asp-controller="AboutUs" asp-action="Index">About Us</a> 
+   @* <div class=" container bg-success text-white">
+        <div>
+            <h3 class="m-3">Mint Garage</h3>
         </div>
-    </nav>
 
+        <nav class="nav border-bottom text-center  mb-5">
+                <a asp-controller="Home" asp-action="Index" class="h6 text-white font-weight-bold">Home</a> &nbsp;&nbsp;
+                <a asp-controller="ConsultationForms" asp-action="Create" class="h6 text-white font-weight-bold">Consultation</a> &nbsp;&nbsp;
+                <a asp-controller="Product" asp-action="Index" class="h6 text-white font-weight-bold">Products</a> &nbsp;&nbsp;
+                <a asp-controller="Portfolio" asp-action="Index" class="h6 text-white font-weight-bold">Portfolio</a> &nbsp;&nbsp;
+                <a asp-controller="AboutUs" asp-action="Index" class="h6 text-white font-weight-bold">About Us</a>
+        </nav>
+    </div>*@
+   
 
-
-
-    @* <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+     <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">
                 <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MintGarage</a>
+
+                    <a class="navbar-brand text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">Mint Garage</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
+                    <div class="navbar-collapse collapse d-flex justify-content-end">
+                        <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a  class=" nav-link text-white font-weight-bold" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                <a  class=" nav-link text-white font-weight-bold" asp-controller="ConsultationForms" asp-action="Create">Consultation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class=" nav-link text-white font-weight-bold"  asp-controller="Product" asp-action="Index">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class=" nav-link text-white font-weight-bold" asp-controller="Portfolio" asp-action="Index">Portfolio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Index">About Us</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-        </header>*@
-    <div>
+        </header>
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top text-center footer ">
+    <footer class="border-top text-center footer bg-success text-white">
         <div class="container-fluid">
-            &copy; 2021 - MintGarage - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - MintGarage - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="h6 text-white font-weight-bold">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
