@@ -14,5 +14,16 @@ namespace MintGarage.Models.ConsultationForms
             context = ctx;
         }
         public IQueryable<ConsultationForm> ConsultationForms => context.ConsultationForm;
+
+        public void AddConsultationForm(ConsultationForm consultationForm)
+        {
+            context.ConsultationForm.Add(consultationForm);
+            SaveConsultationForm();
+        }
+
+        public void SaveConsultationForm()
+        {
+            context.SaveChanges();
+        }
     }
 }
