@@ -9,11 +9,11 @@ using MintGarage.Models.ConsultationForms;
 
 namespace MintGarage.Controllers
 {
-    public class EmailController
+    public class Email
     {
         private ConsultationForm consultationForm;
 
-        public EmailController(ConsultationForm c)
+        public Email(ConsultationForm c)
         {
             consultationForm = c;
         }

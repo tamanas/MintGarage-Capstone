@@ -12,12 +12,10 @@ namespace MintGarage.Controllers
 {
     public class ConsultationFormsController : Controller
     {
-        private readonly MintGarageContext _context;
         public  IConsultationFormRepository consultationRepository;
 
-        public ConsultationFormsController(IConsultationFormRepository consultationRepo, MintGarageContext context)
+        public ConsultationFormsController(IConsultationFormRepository consultationRepo)
         {
-            _context = context;
             consultationRepository = consultationRepo;
         }
 
@@ -38,20 +36,16 @@ namespace MintGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,ServiceType")] ConsultationForm consultationForm)
+        public IActionResult Create([Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,ServiceType")] ConsultationForm consultationForm)
         {
             if (ModelState.IsValid)
             {
-                new EmailController(consultationForm).SendEmail();
+                new Email(consultationForm).SendEmail();
                 consultationRepository.AddConsultationForm(consultationForm);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             return View(consultationForm);
         }
 
-        private bool ConsultationFormExists(int id)
-        {
-            return _context.ConsultationForm.Any(e => e.ConsultationFormID == id);
-        }
     }
 }
