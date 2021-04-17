@@ -7,10 +7,6 @@
 
 <h3 class="text-center">Consultation Form</h3>
 
-<p>
-    <a asp-action="Index">Consultation List</a>
-</p>
-
 <div class="row">
     <div class="col-md-8">
         <form asp-action="Create" method="post">
@@ -45,6 +41,10 @@
                 <input asp-for="FormDescription" class="form-control" />
                 <span asp-validation-for="FormDescription" class="text-danger"></span>
             </div>
+            @if (ViewBag.Success != null && ViewBag.Success)
+            {
+                <h4 style="color:green">Your consultation request has been sent.</h4>
+            }
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-success" />
             </div>
