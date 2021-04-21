@@ -12,8 +12,6 @@ namespace MintGarage.Models.Categories
         public CategoryRepository(MintGarageContext ctx)
         {
             context = ctx;
-            context.Category.Add(new Category() {Name = "test" }) ;
-            context.SaveChanges();
         }
         public IQueryable<Category> Categories => context.Category;
     }
