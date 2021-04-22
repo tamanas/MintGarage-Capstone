@@ -28,6 +28,8 @@ namespace MintGarage.Controllers
         // GET: ConsultationForms/Create
         public IActionResult Create()
         {
+            ViewBag.Message = TempData["Message"];
+            ViewBag.Success = TempData["Success"];
             return View();
         }
 
@@ -36,16 +38,32 @@ namespace MintGarage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ConsultationFormID,FirstName,LastName,EmailAddress,FormDescription,PhoneNumber,ServiceType")] ConsultationForm consultationForm)
+        public IActionResult Create([Bind("ConsultationFormID," +
+            "FirstName,LastName,EmailAddress,FormDescription,PhoneNumber," +
+            "ServiceType")] ConsultationForm consultationForm)
         {
+
             if (ModelState.IsValid)
             {
                 new Email(consultationForm).SendEmail();
-                consultationRepository.AddConsultationForm(consultationForm);
-                return RedirectToAction("Index");
+                try
+                {
+                    consultationRepository.AddConsultationForm(consultationForm);
+                    TempData["Message"] = "Your consultation request has been sent successfully.";
+                    TempData["Success"] = true;
+                }
+                catch (Exception e)
+                {
+                    TempData["Message"] = "Unable to send consultation request.";
+                    TempData["Success"] = false;
+                }
+                return RedirectToAction("Create");
+            } else
+            {
+                TempData["Message"] = "";
+                TempData["Success"] = false;
             }
             return View(consultationForm);
         }
-
     }
 }

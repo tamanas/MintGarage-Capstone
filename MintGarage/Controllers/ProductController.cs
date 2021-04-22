@@ -5,6 +5,7 @@ using MintGarage.Models.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MintGarage.Controllers
@@ -60,6 +61,9 @@ namespace MintGarage.Controllers
 
                 if (searchItem != null)
                 {
+                    searchItem = searchItem.Trim();
+                    Regex trimmer = new Regex(@"\s\s+");
+                    searchItem = trimmer.Replace(searchItem, " ");
                     productList = productList.Where(x => x.ProductName.Contains(searchItem));
                 }
 

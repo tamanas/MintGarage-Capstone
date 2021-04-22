@@ -7,26 +7,25 @@
 
 <h3 class="text-center">Consultation Form</h3>
 
-<p>
-    <a asp-action="Index">Consultation List</a>
-</p>
-
 <div class="row">
     <div class="col-md-8">
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
+                <label class="text-danger">*</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
+                <label class="text-danger">*</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EmailAddress" class="control-label"></label>
+                <label class="text-danger">*</label>
                 <input asp-for="EmailAddress" class="form-control" />
                 <span asp-validation-for="EmailAddress" class="text-danger"></span>
             </div>
@@ -37,6 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ServiceType" class="control-label"></label>
+                <label class="text-danger">*</label>
                 <input asp-for="ServiceType" class="form-control" />
                 <span asp-validation-for="ServiceType" class="text-danger"></span>
             </div>
@@ -48,10 +48,18 @@
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-success" />
             </div>
+            @if (ViewBag.Success != null && ViewBag.Success)
+            {
+                <h6 class="text-success">@ViewBag.Message</h6>
+            }
+            @if (ViewBag.Success != null && !ViewBag.Success)
+            {
+                <h6 class="text-danger">@ViewBag.Message</h6>
+            }
         </form>
     </div>
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+}*@
