@@ -28,6 +28,11 @@ namespace MintGarage
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Adding session services to Razor Pages
+            services.AddSession();
+            services.AddMemoryCache();
+            services.AddMvc();
+
             services.AddControllersWithViews();
             services.AddDbContext<MintGarageContext>(options =>
             {
@@ -59,6 +64,7 @@ namespace MintGarage
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSession();
             app.UseAuthorization();
             using (var scope = app.ApplicationServices.CreateScope())
             using (var context = scope.ServiceProvider.GetService<MintGarageContext>())
