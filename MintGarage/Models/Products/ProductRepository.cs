@@ -11,7 +11,7 @@ namespace MintGarage.Models.Products
         private MintGarageContext context;
         public ProductRepository(MintGarageContext ctx)
         {
-            context = ctx;
+            context = ctx;           
         }
         public IQueryable<Product> Products => context.Product;
     }

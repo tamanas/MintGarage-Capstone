@@ -1,18 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using MintGarage.Database;
 using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
 using MintGarage.Models.ConsultationForms;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MintGarage.Models;
 
 namespace MintGarage
 {
@@ -33,7 +28,6 @@ namespace MintGarage
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:MintGarageConnStr"]);
             });
-            // Products
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             // Customer Form
@@ -55,12 +49,14 @@ namespace MintGarage
                  // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                  app.UseHsts();
              }*/
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+            using (var scope = app.ApplicationServices.CreateScope())
+            using (var context = scope.ServiceProvider.GetService<MintGarageContext>())
+                context.Database.Migrate();
+            //  mintGarageDBInitializer.Initialize();
 
             app.UseEndpoints(endpoints =>
             {
@@ -68,6 +64,8 @@ namespace MintGarage
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            InitialData.EnsurePopulated(app);
         }
     }
 }
