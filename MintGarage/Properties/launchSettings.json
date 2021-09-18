@@ -3,11 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-<<<<<<< HEAD
       "applicationUrl": "http://localhost:4554",
-=======
       "applicationUrl": "http://localhost:7000",
->>>>>>> origin/bugfix/database_deployment
       "sslPort": 44379
     }
   },
