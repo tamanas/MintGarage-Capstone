@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MintGarage.Models;
+using MintGarage.Models.Accounts;
 using MintGarage.Models.Categories;
 using MintGarage.Models.ConsultationForms;
 using MintGarage.Models.Products;
@@ -20,6 +21,8 @@ namespace MintGarage.Database
         public DbSet<Category> Category { get; set; }
 
         public DbSet<ConsultationForm> ConsultationForm { get; set; }
+        public DbSet<Account> Account { get; set; }
+
 
     }
 }

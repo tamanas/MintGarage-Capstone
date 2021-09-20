@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MintGarage.Database;
 using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
+using MintGarage.Models.Accounts;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,12 @@ namespace MintGarage.Models
                 context.Category.Add(new Category() { Name = "Hook" });
                 context.Category.Add(new Category() { Name = "Shelf" });
                 context.Category.Add(new Category() { Name = "Basket" });
+                context.SaveChanges();
+            }
+
+            if (!context.Account.Any())
+            {
+                context.Account.Add(new Account() { Username = "admin", Password = "admin" });
                 context.SaveChanges();
             }
             if (!context.Product.Any())
