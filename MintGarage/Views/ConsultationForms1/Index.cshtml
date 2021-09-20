@@ -1,0 +1,76 @@
+﻿@model IEnumerable<MintGarage.Models.ConsultationForms.ConsultationForm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">@Html.DisplayNameFor(model => model.FirstName)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]">@Html.DisplayNameFor(model => model.LastName)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["EmailSortParm"]">@Html.DisplayNameFor(model => model.EmailAddress)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ServiceSortParm"]">@Html.DisplayNameFor(model => model.ServiceType)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DescSortParm"]">@Html.DisplayNameFor(model => model.FormDescription)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormDescription)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ConsultationFormID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ConsultationFormID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ConsultationFormID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
