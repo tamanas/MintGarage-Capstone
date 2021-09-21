@@ -9,6 +9,7 @@ namespace MintGarage.Models.ConsultationForms
     {
         IQueryable<ConsultationForm> ConsultationForms { get; }
         void AddConsultationForm(ConsultationForm consultationForm);
+        void DeleteConsultationForm(ConsultationForm consultationForm);
         void SaveConsultationForm();           
 
     }

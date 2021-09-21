@@ -20,7 +20,7 @@ namespace MintGarage.Database
         public DbSet<Category> Category { get; set; }
 
         public DbSet<ConsultationForm> ConsultationForm { get; set; }
-
+        public object ConsutationForm { get; internal set; }
     }
 }
 

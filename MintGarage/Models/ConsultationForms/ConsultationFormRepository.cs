@@ -21,6 +21,11 @@ namespace MintGarage.Models.ConsultationForms
             SaveConsultationForm();
         }
 
+        public void DeleteConsultationForm(ConsultationForm consultationForm)
+        {
+            context.ConsultationForm.Remove(consultationForm);
+            SaveConsultationForm();
+        }
         public void SaveConsultationForm()
         {
             context.SaveChanges();
