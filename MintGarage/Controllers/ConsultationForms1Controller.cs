@@ -52,7 +52,7 @@ namespace MintGarage.Controllers
                     forms = forms.OrderByDescending(s => s.FirstName);
                     break;
                 case "lname_desc":
-                    forms = forms.OrderBy(s => s.LastName);
+                    forms = forms.OrderByDescending(s => s.LastName);
                     break;
                 case "email_desc":
                     forms = forms.OrderByDescending(s => s.EmailAddress);
@@ -64,7 +64,11 @@ namespace MintGarage.Controllers
                     forms = forms.OrderByDescending(s => s.FormDescription);
                     break;
                 default:
+                    forms = forms.OrderBy(s => s.FirstName);
                     forms = forms.OrderBy(s => s.LastName);
+                    forms = forms.OrderBy(s => s.EmailAddress);
+                    forms = forms.OrderBy(s => s.ServiceType);
+                    forms = forms.OrderBy(s => s.FormDescription);
                     break;
             }
             //return View(await _context.ConsultationForm.ToListAsync());
