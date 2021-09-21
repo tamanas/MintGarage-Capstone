@@ -79,5 +79,10 @@ namespace MintGarage.Controllers
             return View(productCategory);
         }
 
+        public IActionResult Update()
+        {
+            return View();
+        }
+
     }
 }
