@@ -16,14 +16,10 @@ namespace MintGarage.Database
         public MintGarageContext(DbContextOptions<MintGarageContext> option) : base(option)
         {
         }
-
         public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
-
         public DbSet<ConsultationForm> ConsultationForm { get; set; }
         public DbSet<Account> Account { get; set; }
-
-
     }
 }
 

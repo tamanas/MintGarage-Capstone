@@ -19,11 +19,58 @@ namespace MintGarage.Controllers
             consultationRepository = consultationRepo;
         }
 
-        // GET: ConsultationForms
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Update(string sortOrder, string searchString)
         {
-            return View(await consultationRepository.ConsultationForms.ToListAsync());
+            var forms = consultationRepository.ConsultationForms;
+
+            ViewData["CurrentFilter"] = searchString;
+
+            // Serach Function
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                forms = forms.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstName.Contains(searchString)
+                                       || s.LastName.Contains(searchString)
+                                       || s.EmailAddress.Contains(searchString)
+                                       || s.PhoneNumber.Contains(searchString)
+                                       || s.FormDescription.Contains(searchString) );
+            }
+            ViewData["FirstNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "fname_desc" : "";
+            ViewData["LastNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lname_desc" : "";
+            ViewData["EmailSortParm"] = String.IsNullOrEmpty(sortOrder) ? "email_desc" : "";
+            ViewData["ServiceSortParm"] = String.IsNullOrEmpty(sortOrder) ? "service_desc" : "";
+            ViewData["DescSortParm"] = String.IsNullOrEmpty(sortOrder) ? "desc_desc" : "";
+
+
+            // Sort Function
+            switch (sortOrder)
+            {
+                case "fname_desc":
+                    forms = forms.OrderByDescending(s => s.FirstName);
+                    break;
+                case "lname_desc":
+                    forms = forms.OrderByDescending(s => s.LastName);
+                    break;
+                case "email_desc":
+                    forms = forms.OrderByDescending(s => s.EmailAddress);
+                    break;
+                case "service_desc":
+                    forms = forms.OrderByDescending(s => s.ServiceType);
+                    break;
+                case "desc_desc":
+                    forms = forms.OrderByDescending(s => s.FormDescription);
+                    break;
+                default:
+                    forms = forms.OrderBy(s => s.FirstName);
+                    forms = forms.OrderBy(s => s.LastName);
+                    forms = forms.OrderBy(s => s.EmailAddress);
+                    forms = forms.OrderBy(s => s.ServiceType);
+                    forms = forms.OrderBy(s => s.FormDescription);
+                    break;
+            }
+            return View(await forms.AsNoTracking().ToListAsync());
         }
+
 
         // GET: ConsultationForms/Create
         public IActionResult Create()
@@ -34,15 +81,12 @@ namespace MintGarage.Controllers
         }
 
         // POST: ConsultationForms/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("ConsultationFormID," +
             "FirstName,LastName,EmailAddress,FormDescription,PhoneNumber," +
             "ServiceType")] ConsultationForm consultationForm)
         {
-
             if (ModelState.IsValid)
             {
                 new Email(consultationForm).SendEmail();
@@ -65,5 +109,22 @@ namespace MintGarage.Controllers
             }
             return View(consultationForm);
         }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var consultationForm = await consultationRepository.ConsultationForms
+                .FirstOrDefaultAsync(m => m.ConsultationFormID == id);
+            if (consultationForm == null)
+            {
+                return NotFound();
+            }
+            consultationRepository.DeleteConsultationForm(consultationForm);
+            return RedirectToAction("Update");
+        }
+
     }
 }

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ConsultationForm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-action="Update" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-info">Clear</a>
+        </p>
+    </div>
+</form>
+<div>
+<table class="table">
+    <thead>
+        <tr>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">First Name</a></th>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]">Last Name</a></th>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["EmailSortParm"]">Email Address</a></th>
+            <th>Phone Number</th>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["ServiceSortParm"]">Service Type</a></th>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["DescSortParm"]">Description</a></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.EmailAddress</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.ServiceType</td>
+                <td>@item.FormDescription</td>
+                <td><a asp-action="Delete" asp-controller="ConsultationForms" asp-route-id="@item.ConsultationFormID" onclick="return confirm('Are you sure you to delete this?')">Delete</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
