@@ -32,7 +32,7 @@ namespace MintGarage.Controllers
                 Account acc = accoutRepository.Account.FirstOrDefault();
                 if (acc.Username == account.Username && acc.Password == account.Password)
                 {
-                    return RedirectToAction("index", "Home");
+                    return RedirectToAction("Update", "Home");
                 }
                 else
                 {
@@ -73,6 +73,11 @@ namespace MintGarage.Controllers
                 return RedirectToAction("Update");
             }
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            return RedirectToAction("index", "Home");
         }
     }
 }
