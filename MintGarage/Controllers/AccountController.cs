@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models.Accounts;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Login()
         {
+            HttpContext.Session.SetString("isAdminLoggedIn", "true");
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
             return View();
@@ -46,37 +48,50 @@ namespace MintGarage.Controllers
 
         public IActionResult Update()
         {
-            ViewBag.Message = TempData["Message"];
-            ViewBag.Success = TempData["Success"];
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("true"))
+            {
+                ViewBag.Message = TempData["Message"];
+                ViewBag.Success = TempData["Success"];
+            } else
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         [HttpPost]
         public IActionResult Update(UpdatePassword updatePassword)
         {
-            if (ModelState.IsValid)
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("true")) 
             {
-                Account acc = accoutRepository.Account.FirstOrDefault();
-                
-                if (!acc.Password.Equals(updatePassword.CurrectPassword))
+                if (ModelState.IsValid)
                 {
-                    TempData["Message"] = "Incorrect current password. Please try again!";
-                    TempData["Success"] = false;
+                    Account acc = accoutRepository.Account.FirstOrDefault();
+
+                    if (!acc.Password.Equals(updatePassword.CurrectPassword))
+                    {
+                        TempData["Message"] = "Incorrect current password. Please try again!";
+                        TempData["Success"] = false;
+                    }
+                    if (acc.Password.Equals(updatePassword.CurrectPassword))
+                    {
+                        acc.Password = updatePassword.NewPassword;
+                        accoutRepository.Update(acc);
+                        TempData["Message"] = "Password updated successfully.";
+                        TempData["Success"] = true;
+                    }
+                    return RedirectToAction("Update");
                 }
-                if (acc.Password.Equals(updatePassword.CurrectPassword))
-                {
-                    acc.Password = updatePassword.NewPassword;
-                    accoutRepository.Update(acc);
-                    TempData["Message"] = "Password updated successfully.";
-                    TempData["Success"] = true;
-                }
-                return RedirectToAction("Update");
+            } else
+            {
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
 
         public IActionResult Logout()
         {
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
             return RedirectToAction("index", "Home");
         }
     }

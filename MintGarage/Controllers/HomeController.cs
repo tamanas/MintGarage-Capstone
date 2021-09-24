@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MintGarage.Models;
 using System;
@@ -20,6 +21,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
             return View();
         }
 
