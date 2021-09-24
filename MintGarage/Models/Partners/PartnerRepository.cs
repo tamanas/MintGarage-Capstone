@@ -13,7 +13,7 @@ namespace MintGarage.Models.Partners
         {
             context = ctx;
         }
-        public IQueryable<Partner> Partner => context.Partner;
+        public IQueryable<Partner> Partners => context.Partner;
 
         public void Create(Partner partner)
         {
