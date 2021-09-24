@@ -8,7 +8,7 @@ namespace MintGarage.Models.Partners
 {
     public class PartnerRepository : IPartnerRepository
     {
-        private MintGarageContext context;
+        public MintGarageContext context;
         public PartnerRepository(MintGarageContext ctx)
         {
             context = ctx;

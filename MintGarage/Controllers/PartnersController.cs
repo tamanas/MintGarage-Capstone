@@ -27,22 +27,23 @@ namespace MintGarage.Controllers
 
         public IActionResult Update()
         {
-            return View();
+            var partners = partnerRepository.Partner;
+            return View(partners);
         }
 
         public IActionResult Create()
         {
-            return View();
+            return RedirectToAction("Update");
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(Partner? partner, int? id)
         {
-            return View();
+            return RedirectToAction("Update");
         }
 
-        public IActionResult Delete()
+        public IActionResult Delete(Partner? partner, int? id)
         {
-            return View();
+            return RedirectToAction("Update");
         }
     }
 }
