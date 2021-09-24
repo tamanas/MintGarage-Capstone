@@ -11,39 +11,8 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/adminLayout.css" />
 
-    <style>
-
-        .sidenav {
-            height: 100%;
-            width: 170px;
-            position: fixed;
-            z-index: 1;
-            top: 55px;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            padding-top: 20px;
-        }
-
-            .sidenav a {
-                padding: 6px 8px 6px 16px;
-                text-decoration: none;
-                font-size: 20px;
-                color: #818181;
-                display: block;
-            }
-
-                .sidenav a:hover {
-                    color: #f1f1f1;
-                }
-
-        .main {
-            margin-left: 170px; /* Same as the width of the sidenav */
-            font-size: 20px; /* Increased text to enable scrolling */
-            padding: 0px 10px;
-        }
-    </style>
 </head>
 
 <body>
@@ -52,6 +21,7 @@
         <a class=" nav-link text-white font-weight-bold" asp-controller="ConsultationForms" asp-action="Update">Consultation</a>
         <a class=" nav-link text-white font-weight-bold" asp-controller="Product" asp-action="Update">Products</a>
         <a class=" nav-link text-white font-weight-bold" asp-controller="Portfolio" asp-action="Update">Portfolio</a>
+        <a class=" nav-link text-white font-weight-bold" asp-controller="Partners" asp-action="Update">Partners</a>
         <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Update">About Us</a>
         <a class=" nav-link text-white font-weight-bold" asp-controller="Account" asp-action="Update">Change Password</a>
         <a class=" nav-link text-white font-weight-bold" asp-controller="Account" asp-action="Logout">Logout</a>
