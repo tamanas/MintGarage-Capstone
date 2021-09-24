@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<Partner>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -49,6 +51,13 @@
                             <li class="nav-item">
                                 <a class=" nav-link text-white font-weight-bold" asp-controller="Partners" asp-action="Index">Partners</a>
                             </li>
+                            <li class="dropdown">
+                                <a class=" nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" href="#">Partners<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="https://mintgarage.ca/">Mint Garage</a></li>
+                                    <li><a href="https://mintfloors.ca/">Mint Floors</a></li>
+                                </ul>
+                            </li>
                             <li class="nav-item">
                                 <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Index">About Us</a>
                             </li>
@@ -71,6 +80,17 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $("[data-toggle='dropdown']").click(function (e) {
+                $(this).parents(".dropdown").toggleClass("open");
+            });
+
+            $("html").click(function () {
+                $(".open").removeClass("open");
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
