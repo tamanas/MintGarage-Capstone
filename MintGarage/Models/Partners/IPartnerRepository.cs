@@ -7,7 +7,7 @@ namespace MintGarage.Models.Partners
 {
     public interface IPartnerRepository
     {
-        IQueryable<Partner> Partner { get; }
+        IQueryable<Partner> Partners { get; }
 
         void Create(Partner partner);
         void Edit(Partner partner);

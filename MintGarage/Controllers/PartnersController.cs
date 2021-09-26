@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MintGarage.Models.Partners;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MintGarage.Database;
-using Microsoft.EntityFrameworkCore;
-
+ 
 
 namespace MintGarage.Controllers
 {
@@ -23,9 +20,6 @@ namespace MintGarage.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.test = "abc";
-            ViewData["PartnersArray"] = "test";
-            var partnersList = partnerRepository.Partner;
             return View();
         }
 

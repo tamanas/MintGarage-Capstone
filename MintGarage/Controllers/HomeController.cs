@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MintGarage.Models;
+using MintGarage.Models.Partners;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,15 +13,17 @@ namespace MintGarage.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        public IPartnerRepository partnerRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IPartnerRepository partnerRepo)
         {
             _logger = logger;
+            partnerRepository = partnerRepo;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(partnerRepository.Partners);
         }
 
         public IActionResult Update()

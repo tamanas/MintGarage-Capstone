@@ -1,5 +1,7 @@
-﻿@model String
+﻿@model IEnumerable<Partner>
 
+@{
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,20 +50,13 @@
                             <li class="nav-item">
                                 <a class=" nav-link text-white font-weight-bold" asp-controller="Portfolio" asp-action="Index">Portfolio</a>
                             </li>
-                            <li class="nav-item">
-                                <a class=" nav-link text-white font-weight-bold" asp-controller="Partners" asp-action="Index">Partners</a>
-                            </li>
-                            <li class="dropdown">
+                            <li class="nav-item dropdown">
                                 <a class=" nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li>@ViewBag.test</li>
-                                    <li><a href="https://mintgarage.ca/">Mint Garage</a></li>
-                                    <li><a href="https://mintfloors.ca/">Mint Floors</a></li>
-
-                                    @*                                    @foreach (var item in Model)
-        {
-            <li><a href=@item.PartnerUrl>@item.PartnerName</a></li>
-        }*@
+                                    @foreach (var item in Model)
+                                    {
+                                    <li><a href=@item.PartnerUrl>@item.PartnerName</a></li>
+                                    }
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -92,9 +87,9 @@
                 $(this).parents(".dropdown").toggleClass("open");
             });
 
-@*            $("html").click(function () {
+            $("html").click(function () {
                 $(".open").removeClass("open");
-            });*@
+            });
         });
     </script>
     @await RenderSectionAsync("Scripts", required: false)

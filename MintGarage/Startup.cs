@@ -9,6 +9,7 @@ using MintGarage.Models.Products;
 using MintGarage.Models.ConsultationForms;
 using MintGarage.Models;
 using MintGarage.Models.Accounts;
+using MintGarage.Models.Partners;
 
 namespace MintGarage
 {
@@ -42,6 +43,9 @@ namespace MintGarage
             // Customer Form
             services.AddScoped<IConsultationFormRepository, ConsultationFormRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+
+            services.AddScoped<IPartnerRepository, PartnerRepository>();
+
 
         }
 
