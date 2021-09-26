@@ -4,8 +4,8 @@
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-@if (ViewBag.add) { 
+@if (ViewBag.add)
+{
     <div>
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -19,76 +19,77 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Add" class="btn btn-success" />
-                <a class="btn btn-info" asp-action="Cancel">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
-@if (ViewBag.edit)
-{
-    <div>
-        <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.Partner.PartnerID" hidden />
-            <div class="form-group">
-                <input asp-for="@Model.Partner.PartnerName" class="form-control" />
-                <span asp-validation-for="@Model.Partner.PartnerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Partner.PartnerUrl" class="form-control" />
-                <span asp-validation-for="@Model.Partner.PartnerUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-warning" />
-                <a class="btn btn-info" asp-action="Cancel">Cancel</a>
+                <a class="btn btn-info" asp-action="Update">Cancel</a>
             </div>
         </form>
     </div>
 }
 
-@if (ViewBag.delete)
-{
+    @if (ViewBag.edit)
+    {
+        <div>
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Partner.PartnerID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Partner.PartnerName" class="form-control" />
+                    <span asp-validation-for="@Model.Partner.PartnerName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Partner.PartnerUrl" class="form-control" />
+                    <span asp-validation-for="@Model.Partner.PartnerUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-warning" />
+                    <a class="btn btn-info"  asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+
+    @if (ViewBag.delete)
+    {
+        <div>
+            <form asp-action="Delete" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Partner.PartnerID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Partner.PartnerName" class="form-control" />
+                    <span asp-validation-for="@Model.Partner.PartnerName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Partner.PartnerUrl" class="form-control" />
+                    <span asp-validation-for="@Model.Partner.PartnerUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
     <div>
-        <form asp-action="Delete" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.Partner.PartnerID" hidden />
-            <div class="form-group">
-                <input asp-for="@Model.Partner.PartnerName" class="form-control" />
-                <span asp-validation-for="@Model.Partner.PartnerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Partner.PartnerUrl" class="form-control" />
-                <span asp-validation-for="@Model.Partner.PartnerUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Delete" class="btn btn-danger" />
-                <a class="btn btn-info" asp-action="Cancel">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Partner</th>
-                <th>URL</th>
-                <th></th>
-                <td><a asp-action="Update" asp-controller="Partners">Add</a></td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Partners)
-            {
+        <table class="table">
+            <thead>
                 <tr>
+                    <th>No.</th>
+                    <th>Partner</th>
+                    <th>URL</th>
                     <th></th>
-                    <td>@item.PartnerName</td>
-                    <td>@item.PartnerUrl</td>
-                    <td><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID">Delete</a></td>
-                    <td><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID">Edit</a></td>
+                    <td><a asp-action="Update" asp-controller="Partners"  asp-route-operation="add" asp-route-show=true>Add</a></td>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Partners)
+                {
+                    <tr>
+                        <th></th>
+                        <td>@item.PartnerName</td>
+                        <td>@item.PartnerUrl</td>
+                        <td><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID"  asp-route-operation="edit" asp-route-show=true>Edit</a></td>
+                        <td><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID"  asp-route-operation="delete" asp-route-show=true>Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

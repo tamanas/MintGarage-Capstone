@@ -12,77 +12,63 @@ namespace MintGarage.Controllers
     {
 
         public IPartnerRepository partnerRepository;
-
         public PartnersController(IPartnerRepository partnerRepo)
         {
             partnerRepository = partnerRepo;
         }
 
-        public IActionResult Index()
+      /*  public IActionResult Index()
         {
-            ViewData["PartnersArray"] = "test";
+            return RedirectToAction("Update");
+        }*/
 
-            return View("_Layout");
-        }
-
-        public IActionResult Update(int? id)
+        public IActionResult Update(int? id, string? operation, bool? show)
         {
+            ViewBag.add = false;
+            ViewBag.edit = false;
+            ViewBag.delete = false;
+            
+            if(operation != null && show != null)
+            {
+                switch (operation)
+                {
+                    case "add":
+                        ViewBag.add = show;
+                        break;
+                    case "edit":
+                        ViewBag.edit = show;
+                        break;
+                    case "delete":
+                        ViewBag.delete = show;
+                        break;
+                }
+            }
+
             PartnerUpdateView partnerUpdateView = new PartnerUpdateView();
             partnerUpdateView.Partners = partnerRepository.Partners;
-            ViewBag.add = true;
-            ViewBag.delete = true;
-
             if (id != null)
             {
-                ViewBag.edit = true;
                 partnerUpdateView.Partner = partnerRepository.Partners.FirstOrDefault(s => s.PartnerID == id); ;
-            }
-            else
-            {
-                ViewBag.edit = false;
             }
             return View(partnerUpdateView);
         }
 
+
         public IActionResult Create(Partner? partner)
         {
-            //ViewBag.add = true;
-         /*   if (partner is not null)
-            {
-                ViewBag.add = true;*/
-                partnerRepository.Create(partner);
-
-         /*   }
-            else
-            {
-                ViewBag.add = false;
-            }*/
+            partnerRepository.Create(partner);
             return RedirectToAction("Update");
         }
 
-        [HttpPost]
         public IActionResult Edit(PartnerUpdateView partnerUpdateView)
         {
             partnerRepository.Edit(partnerUpdateView.Partner);
             return RedirectToAction("Update");
         }
 
-        /* public IActionResult Delete(int? id)
-         {
-             var partner = partnerRepository.Partner.FirstOrDefault(s => s.PartnerID == id);
- *//*            partnerRepository.Delete(partner);
- *//*            return RedirectToAction("Update", partner);
-         }*/
-
-        [HttpPost]
         public IActionResult Delete(PartnerUpdateView partnerUpdateView)
         {
             partnerRepository.Delete(partnerUpdateView.Partner);
-            return RedirectToAction("Update");
-        }
-
-        public IActionResult Cancel()
-        {
             return RedirectToAction("Update");
         }
 
