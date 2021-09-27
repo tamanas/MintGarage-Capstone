@@ -46,7 +46,7 @@ namespace MintGarage.Controllers
 
             PartnerUpdateView partnerUpdateView = new PartnerUpdateView();
             partnerUpdateView.Partners = partnerRepository.Partners;
-            if (id != null)
+            if (id != null && operation != "add")
             {
                 partnerUpdateView.Partner = partnerRepository.Partners.FirstOrDefault(s => s.PartnerID == id); ;
             }
