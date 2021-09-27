@@ -1,8 +1,4 @@
-﻿@model IEnumerable<Partner>
-
-@{
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,6 +6,7 @@
     <title>@ViewData["Title"] - MintGarage</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/js/_layout.js"></script>
 </head>
 <body>
    @* <div class=" container bg-success text-white">
@@ -26,7 +23,6 @@
         </nav>
     </div>*@
    
-
      <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">
                 <div class="container">
@@ -53,10 +49,10 @@
                             <li class="nav-item dropdown">
                                 <a class=" nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    @foreach (var item in Model)
+                                    @foreach (var partner in ViewBag.Partners)
                                     {
-                                    <li><a href=@item.PartnerUrl>@item.PartnerName</a></li>
-                                    }
+                                        <li><a href=@partner.PartnerUrl>@partner.PartnerName</a></li>
+                                        }
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -81,17 +77,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        $(document).ready(function () {
-            $("[data-toggle='dropdown']").click(function (e) {
-                $(this).parents(".dropdown").toggleClass("open");
-            });
-
-            $("html").click(function () {
-                $(".open").removeClass("open");
-            });
-        });
-    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

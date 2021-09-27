@@ -12,33 +12,34 @@ namespace MintGarage.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         public IPartnerRepository partnerRepository;
 
-        public HomeController(ILogger<HomeController> logger, IPartnerRepository partnerRepo)
-        {
-            _logger = logger;
+        public HomeController(IPartnerRepository partnerRepo) { 
             partnerRepository = partnerRepo;
         }
 
         public IActionResult Index()
         {
-            return View(partnerRepository.Partners);
+            ViewBag.Partners = partnerRepository.Partners;
+            return View();
         }
 
         public IActionResult Update()
         {
+            ViewBag.Partners = partnerRepository.Partners;
             return View();
         }
 
         public IActionResult Privacy()
         {
+            ViewBag.Partners = partnerRepository.Partners;
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            ViewBag.Partners = partnerRepository.Partners;
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
