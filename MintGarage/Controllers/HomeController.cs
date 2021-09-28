@@ -33,6 +33,31 @@ namespace MintGarage.Controllers
             return View();
         }
 
+        public IActionResult UpdateContactUs()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateSocial()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateReviews()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateSuppliers()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateHome()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -40,3 +65,8 @@ namespace MintGarage.Controllers
         }
     }
 }
+
+
+
+
+
