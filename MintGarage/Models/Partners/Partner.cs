@@ -16,7 +16,9 @@ namespace MintGarage.Models.Partners
         public string PartnerName { get; set; }
 
         [Display(Name = "Partner URL")]
+        [Url(ErrorMessage = "Invalid URL")]
         [Required(ErrorMessage = "Partner URL required")]
         public string PartnerUrl { get; set; }
+
     }
 }

@@ -54,11 +54,11 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input asp-for="@Model.Partner.PartnerID" hidden />
                 <div class="form-group">
-                    <input asp-for="@Model.Partner.PartnerName" class="form-control" />
+                    <input asp-for="@Model.Partner.PartnerName" class="form-control" readonly />
                     <span asp-validation-for="@Model.Partner.PartnerName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input asp-for="@Model.Partner.PartnerUrl" class="form-control" />
+                    <input asp-for="@Model.Partner.PartnerUrl" class="form-control" readonly />
                     <span asp-validation-for="@Model.Partner.PartnerUrl" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -68,28 +68,30 @@
             </form>
         </div>
     }
-    <div>
-        <table class="table">
-            <thead>
+    
+<div>
+    <span>@ViewBag.Message</span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Partner</th>
+                <th>URL</th>
+                <th></th>
+                <td><a asp-action="Update" asp-controller="Partners" asp-route-operation="add" asp-route-show=true>Add</a></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Partners)
+            {
                 <tr>
-                    <th>No.</th>
-                    <th>Partner</th>
-                    <th>URL</th>
                     <th></th>
-                    <td><a asp-action="Update" asp-controller="Partners"  asp-route-operation="add" asp-route-show=true>Add</a></td>
+                    <td>@item.PartnerName</td>
+                    <td>@item.PartnerUrl</td>
+                    <td><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
+                    <td><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Partners)
-                {
-                    <tr>
-                        <th></th>
-                        <td>@item.PartnerName</td>
-                        <td>@item.PartnerUrl</td>
-                        <td><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID"  asp-route-operation="edit" asp-route-show=true>Edit</a></td>
-                        <td><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID"  asp-route-operation="delete" asp-route-show=true>Delete</a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
+</div>

@@ -27,6 +27,7 @@ namespace MintGarage.Controllers
             ViewBag.add = false;
             ViewBag.edit = false;
             ViewBag.delete = false;
+            ViewBag.message = TempData["AdminPartnerMessage"];
             
             if(operation != null && show != null)
             {
@@ -54,22 +55,49 @@ namespace MintGarage.Controllers
         }
 
 
-        public IActionResult Create(Partner? partner)
+        public IActionResult Create(PartnerUpdateView partnerUpdateView)
         {
-            partnerRepository.Create(partner);
+            if (ModelState.IsValid)
+            {
+                partnerRepository.Create(partnerUpdateView.Partner);
+                TempData["AdminPartnerMessage"] = "Successfully added new Partner.";
+            } else
+            {
+                partnerUpdateView.Partners = partnerRepository.Partners;
+                setViewBag(true, false, false);
+                return View("Update", partnerUpdateView);
+            }
             return RedirectToAction("Update");
         }
 
         public IActionResult Edit(PartnerUpdateView partnerUpdateView)
         {
-            partnerRepository.Edit(partnerUpdateView.Partner);
+            if (ModelState.IsValid)
+            {
+                partnerRepository.Edit(partnerUpdateView.Partner);
+                TempData["AdminPartnerMessage"] = "Successfully edited Partner.";
+            }
+            else
+            {
+                partnerUpdateView.Partners = partnerRepository.Partners;
+                setViewBag(false, true, false);
+                return View("Update", partnerUpdateView);
+            }
             return RedirectToAction("Update");
         }
 
         public IActionResult Delete(PartnerUpdateView partnerUpdateView)
         {
             partnerRepository.Delete(partnerUpdateView.Partner);
+            TempData["AdminPartnerMessage"] = "Successfully deleted Partner.";
             return RedirectToAction("Update");
+        }
+
+        public void setViewBag(bool add, bool edit, bool delete)
+        {
+            ViewBag.add = add;
+            ViewBag.edit = edit;
+            ViewBag.delete = delete;
         }
 
     }
