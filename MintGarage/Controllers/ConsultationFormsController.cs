@@ -7,21 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MintGarage.Database;
 using MintGarage.Models.ConsultationForms;
+using MintGarage.Models.Partners;
 
 namespace MintGarage.Controllers
 {
     public class ConsultationFormsController : Controller
     {
-        public  IConsultationFormRepository consultationRepository;
+        public IConsultationFormRepository consultationRepository;
+        public IPartnerRepository partnerRepository;
 
-        public ConsultationFormsController(IConsultationFormRepository consultationRepo)
+        public ConsultationFormsController(IConsultationFormRepository consultationRepo, IPartnerRepository partnerRepo)
         {
             consultationRepository = consultationRepo;
+            partnerRepository = partnerRepo;
         }
 
         public async Task<IActionResult> Update(string sortOrder, string searchString)
         {
             var forms = consultationRepository.ConsultationForms;
+            ViewBag.Partners = partnerRepository.Partners;
 
             ViewData["CurrentFilter"] = searchString;
 
@@ -77,6 +81,7 @@ namespace MintGarage.Controllers
         {
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
+            ViewBag.Partners = partnerRepository.Partners;
             return View();
         }
 
@@ -107,6 +112,7 @@ namespace MintGarage.Controllers
                 TempData["Message"] = "";
                 TempData["Success"] = false;
             }
+            ViewBag.Partners = partnerRepository.Partners;
             return View(consultationForm);
         }
 
@@ -123,6 +129,7 @@ namespace MintGarage.Controllers
                 return NotFound();
             }
             consultationRepository.DeleteConsultationForm(consultationForm);
+            ViewBag.Partners = partnerRepository.Partners;
             return RedirectToAction("Update");
         }
 
