@@ -6,21 +6,38 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using MintGarage.Models.HomeTab.HomeContents;
+using MintGarage.Models.HomeTab.Reviews;
+using MintGarage.Models.HomeTab.Suppliers;
 
 namespace MintGarage.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private IHomeContentRepository homeContentRepo;
+        private IReviewRepository reviewRepo;
+        private ISupplierRepository supplierRepo;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHomeContentRepository homeContentRepository, IReviewRepository reviewRepository, ISupplierRepository suuplierRepository)
         {
-            _logger = logger;
+            homeContentRepo = homeContentRepository;
+            reviewRepo = reviewRepository;
+            supplierRepo = suuplierRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var homeContentsList = homeContentRepo.HomeContents;
+            var reviewList = reviewRepo.Reviews;
+            var suplierList = supplierRepo.Suppliers;
+
+            HomeModel homeModel = new HomeModel()
+            {
+                HomeContent = homeContentsList,
+                Review = reviewList,
+                Supplier = suplierList,
+            };
+            return View(homeModel);
         }
 
         public IActionResult Update()
@@ -63,7 +80,9 @@ namespace MintGarage.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+            
     }
+
 }
 
 
