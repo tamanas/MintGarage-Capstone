@@ -19,31 +19,10 @@ namespace MintGarage.Controllers
 
       /*  public IActionResult Index()
         {
-            return RedirectToAction("Update");
-        }*/
-
-        public IActionResult Update(int? id, string? operation, bool? show)
-        {
-            ViewBag.add = false;
-            ViewBag.edit = false;
-            ViewBag.delete = false;
-            ViewBag.message = TempData["AdminPartnerMessage"];
+            ViewData["PartnersArray"] = "test";
             
-            if(operation != null && show != null)
-            {
-                switch (operation)
-                {
-                    case "add":
-                        ViewBag.add = show;
-                        break;
-                    case "edit":
-                        ViewBag.edit = show;
-                        break;
-                    case "delete":
-                        ViewBag.delete = show;
-                        break;
-                }
-            }
+            return View("_Layout");
+        }
 
             PartnerUpdateView partnerUpdateView = new PartnerUpdateView();
             partnerUpdateView.Partners = partnerRepository.Partners;
