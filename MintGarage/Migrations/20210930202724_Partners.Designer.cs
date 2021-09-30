@@ -10,7 +10,7 @@ using MintGarage.Database;
 namespace MintGarage.Migrations
 {
     [DbContext(typeof(MintGarageContext))]
-    [Migration("20210924064157_Partners")]
+    [Migration("20210930202724_Partners")]
     partial class Partners
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

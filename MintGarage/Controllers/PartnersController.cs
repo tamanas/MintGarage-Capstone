@@ -3,8 +3,7 @@ using MintGarage.Models.Partners;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
- 
+using System.Threading.Tasks; 
 
 namespace MintGarage.Controllers
 {
@@ -17,12 +16,35 @@ namespace MintGarage.Controllers
             partnerRepository = partnerRepo;
         }
 
-      /*  public IActionResult Index()
+/*        public IActionResult Index()
         {
             ViewData["PartnersArray"] = "test";
             
             return View("_Layout");
-        }
+        }*/
+
+        public IActionResult Update(int? id, string? operation, bool? show)
+        {
+            ViewBag.Partners = partnerRepository.Partners;
+
+            setViewBag(false, false, false);
+            ViewBag.message = TempData["AdminPartnerMessage"];
+
+            if (operation != null && show != null)
+            {
+                switch (operation)
+                {
+                    case "add":
+                        ViewBag.add = show;
+                        break;
+                    case "edit":
+                        ViewBag.edit = show;
+                        break;
+                    case "delete":
+                        ViewBag.delete = show;
+                        break;
+                }
+            }
 
             PartnerUpdateView partnerUpdateView = new PartnerUpdateView();
             partnerUpdateView.Partners = partnerRepository.Partners;
@@ -33,9 +55,10 @@ namespace MintGarage.Controllers
             return View(partnerUpdateView);
         }
 
-
         public IActionResult Create(PartnerUpdateView partnerUpdateView)
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             if (ModelState.IsValid)
             {
                 partnerRepository.Create(partnerUpdateView.Partner);
@@ -51,6 +74,8 @@ namespace MintGarage.Controllers
 
         public IActionResult Edit(PartnerUpdateView partnerUpdateView)
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             if (ModelState.IsValid)
             {
                 partnerRepository.Edit(partnerUpdateView.Partner);
@@ -67,6 +92,8 @@ namespace MintGarage.Controllers
 
         public IActionResult Delete(PartnerUpdateView partnerUpdateView)
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             partnerRepository.Delete(partnerUpdateView.Partner);
             TempData["AdminPartnerMessage"] = "Successfully deleted Partner.";
             return RedirectToAction("Update");

@@ -4,20 +4,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MintGarage.Models.Partners;
 
 namespace MintGarage.Controllers
 {
     public class AccountController : Controller
     {
         public IAccountRepository accoutRepository;
+        public IPartnerRepository partnerRepository;
 
-        public AccountController(IAccountRepository accountRepo)
+        public AccountController(IAccountRepository accountRepo, IPartnerRepository partnerRepo)
         {
             accoutRepository = accountRepo;
+            partnerRepository = partnerRepo;
         }
 
         public IActionResult Login()
         {
+            ViewBag.Partners = partnerRepository.Partners;
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
             return View();
@@ -27,6 +31,7 @@ namespace MintGarage.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(Account account)
         {
+            ViewBag.Partners = partnerRepository.Partners;
             if (ModelState.IsValid)
             {
                 Account acc = accoutRepository.Account.FirstOrDefault();
@@ -46,6 +51,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Update()
         {
+            ViewBag.Partners = partnerRepository.Partners;
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
             return View();
@@ -54,6 +60,7 @@ namespace MintGarage.Controllers
         [HttpPost]
         public IActionResult Update(UpdatePassword updatePassword)
         {
+            ViewBag.Partners = partnerRepository.Partners;
             if (ModelState.IsValid)
             {
                 Account acc = accoutRepository.Account.FirstOrDefault();
@@ -77,6 +84,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Logout()
         {
+            ViewBag.Partners = partnerRepository.Partners;
             return RedirectToAction("index", "Home");
         }
     }
