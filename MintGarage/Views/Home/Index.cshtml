@@ -1,4 +1,4 @@
-﻿@model  HomeModel
+﻿@model HomeModel
 
 @{
     Layout = Layout;
@@ -11,16 +11,13 @@
 </div>
 
 
-<table>
+<div class="img-container">
     @foreach (HomeContent home in Model.HomeContent)
     {
-<tr>
-    <td>@home.Title</td>
-    <td>@home.Description</td>
-    <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
-</tr>
+        <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top"/>
+        <div class="img-text"><p>@home.Title</p></div>
     }
-</table>
+</div>
 
 <table>
     @foreach (Review review in Model.Review)
@@ -32,12 +29,12 @@
     }
 </table>
 
-<table>
+<div class="suppler-container">
     @foreach (Supplier supplier in Model.Supplier)
     {
-        <tr>
-            <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
-        </tr>
+    <div class="supplier-image">
+        <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
+    </div>
     }
-</table>
+</div>  
 
