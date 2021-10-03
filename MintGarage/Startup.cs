@@ -10,6 +10,11 @@ using MintGarage.Models.ConsultationForms;
 using MintGarage.Models;
 using MintGarage.Models.Accounts;
 using MintGarage.Models.Partners;
+using MintGarage.Models.HomeTab.Contacts;
+using MintGarage.Models.HomeTab.HomeContents;
+using MintGarage.Models.HomeTab.Reviews;
+using MintGarage.Models.HomeTab.SocialMedias;
+using MintGarage.Models.HomeTab.Suppliers;
 
 namespace MintGarage
 {
@@ -44,6 +49,13 @@ namespace MintGarage
             services.AddScoped<IConsultationFormRepository, ConsultationFormRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IPartnerRepository, PartnerRepository>();
+
+            //New
+            services.AddScoped<IContactRepository, ContactsRepository>();
+            services.AddScoped<IHomeContentRepository, HomeContentRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<ISocialMediaRepository, SocialMediaRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

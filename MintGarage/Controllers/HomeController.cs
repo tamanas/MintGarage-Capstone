@@ -7,21 +7,41 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using MintGarage.Models.HomeTab.HomeContents;
+using MintGarage.Models.HomeTab.Reviews;
+using MintGarage.Models.HomeTab.Suppliers;
 
 namespace MintGarage.Controllers
 {
     public class HomeController : Controller
     {
         public IPartnerRepository partnerRepository;
+        private IHomeContentRepository homeContentRepo;
+        private IReviewRepository reviewRepo;
+        private ISupplierRepository supplierRepo;
 
-        public HomeController(IPartnerRepository partnerRepo) { 
+        public HomeController(IPartnerRepository partnerRepo, IHomeContentRepository homeContentRepository, IReviewRepository reviewRepository, ISupplierRepository suuplierRepository)
+        {
             partnerRepository = partnerRepo;
+            homeContentRepo = homeContentRepository;
+            reviewRepo = reviewRepository;
+            supplierRepo = suuplierRepository;
         }
 
         public IActionResult Index()
         {
             ViewBag.Partners = partnerRepository.Partners;
-            return View();
+            var homeContentsList = homeContentRepo.HomeContents;
+            var reviewList = reviewRepo.Reviews;
+            var suplierList = supplierRepo.Suppliers;
+
+            HomeModel homeModel = new HomeModel()
+            {
+                HomeContent = homeContentsList,
+                Review = reviewList,
+                Supplier = suplierList,
+            };
+            return View(homeModel);
         }
 
         public IActionResult Update()
@@ -36,11 +56,43 @@ namespace MintGarage.Controllers
             return View();
         }
 
+        public IActionResult UpdateContactUs()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateSocial()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateReviews()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateSuppliers()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateHome()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             ViewBag.Partners = partnerRepository.Partners;
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+            
     }
+
 }
+
+
+
+
+

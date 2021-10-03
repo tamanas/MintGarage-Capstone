@@ -1,8 +1,43 @@
-﻿@{
-    ViewData["Title"] = "Home";
+﻿@model  HomeModel
+
+@{
+    Layout = Layout;
+
 }
 
 <div class="text-center">
     <h3>Welcome to Mint Garage Home Page</h3>
     <p>We have lots to offer!</p>
 </div>
+
+
+<table>
+    @foreach (HomeContent home in Model.HomeContent)
+    {
+<tr>
+    <td>@home.Title</td>
+    <td>@home.Description</td>
+    <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
+</tr>
+    }
+</table>
+
+<table>
+    @foreach (Review review in Model.Review)
+    {
+        <tr>
+            <td>@review.CustomerName</td>
+            <td>@review.Description</td>
+        </tr>
+    }
+</table>
+
+<table>
+    @foreach (Supplier supplier in Model.Supplier)
+    {
+        <tr>
+            <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
+        </tr>
+    }
+</table>
+
