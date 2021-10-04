@@ -1,4 +1,4 @@
-﻿@model  HomeModel
+﻿@model HomeModel
 
 @{
     Layout = Layout;
@@ -11,33 +11,44 @@
 </div>
 
 
-<table>
+<div class="img-container">
     @foreach (HomeContent home in Model.HomeContent)
     {
-<tr>
-    <td>@home.Title</td>
-    <td>@home.Description</td>
-    <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
-</tr>
-    }
-</table>
+        <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
+        <div class="img-text"><p>@home.Title</p></div>}
+</div>
 
-<table>
+<div class="slideshow-container">
     @foreach (Review review in Model.Review)
     {
-        <tr>
-            <td>@review.CustomerName</td>
-            <td>@review.Description</td>
-        </tr>
+        <!-- Full-width slides/quotes -->
+        <div class="mySlides">
+            <p>@review.CustomerName</p>
+            <p> @review.Description</p>
+        </div>
     }
-</table>
+    <!-- Next/prev buttons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
 
-<table>
+<!-- Dots/bullets/indicators -->
+<div class="dot-container">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+    <span class="dot" onclick="currentSlide(5)"></span>
+</div>
+
+<div class="supplier-container">
     @foreach (Supplier supplier in Model.Supplier)
     {
-        <tr>
+        <div class="supplier-image">
             <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
-        </tr>
+        </div>
     }
-</table>
+</div>
+
+
 

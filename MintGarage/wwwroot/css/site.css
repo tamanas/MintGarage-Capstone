@@ -1,4 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -68,4 +68,41 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/* Image container */
+.img-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.img-container img {
+    width: 100%;
+}
+
+/* Image text */
+.img-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Suppliers */
+.supplier-container {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.supplier-image {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.supplier-image img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
