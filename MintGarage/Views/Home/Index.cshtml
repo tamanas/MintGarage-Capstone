@@ -12,7 +12,7 @@
 
 
 <table>
-    @foreach (HomeContent home in Model.HomeContent)
+    @foreach (HomeContent home in Model.HomeContents)
     {
 <tr>
     <td>@home.Title</td>
@@ -23,7 +23,7 @@
 </table>
 
 <table>
-    @foreach (Review review in Model.Review)
+    @foreach (Review review in Model.Reviews)
     {
         <tr>
             <td>@review.CustomerName</td>
@@ -33,7 +33,7 @@
 </table>
 
 <table>
-    @foreach (Supplier supplier in Model.Supplier)
+    @foreach (Supplier supplier in Model.Suppliers)
     {
         <tr>
             <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top" style="height:200px; width:300px" />

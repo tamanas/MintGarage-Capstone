@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +22,11 @@ namespace MintGarage.Models.HomeTab.HomeContents
         public string Description { get; set; }
 
         [Display(Name = "Image")]
-        [Required(ErrorMessage = "Image Required")]
         public string Image { get; set; }
+
+        [NotMapped]
+        [Display(Name = "upload Image")]
+        [Required(ErrorMessage = "Image Required here")]
+        public IFormFile ImageFile { get; set; }
     }
 }
