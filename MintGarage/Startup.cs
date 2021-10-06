@@ -14,6 +14,8 @@ using MintGarage.Models.HomeTab.HomeContents;
 using MintGarage.Models.HomeTab.Reviews;
 using MintGarage.Models.HomeTab.SocialMedias;
 using MintGarage.Models.HomeTab.Suppliers;
+using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterContents.FooterSocialMedias;
 
 namespace MintGarage
 {
@@ -54,6 +56,8 @@ namespace MintGarage
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<ISocialMediaRepository, SocialMediaRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<IFooterContactInfoRepository, FooterContactInfoRepository>();
+            services.AddScoped<IFooterSocialMediaRepository, FooterSocialMediaRepository>();
 
         }
 

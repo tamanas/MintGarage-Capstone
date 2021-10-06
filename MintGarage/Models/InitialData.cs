@@ -5,6 +5,7 @@ using MintGarage.Database;
 using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
 using MintGarage.Models.Accounts;
+using MintGarage.Models.FooterContents.FooterContactInfo;
 
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,15 @@ namespace MintGarage.Models
             if (!context.Account.Any())
             {
                 context.Account.Add(new Account() { Username = "admin", Password = "admin" });
+                context.SaveChanges();
+            }
+            if (!context.FooterContactInfo.Any())
+            {
+                context.FooterContactInfo.Add(new FooterContactInfo()
+                {
+                    PhoneNumber = "6475230914",
+                    EmailAddress = "Info@mintgarage.ca"
+                });
                 context.SaveChanges();
             }
             if (!context.Product.Any())

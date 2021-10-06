@@ -1,0 +1,159 @@
+﻿@model FooterModel
+
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@if (ViewBag.contactEdit)
+{
+    <div>
+        <form asp-action="EditFooterContactInfo" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="@Model.FooterContact.FooterContactInfoID" hidden />
+            <div class="form-group">
+                <input asp-for="@Model.FooterContact.PhoneNumber" class="form-control" />
+                <span asp-validation-for="@Model.FooterContact.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.FooterContact.EmailAddress" class="form-control" />
+                <span asp-validation-for="@Model.FooterContact.EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-warning" />
+                <a class="btn btn-info" asp-action="Update">Cancel</a>
+            </div>
+        </form>
+    </div>
+}
+
+<div>
+    <span>@ViewBag.contactInfoMessage</span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Phone Number</th>
+                <th>Email Address</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FooterContactInfo)
+            {
+                <tr>
+                    <th></th>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.EmailAddress</td>
+                    <td><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterContactInfoID" asp-route-operation="contactEdit" asp-route-show=true>Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (ViewBag.add)
+{
+    <div>
+        <form asp-action="AddSocialMedia" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" />
+                <span asp-validation-for="@Model.FooterSocialMedia.Name;" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" />
+                <span asp-validation-for="@Model.FooterSocialMedia.SocialMediaUrl" class="text-danger"></span>
+            </div>
+            <div class="">
+                <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="" />
+                <span asp-validation-for="@Model.FooterSocialMedia.ImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-success" />
+                <a class="btn btn-info" asp-action="Update">Cancel</a>
+            </div>
+        </form>
+    </div>
+}
+
+@if (ViewBag.edit)
+{
+    <div>
+        <form asp-action="EditSocialMedia" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="@Model.FooterSocialMedia.FooterSocialMediaID" hidden />
+            <div class="form-group">
+                <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" placeholder="Social Media Name" />
+                <span asp-validation-for="@Model.FooterSocialMedia.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" placeholder="Social Media URL" />
+                <span asp-validation-for="@Model.FooterSocialMedia.SocialMediaUrl" class="text-danger"></span>
+            </div>
+            <div class="">
+                <input asp-for="@Model.FooterSocialMedia.SocialMediaLogo" class="form-control" placeholder="Social Media Icon File Path" />
+                <span asp-validation-for="@Model.FooterSocialMedia.SocialMediaLogo" class="text-danger"></span>
+                <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="image/*" />
+                <span asp-validation-for="@Model.FooterSocialMedia.ImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-warning" />
+                <a class="btn btn-info" asp-action="Update">Cancel</a>
+            </div>
+        </form>
+    </div>
+}
+
+@if (ViewBag.delete)
+{
+    <div>
+        <form asp-action="DeleteSocialMedia" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="@Model.FooterSocialMedia.FooterSocialMediaID" hidden />
+            <div class="form-group">
+                <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.FooterSocialMedia.SocialMediaLogo" hidden />
+                <img src="@("~/Images/"+Model.FooterSocialMedia.SocialMediaLogo)" width="100" height="70" asp-append-version="true" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a class="btn btn-info" asp-action="Update">Cancel</a>
+            </div>
+        </form>
+    </div>
+}
+
+<div>
+    <span>@ViewBag.socialMediaMessage</span>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Social Media Name</th>
+                <th>Social Media URL</th>
+                <th>Social Media Logo</th>
+                <th></th>
+                <td><a asp-action="Update" asp-controller="Footer" asp-route-operation="add" asp-route-show=true>Add</a></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FooterSocialMedias)
+            {
+            <tr>
+                <th></th>
+                <td>@item.Name</td>
+                <td>@item.SocialMediaUrl</td>
+                <td><img src="@("~/Images/"+item.SocialMediaLogo)" width="100" height="70" asp-append-version="true" /></td>
+                <td><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-path=@("~/Images/"+item.SocialMediaLogo) asp-route-operation="edit" asp-route-show=true>Edit</a></td>
+                <td><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

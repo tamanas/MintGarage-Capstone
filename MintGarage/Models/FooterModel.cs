@@ -1,5 +1,5 @@
-﻿using MintGarage.Models.HomeTab.Contacts;
-using MintGarage.Models.HomeTab.SocialMedias;
+﻿using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterContents.FooterSocialMedias;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,9 @@ namespace MintGarage.Models
 {
     public class FooterModel
     {
-        public IEnumerable<Contact> Contact { get; set; }
-        public IEnumerable<SocialMedia> SocialMedia { get; set; }
+        public IEnumerable<FooterContactInfo> FooterContactInfo { get; set; }
+        public FooterContactInfo FooterContact { get; set; }
+        public IEnumerable<FooterSocialMedia> FooterSocialMedias { get; set; }
+        public FooterSocialMedia FooterSocialMedia { get; set; }
     }
 }

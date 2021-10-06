@@ -9,6 +9,8 @@ using MintGarage.Models.HomeTab.Reviews;
 using MintGarage.Models.HomeTab.SocialMedias;
 using MintGarage.Models.HomeTab.Suppliers;
 using MintGarage.Models.Products;
+using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterContents.FooterSocialMedias;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +32,8 @@ namespace MintGarage.Database
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-
-
+        public DbSet<FooterContactInfo> FooterContactInfo { get; set; }
+        public DbSet<FooterSocialMedia> FooterSocialMedias { get; set; }
     }
 }
 
