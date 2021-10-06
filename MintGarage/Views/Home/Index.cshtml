@@ -12,14 +12,14 @@
 
 
 <div class="img-container">
-    @foreach (HomeContent home in Model.HomeContent)
+    @foreach (HomeContent home in Model.HomeContents)
     {
         <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top" style="height:200px; width:300px" />
         <div class="img-text"><p>@home.Title</p></div>}
 </div>
 
 <div class="slideshow-container">
-    @foreach (Review review in Model.Review)
+    @foreach (Review review in Model.Reviews)
     {
         <!-- Full-width slides/quotes -->
         <div class="mySlides">
@@ -42,7 +42,7 @@
 </div>
 
 <div class="supplier-container">
-    @foreach (Supplier supplier in Model.Supplier)
+    @foreach (Supplier supplier in Model.Suppliers)
     {
         <div class="supplier-image">
             <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top" style="height:200px; width:300px" />

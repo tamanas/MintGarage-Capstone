@@ -3,12 +3,12 @@ using MintGarage.Models;
 using MintGarage.Models.Accounts;
 using MintGarage.Models.Categories;
 using MintGarage.Models.ConsultationForms;
+using MintGarage.Models.Partners;
 using MintGarage.Models.HomeTab.Contacts;
 using MintGarage.Models.HomeTab.HomeContents;
 using MintGarage.Models.HomeTab.Reviews;
 using MintGarage.Models.HomeTab.SocialMedias;
 using MintGarage.Models.HomeTab.Suppliers;
-using MintGarage.Models.Partners;
 using MintGarage.Models.Products;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
@@ -28,6 +28,7 @@ namespace MintGarage.Database
         public DbSet<Category> Category { get; set; }
         public DbSet<ConsultationForm> ConsultationForm { get; set; }
         public DbSet<Account> Account { get; set; }
+        public DbSet<Partner> Partner { get; set; }
         public DbSet<HomeContent> HomeContents { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
@@ -35,7 +36,6 @@ namespace MintGarage.Database
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<FooterContactInfo> FooterContactInfo { get; set; }
         public DbSet<FooterSocialMedia> FooterSocialMedias { get; set; }
-        public DbSet<Partner> Partner { get; set; }
     }
 }
 

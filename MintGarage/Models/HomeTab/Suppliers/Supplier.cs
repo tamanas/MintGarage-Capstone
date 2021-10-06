@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,9 +20,12 @@ namespace MintGarage.Models.HomeTab.Suppliers
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        [Display(Name = "Logo")]
-        [Required(ErrorMessage = "Logo Required")]
         public string SupplierLogo { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Upload Logo")]
+        [Required(ErrorMessage = "Logo Required")]
+        public IFormFile ImageFile { get; set; }
     }
 }
 
