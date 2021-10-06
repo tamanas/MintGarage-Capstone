@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MintGarage.Database;
 
 namespace MintGarage.Migrations
 {
     [DbContext(typeof(MintGarageContext))]
-    partial class MintGarageContextModelSnapshot : ModelSnapshot
+    [Migration("20210930202724_Partners")]
+    partial class Partners
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,165 +89,6 @@ namespace MintGarage.Migrations
                     b.HasKey("ConsultationFormID");
 
                     b.ToTable("ConsultationForm");
-                });
-
-            modelBuilder.Entity("MintGarage.Models.FooterContents.FooterContactInfo.FooterContactInfo", b =>
-                {
-                    b.Property<int>("FooterContactInfoID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("FooterContactInfoID");
-
-                    b.ToTable("FooterContactInfo");
-                });
-
-            modelBuilder.Entity("MintGarage.Models.FooterContents.FooterSocialMedias.FooterSocialMedia", b =>
-                {
-                    b.Property<int>("FooterSocialMediaID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SocialMediaLogo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SocialMediaUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("FooterSocialMediaID");
-
-                    b.ToTable("FooterSocialMedias");
-                });
-
-            modelBuilder.Entity("MintGarage.Models.HomeTab.Contacts.Contact", b =>
-                {
-                    b.Property<int>("ContactsID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("ContactsID");
-
-                    b.ToTable("Contacts");
-                });
-
-            modelBuilder.Entity("MintGarage.Models.HomeTab.HomeContents.HomeContent", b =>
-                {
-                    b.Property<int>("HomeContentsID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("HomeContentsID");
-
-                    b.ToTable("HomeContents");
-                });
-
-            modelBuilder.Entity("MintGarage.Models.HomeTab.Reviews.Review", b =>
-                {
-                    b.Property<int>("ReviewsID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ReviewsID");
-
-                    b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("MintGarage.Models.HomeTab.SocialMedias.SocialMedia", b =>
-                {
-                    b.Property<int>("MediaID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("MediaImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MediaLink")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MediaName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MediaID");
-
-                    b.ToTable("SocialMedias");
-                });
-
-            modelBuilder.Entity("MintGarage.Models.HomeTab.Suppliers.Supplier", b =>
-                {
-                    b.Property<int>("SuppliersID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SupplierLogo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SuppliersName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SuppliersID");
-
-                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("MintGarage.Models.Partners.Partner", b =>

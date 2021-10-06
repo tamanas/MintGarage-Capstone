@@ -9,6 +9,7 @@ using MintGarage.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using MintGarage.Models.Partners;
 
 namespace MintGarage.Controllers
 {
@@ -17,19 +18,24 @@ namespace MintGarage.Controllers
 
         private IFooterContactInfoRepository footerContactInfoRepository;
         private IFooterSocialMediaRepository footerSocialMediaRepository;
+        public IPartnerRepository partnerRepository;
         private IWebHostEnvironment hostEnv;
         private string imageFolder = "/Images/";
 
         public FooterController(IFooterContactInfoRepository footerContactInfoRepo,
-            IFooterSocialMediaRepository footerSocialMediaRepo, IWebHostEnvironment hostEnvironment)
+            IFooterSocialMediaRepository footerSocialMediaRepo, IWebHostEnvironment hostEnvironment,
+            IPartnerRepository partnerRepo)
         {
             footerContactInfoRepository = footerContactInfoRepo;
             footerSocialMediaRepository = footerSocialMediaRepo;
+            partnerRepository = partnerRepo;
             hostEnv = hostEnvironment;
         }
 
         public IActionResult Index()
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             var footerContactInfoList = footerContactInfoRepository.FooterContactInfo;
             var footerSocialMediaList = footerSocialMediaRepository.FooterSocialMedias;
 
@@ -43,6 +49,8 @@ namespace MintGarage.Controllers
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             ViewBag.contactInfoMessage = TempData["AdminFooterContactInfoMessage"];
             ViewBag.socialMediaMessage = TempData["AdminFooterSocialMediaMessage"];
             setViewBag(false, false, false, false);
@@ -80,6 +88,8 @@ namespace MintGarage.Controllers
 
         public IActionResult EditFooterContactInfo(FooterModel footerModel)
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             if (ModelState.IsValid)
             {
                 footerContactInfoRepository.Update(footerModel.FooterContact);
@@ -97,6 +107,8 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> AddSocialMedia(FooterModel footerModel)
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             if (ModelState.IsValid && footerModel.FooterSocialMedia.ImageFile != null)
             {
                 footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
@@ -114,6 +126,8 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditSocialMedia(FooterModel footerModel)
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             if (ModelState.IsValid)
             {
                 if (footerModel.FooterSocialMedia.ImageFile != null)
@@ -136,6 +150,8 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteSocialMedia(FooterModel footerModel)
         {
+            ViewBag.Partners = partnerRepository.Partners;
+
             DeleteImage(footerModel.FooterSocialMedia.SocialMediaLogo);
             footerSocialMediaRepository.Delete(footerModel.FooterSocialMedia);
             TempData["AdminFooterSocialMediaMessage"] = "Successfully deleted Social Media.";

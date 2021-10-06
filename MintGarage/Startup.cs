@@ -16,6 +16,7 @@ using MintGarage.Models.HomeTab.SocialMedias;
 using MintGarage.Models.HomeTab.Suppliers;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
+using MintGarage.Models.Partners;
 
 namespace MintGarage
 {
@@ -59,6 +60,7 @@ namespace MintGarage
             services.AddScoped<IFooterContactInfoRepository, FooterContactInfoRepository>();
             services.AddScoped<IFooterSocialMediaRepository, FooterSocialMediaRepository>();
 
+            services.AddScoped<IPartnerRepository, PartnerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
