@@ -41,7 +41,7 @@ namespace MintGarage.Controllers
             return View(footerModel);
         }
 
-        public async Task<IActionResult> Update(int? id, string? operation, bool? show, string? path)
+        public IActionResult Update(int? id, string? operation, bool? show)
         {
             ViewBag.contactInfoMessage = TempData["AdminFooterContactInfoMessage"];
             ViewBag.socialMediaMessage = TempData["AdminFooterSocialMediaMessage"];
@@ -97,7 +97,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> AddSocialMedia(FooterModel footerModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && footerModel.FooterSocialMedia.ImageFile != null)
             {
                 footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
                 footerSocialMediaRepository.Create(footerModel.FooterSocialMedia);
@@ -116,8 +116,11 @@ namespace MintGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                DeleteImage(footerModel.FooterSocialMedia.SocialMediaLogo);
-                footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
+                if (footerModel.FooterSocialMedia.ImageFile != null)
+                {
+                    DeleteImage(footerModel.FooterSocialMedia.SocialMediaLogo);
+                    footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
+                }
                 footerSocialMediaRepository.Edit(footerModel.FooterSocialMedia);
                 TempData["AdminFooterSocialMediaMessage"] = "Successfully edited Social Media.";
             }

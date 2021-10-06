@@ -66,7 +66,7 @@
                 <span asp-validation-for="@Model.FooterSocialMedia.SocialMediaUrl" class="text-danger"></span>
             </div>
             <div class="">
-                <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="" />
+                <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="image/*" />
                 <span asp-validation-for="@Model.FooterSocialMedia.ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -80,7 +80,7 @@
 @if (ViewBag.edit)
 {
     <div>
-        <form asp-action="EditSocialMedia" method="post">
+        <form asp-action="EditSocialMedia" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="@Model.FooterSocialMedia.FooterSocialMediaID" hidden />
             <div class="form-group">
@@ -92,8 +92,8 @@
                 <span asp-validation-for="@Model.FooterSocialMedia.SocialMediaUrl" class="text-danger"></span>
             </div>
             <div class="">
-                <input asp-for="@Model.FooterSocialMedia.SocialMediaLogo" class="form-control" placeholder="Social Media Icon File Path" />
-                <span asp-validation-for="@Model.FooterSocialMedia.SocialMediaLogo" class="text-danger"></span>
+                <img src="@("~/Images/"+Model.FooterSocialMedia.SocialMediaLogo)" width="100" height="70" asp-append-version="true" />
+                <input asp-for="@Model.FooterSocialMedia.SocialMediaLogo" hidden />
                 <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="image/*" />
                 <span asp-validation-for="@Model.FooterSocialMedia.ImageFile" class="text-danger"></span>
             </div>
@@ -150,7 +150,7 @@
                 <td>@item.Name</td>
                 <td>@item.SocialMediaUrl</td>
                 <td><img src="@("~/Images/"+item.SocialMediaLogo)" width="100" height="70" asp-append-version="true" /></td>
-                <td><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-path=@("~/Images/"+item.SocialMediaLogo) asp-route-operation="edit" asp-route-show=true>Edit</a></td>
+                <td><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
                 <td><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
             </tr>
             }
