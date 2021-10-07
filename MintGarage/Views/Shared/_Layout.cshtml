@@ -6,12 +6,28 @@
     <title>@ViewData["Title"] - MintGarage</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/footer.css" />
     <script src="~/js/_layout.js"></script>
 </head>
 <body>
-     <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">
-                <div class="container">
+    @* <div class=" container bg-success text-white">
+            <div>
+                <h3 class="m-3">Mint Garage</h3>
+            </div>
+
+            <nav class="nav border-bottom text-center  mb-5">
+                    <a asp-controller="Home" asp-action="Index" class="h6 text-white font-weight-bold">Home</a> &nbsp;&nbsp;
+                    <a asp-controller="ConsultationForms" asp-action="Create" class="h6 text-white font-weight-bold">Consultation</a> &nbsp;&nbsp;
+                    <a asp-controller="Product" asp-action="Index" class="h6 text-white font-weight-bold">Products</a> &nbsp;&nbsp;
+                    <a asp-controller="Portfolio" asp-action="Index" class="h6 text-white font-weight-bold">Portfolio</a> &nbsp;&nbsp;
+                    <a asp-controller="AboutUs" asp-action="Index" class="h6 text-white font-weight-bold">About Us</a>
+            </nav>
+        </div>*@
+
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">
+            <div class="container">
 
                     <a class="navbar-brand text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">Mint Garage</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -47,17 +63,65 @@
                         </ul>
                     </div>
                 </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top text-center footer bg-success text-white">
-        <div class="container-fluid">
-            &copy; 2021 - MintGarage <a asp-area="" asp-controller="Home" asp-action="Privacy" class="h6 text-white font-weight-bold">Privacy</a>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <img src="~/Images/mintlogo.png" alt="Mint Logo" />
+                    <p class="text-justify">@ViewBag.AboutData</p>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Links</h6>
+                    <ul class="footer-links">
+                        <li><a asp-controller="ConsultationForms" asp-action="Create">Consultation</a></li>
+                        <li><a asp-controller="Product" asp-action="Index">Products</a></li>
+                        <li><a asp-controller="Portfolio" asp-action="Index">Portfolio</a></li>
+                        <li><a asp-controller="AboutUs" asp-action="Index">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Contact Information</h6>
+                    <ul class="footer-links">
+                        @foreach (var social in ViewBag.SocialMedias)
+                        {
+                            <li><a href="@social.SocialMediaUrl">@social.Name</a></li>
+                        }
+                        @foreach (var contact in ViewBag.Contacts)
+                        {
+                            <li>@contact.EmailAddress</li>
+                            <li>@contact.PhoneNumber</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">
+                        Copyright &copy; 2017 All Rights Reserved by
+                        <a href="#">Scanfcode</a>.
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    @foreach (var contact in ViewBag.Contacts)
+                    {
+                        <p> @contact.PhoneNumber / @contact.EmailAddress </p>
+                    }
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
