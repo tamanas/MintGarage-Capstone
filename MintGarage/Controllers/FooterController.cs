@@ -22,6 +22,9 @@ namespace MintGarage.Controllers
         private IWebHostEnvironment hostEnv;
         private string imageFolder = "/Images/";
 
+        private const String AboutUs = "We are specialists in transforming and organizing any room. " +
+        "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
+
         public FooterController(IFooterContactInfoRepository footerContactInfoRepo,
             IFooterSocialMediaRepository footerSocialMediaRepo, IWebHostEnvironment hostEnvironment,
             IPartnerRepository partnerRepo)
@@ -35,21 +38,25 @@ namespace MintGarage.Controllers
         public IActionResult Index()
         {
             ViewBag.Partners = partnerRepository.Partners;
-
-            var footerContactInfoList = footerContactInfoRepository.FooterContactInfo;
-            var footerSocialMediaList = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
 
             FooterModel footerModel = new FooterModel()
             {
-                FooterContactInfo = footerContactInfoList,
-                FooterSocialMedias = footerSocialMediaList
+                FooterContactInfo = footerContactInfoRepository.FooterContactInfo,
+                FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias
             };
+
             return View(footerModel);
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
 
             ViewBag.contactInfoMessage = TempData["AdminFooterContactInfoMessage"];
             ViewBag.socialMediaMessage = TempData["AdminFooterSocialMediaMessage"];
@@ -89,6 +96,9 @@ namespace MintGarage.Controllers
         public IActionResult EditFooterContactInfo(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
@@ -108,6 +118,9 @@ namespace MintGarage.Controllers
         public async Task<IActionResult> AddSocialMedia(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid && footerModel.FooterSocialMedia.ImageFile != null)
             {
@@ -127,6 +140,9 @@ namespace MintGarage.Controllers
         public async Task<IActionResult> EditSocialMedia(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
@@ -151,6 +167,9 @@ namespace MintGarage.Controllers
         public IActionResult DeleteSocialMedia(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
 
             DeleteImage(footerModel.FooterSocialMedia.SocialMediaLogo);
             footerSocialMediaRepository.Delete(footerModel.FooterSocialMedia);
