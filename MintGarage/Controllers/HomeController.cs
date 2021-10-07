@@ -48,14 +48,14 @@ namespace MintGarage.Controllers
             return View(homeModel);
         }
 
-        public IActionResult Update(int? id, string? operation, bool? show)
+        public IActionResult Update(int? id, string? operation, bool? show, string? table)
         {
             ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.message = TempData["AdminHomeContentMessage"];
-            setViewBag(false, false, false);
-
-            if (operation != null && show != null)
+            ViewBag.message = TempData["message"];
+            setViewBag(false, false, false, "");
+            if (operation != null && show != null && table != "")
             {
+                ViewBag.table = table;
                 switch (operation)
                 {
                     case "add":
@@ -94,14 +94,15 @@ namespace MintGarage.Controllers
             {
                 homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
                 homeContentRepo.AddHomeContents(homeModel.HomeContent);
-                TempData["AdminHomeContentMessage"] = "Successfully added new Home Content.";
+                TempData["message"] = "Successfully added new Home Content.";
             }
             else
             {
                 homeModel.HomeContents = homeContentRepo.HomeContents;
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
-                setViewBag(true, false, false);
+                setViewBag(true, false, false, "homecontent");
+
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -116,15 +117,15 @@ namespace MintGarage.Controllers
                 DeleteImage(homeModel.HomeContent.Image);
                 homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
                 homeContentRepo.UpdateHomeContents(homeModel.HomeContent);
-                TempData["AdminHomeContentMessage"] = "Successfully edited Home Content.";
+                TempData["message"] = "Successfully edited Home Content.";
             }
-            else
+            if(!ModelState.IsValid)
             {
                 homeModel.HomeContents = homeContentRepo.HomeContents;
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
 
-                setViewBag(false, true, false);
+                setViewBag(false, true, false, "homecontent");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -135,7 +136,7 @@ namespace MintGarage.Controllers
             ViewBag.Partners = partnerRepository.Partners;
             DeleteImage(homeModel.HomeContent.Image);
             homeContentRepo.DeleteHomeContents(homeModel.HomeContent);
-            TempData["AdminHomeContentMessage"] = "Successfully deleted Home Content.";
+            TempData["message"] = "Successfully deleted Home Content.";
             return RedirectToAction("Update");
         }
 
@@ -146,7 +147,7 @@ namespace MintGarage.Controllers
             if (ModelState.IsValid)
             {
                 reviewRepo.AddReviews(homeModel.Review);
-                TempData["AdminReviewMessage"] = "Successfully added new Review.";
+                TempData["message"] = "Successfully added new Review.";
             }
             else
             {
@@ -154,7 +155,7 @@ namespace MintGarage.Controllers
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
 
-                setViewBag(true, false, false);
+                setViewBag(true, false, false, "review");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -167,7 +168,7 @@ namespace MintGarage.Controllers
             if (ModelState.IsValid)
             {
                 reviewRepo.UpdateReviews(homeModel.Review);
-                TempData["AdminReviewMessage"] = "Successfully edited Review.";
+                TempData["message"] = "Successfully edited Review.";
             }
             else
             {
@@ -175,7 +176,7 @@ namespace MintGarage.Controllers
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
 
-                setViewBag(false, true, false);
+                setViewBag(false, true, false, "review");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -186,7 +187,7 @@ namespace MintGarage.Controllers
             ViewBag.Partners = partnerRepository.Partners;
 
             reviewRepo.DeleteReviews(homeModel.Review);
-            TempData["AdminReviewMessage"] = "Successfully deleted Review.";
+            TempData["message"] = "Successfully deleted Review.";
             return RedirectToAction("Update");
         }
 
@@ -199,14 +200,14 @@ namespace MintGarage.Controllers
             {
                 homeModel.Supplier.SupplierLogo = await SaveImage(homeModel.Supplier.ImageFile);
                 supplierRepo.AddSuppliers(homeModel.Supplier);
-                TempData["AdminReviewMessage"] = "Successfully added new Supplier.";
+                TempData["message"] = "Successfully added new Supplier.";
             }
             else
             {
                 homeModel.HomeContents = homeContentRepo.HomeContents;
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
-                setViewBag(true, false, false);
+                setViewBag(true, false, false, "supplier");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -221,14 +222,14 @@ namespace MintGarage.Controllers
                 DeleteImage(homeModel.Supplier.SupplierLogo);
                 homeModel.HomeContent.Image = await SaveImage(homeModel.Supplier.ImageFile);
                 supplierRepo.UpdateSuppliers(homeModel.Supplier);
-                TempData["AdminReviewMessage"] = "Successfully edited Supplier.";
+                TempData["message"] = "Successfully edited Supplier.";
             }
             else
             {
                 homeModel.HomeContents = homeContentRepo.HomeContents;
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
-                setViewBag(false, true, false);
+                setViewBag(false, true, false, "supplier");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -239,16 +240,17 @@ namespace MintGarage.Controllers
             ViewBag.Partners = partnerRepository.Partners;
             DeleteImage(homeModel.Supplier.SupplierLogo);
             supplierRepo.DeleteSuppliers(homeModel.Supplier);
-            TempData["AdminReviewMessage"] = "Successfully deleted Supplier.";
+            TempData["message"] = "Successfully deleted Supplier.";
             return RedirectToAction("Update");
         }
 
 
-        public void setViewBag(bool add, bool edit, bool delete)
+        public void setViewBag(bool add, bool edit, bool delete, string table)
         {
             ViewBag.add = add;
             ViewBag.edit = edit;
             ViewBag.delete = delete;
+            ViewBag.table = table;
         }
 
         public async Task<string> SaveImage(IFormFile imageFile)

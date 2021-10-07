@@ -3,92 +3,95 @@
 @{
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-
+    string homeContent = "homecontent";
+    string review = "review";
+    string supplier = "supplier";
 }
 
-@if (ViewBag.add)
-{
-    <div>
-        <form asp-action="CreateHomeContent" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input asp-for="@Model.HomeContent.Title" class="form-control" />
-                <span asp-validation-for="@Model.HomeContent.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.HomeContent.Description" class="form-control" />
-                <span asp-validation-for="@Model.HomeContent.Description" class="text-danger"></span>
-            </div>
-            <div class="">
-                <input asp-for="@Model.HomeContent.ImageFile" accept="image/*" />
-                <span asp-validation-for="@Model.HomeContent.ImageFile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-success" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
-
-@if (ViewBag.edit)
-{
-    <div>
-        <form asp-action="EditHomeContent" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.HomeContent.HomeContentsID" hidden />
-            <div class="form-group">
-                <input asp-for="@Model.HomeContent.Title" class="form-control" />
-                <span asp-validation-for="@Model.HomeContent.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.HomeContent.Description" class="form-control" />
-                <span asp-validation-for="@Model.HomeContent.Description" class="text-danger"></span>
-            </div>
-            <div class="">
-                <img src="@("~/Images/"+Model.HomeContent.Image)" width="100" height="70" asp-append-version="true" />
-                <input asp-for="@Model.HomeContent.Image" hidden />
-                <input asp-for="@Model.HomeContent.ImageFile" accept="image/*" />
-                <span asp-validation-for="@Model.HomeContent.ImageFile" class="text-danger"></span>
-               @* @if(Model.HomeContent.ImageFile == null)
-                {
-                    Model.HomeContent.ImageFile = Model.HomeContent.Image;
-                }*@
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-warning" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
-
-@if (ViewBag.delete)
-{
-    <div>
-        <form asp-action="DeleteHomeContent" method="post" >
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.HomeContent.HomeContentsID" hidden />
-            <div class="form-group">
-                <input asp-for="@Model.HomeContent.Title" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.HomeContent.Description" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.HomeContent.Image" hidden />
-                <img src="@("~/Images/"+Model.HomeContent.Image)" width="100" height="70" asp-append-version="true" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Delete" class="btn btn-danger" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
-
-<div>
+<div class="bg-success font-weight-bold text-center text-white">
     <span>@ViewBag.Message</span>
+</div>
+@if (ViewBag.table == homeContent)
+{
+
+    @if (ViewBag.add)
+    {
+        <div>
+            <form asp-action="CreateHomeContent" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="@Model.HomeContent.Title" class="form-control" />
+                    <span asp-validation-for="@Model.HomeContent.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.HomeContent.Description" class="form-control" />
+                    <span asp-validation-for="@Model.HomeContent.Description" class="text-danger"></span>
+                </div>
+                <div class="">
+                    <input asp-for="@Model.HomeContent.ImageFile" accept="image/*" />
+                    <span asp-validation-for="@Model.HomeContent.ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-success" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+
+    @if (ViewBag.edit)
+    {
+        <div>
+            <form asp-action="EditHomeContent" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.HomeContent.HomeContentsID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.HomeContent.Title" class="form-control" />
+                    <span asp-validation-for="@Model.HomeContent.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.HomeContent.Description" class="form-control" />
+                    <span asp-validation-for="@Model.HomeContent.Description" class="text-danger"></span>
+                </div>
+                <div class="">
+                    <img src="@("~/Images/" + Model.HomeContent.Image)" width="100" height="70" asp-append-version="true" />
+                    <input asp-for="@Model.HomeContent.Image" hidden />
+                    <input asp-for="@Model.HomeContent.ImageFile" accept="image/*"/>
+                    <span asp-validation-for="@Model.HomeContent.ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-warning" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+
+    @if (ViewBag.delete)
+    {
+        <div>
+            <form asp-action="DeleteHomeContent" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.HomeContent.HomeContentsID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.HomeContent.Title" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.HomeContent.Description" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.HomeContent.Image" hidden />
+                    <img src="@("~/Images/" + Model.HomeContent.Image)" width="100" height="70" asp-append-version="true" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+}
+<div>
     <table class="table">
         <thead>
             <tr>
@@ -97,7 +100,7 @@
                 <th>Description</th>
                 <th>Image</th>
                 <th></th>
-                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true>Add</a></td>
+                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="homecontent">Add</a></td>
             </tr>
         </thead>
         <tbody>
@@ -108,80 +111,82 @@
                     <td>@item.Title</td>
                     <td>@item.Description</td>
                     <td><img src="@("~/Images/"+item.Image)" width="100" height="70" asp-append-version="true" /></td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.HomeContentsID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.HomeContentsID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
+                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.HomeContentsID" asp-route-operation="edit" asp-route-show=true asp-route-table="homecontent">Edit</a></td>
+                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.HomeContentsID" asp-route-operation="delete" asp-route-show=true asp-route-table="homecontent">Delete</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
 
-
-@if (ViewBag.add)
+@if (ViewBag.table == review)
 {
-    <div>
-        <form asp-action="CreateReview" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input asp-for="@Model.Review.CustomerName" class="form-control" />
-                <span asp-validation-for="@Model.Review.CustomerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Review.Description" class="form-control" />
-                <span asp-validation-for="@Model.Review.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-success" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
+    @if (ViewBag.add)
+    {
+        <div>
+            <form asp-action="CreateReview" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="@Model.Review.CustomerName" class="form-control" />
+                    <span asp-validation-for="@Model.Review.CustomerName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Review.Description" class="form-control" />
+                    <span asp-validation-for="@Model.Review.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-success" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
 
-@if (ViewBag.edit)
-{
-    <div>
-        <form asp-action="EditReview" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.Review.ReviewsID" hidden />
-            <div class="form-group">
-                <input asp-for="@Model.Review.CustomerName" class="form-control" />
-                <span asp-validation-for="@Model.Review.CustomerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Review.Description" class="form-control" />
-                <span asp-validation-for="@Model.Review.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-warning" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
+   @if (ViewBag.edit)
+    {
+        <div>
+            <form asp-action="EditReview" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Review.ReviewsID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Review.CustomerName" class="form-control" />
+                    <span asp-validation-for="@Model.Review.CustomerName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Review.Description" class="form-control" />
+                    <span asp-validation-for="@Model.Review.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-warning" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
 
-@if (ViewBag.delete)
-{
-    <div>
-        <form asp-action="DeleteReview" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.Review.ReviewsID" hidden />
-            <div class="form-group">
-                <input asp-for="@Model.Review.CustomerName" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Review.Description" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Delete" class="btn btn-danger" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
+    @if (ViewBag.delete)
+    {
+        <div>
+            <form asp-action="DeleteReview" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Review.ReviewsID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Review.CustomerName" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Review.Description" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
 }
 
 <div>
-    <span>@ViewBag.Message</span>
+
     <table class="table">
         <thead>
             <tr>
@@ -189,7 +194,7 @@
                 <th>Customer Name</th>
                 <th>Description</th>
                 <th></th>
-                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true>Add</a></td>
+                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="review">Add</a></td>
             </tr>
         </thead>
         <tbody>
@@ -199,114 +204,116 @@
                     <th></th>
                     <td>@item.CustomerName</td>
                     <td>@item.Description</td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.ReviewsID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.ReviewsID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
+                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.ReviewsID" asp-route-operation="edit" asp-route-show=true asp-route-table="review">Edit</a></td>
+                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.ReviewsID" asp-route-operation="delete" asp-route-show=true asp-route-table="review">Delete</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
 
-@if (ViewBag.add)
+@if (ViewBag.table == supplier)
 {
-    <div>
-        <form asp-action="CreateSupplier" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input asp-for="@Model.Supplier.SuppliersName" class="form-control" />
-                <span asp-validation-for="@Model.Supplier.SuppliersName;" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Supplier.Description" class="form-control" />
-                <span asp-validation-for="@Model.Supplier.Description" class="text-danger"></span>
-            </div>
-            <div class="">
-                <input asp-for="@Model.Supplier.ImageFile" class="" />
-                <span asp-validation-for="@Model.Supplier.ImageFile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-success" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
+    @if (ViewBag.add)
+    {
+        <div>
+            <form asp-action="CreateSupplier" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="@Model.Supplier.SuppliersName" class="form-control" />
+                    <span asp-validation-for="@Model.Supplier.SuppliersName;" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Supplier.Description" class="form-control" />
+                    <span asp-validation-for="@Model.Supplier.Description" class="text-danger"></span>
+                </div>
+                <div class="">
+                    <input asp-for="@Model.Supplier.ImageFile" class="" />
+                    <span asp-validation-for="@Model.Supplier.ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-success" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
 
-@if (ViewBag.edit)
-{
-    <div>
-        <form asp-action="EditSupplier" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.Supplier.SuppliersID" hidden />
-            <div class="form-group">
-                <input asp-for="@Model.Supplier.SuppliersName" class="form-control" placeholder="Supplier Name"/>
-                <span asp-validation-for="@Model.Supplier.SuppliersName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Supplier.Description" class="form-control" placeholder="Description" />
-                <span asp-validation-for="@Model.Supplier.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Supplier.SupplierLogo" class="form-control" />
-                <input asp-for="@Model.Supplier.ImageFile" accept="image/*" />
-                <span asp-validation-for="@Model.Supplier.SupplierLogo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-warning" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
-}
+    @if (ViewBag.edit)
+    {
+        <div>
+            <form asp-action="EditSupplier" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Supplier.SuppliersID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Supplier.SuppliersName" class="form-control" placeholder="Supplier Name" />
+                    <span asp-validation-for="@Model.Supplier.SuppliersName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Supplier.Description" class="form-control" placeholder="Description" />
+                    <span asp-validation-for="@Model.Supplier.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <img src="@("~/Images/" + Model.Supplier.SupplierLogo)" width="100" height="70" asp-append-version="true" />
+                    <input asp-for="@Model.Supplier.SupplierLogo" hidden />
+                    <input asp-for="@Model.Supplier.ImageFile" accept="image/*" />
+                    <span asp-validation-for="@Model.Supplier.ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-warning" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
 
-@if (ViewBag.delete)
-{
-    <div>
-        <form asp-action="DeleteSupplier" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.Supplier.SuppliersID" hidden />
-            <div class="form-group">
-                <input asp-for="@Model.Supplier.SuppliersName" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Supplier.Description" class="form-control" readonly />
-            </div>
-            <div class="form-group">
-                <input asp-for="@Model.Supplier.SupplierLogo" hidden />
-                <img src="@("~/Images/"+Model.Supplier.SupplierLogo)" width="100" height="70" asp-append-version="true" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Delete" class="btn btn-danger" />
-                <a class="btn btn-info" asp-action="Update">Cancel</a>
-            </div>
-        </form>
-    </div>
+    @if (ViewBag.delete)
+    {
+        <div>
+            <form asp-action="DeleteSupplier" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Supplier.SuppliersID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Supplier.SuppliersName" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Supplier.Description" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Supplier.SupplierLogo" hidden />
+                    <img src="@("~/Images/"+Model.Supplier.SupplierLogo)" width="100" height="70" asp-append-version="true" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+
 }
 
 <div>
-    <span>@ViewBag.Message</span>
     <table class="table">
         <thead>
             <tr>
                 <th>No.</th>
                 <th>Supplier Name</th>
-                <th>Description</th>
                 <th>Logo</th>
                 <th></th>
-                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true>Add</a></td>
+                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="supplier">Add</a></td>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.Suppliers)
             {
-            <tr>
-                <th></th>
-                <td>@item.SuppliersName</td>
-                <td>@item.Description</td>
-                <td><img src="@("~/Images/"+item.SupplierLogo)" width="100" height="70" asp-append-version="true" /></td>
-                <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.SuppliersID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
-                <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.SuppliersID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
-            </tr>
+                <tr>
+                    <th></th>
+                    <td>@item.SuppliersName</td>
+                    <td><img src="@("~/Images/"+item.SupplierLogo)" width="100" height="70" asp-append-version="true" /></td>
+                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.SuppliersID" asp-route-operation="edit" asp-route-show=true asp-route-table="supplier">Edit</a></td>
+                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.SuppliersID" asp-route-operation="delete" asp-route-show=true asp-route-table="supplier">Delete</a></td>
+                </tr>
             }
         </tbody>
     </table>

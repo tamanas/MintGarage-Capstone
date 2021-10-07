@@ -28,5 +28,8 @@ namespace MintGarage.Models.HomeTab.HomeContents
         [Display(Name = "upload Image")]
         [Required(ErrorMessage = "Image Required here")]
         public IFormFile ImageFile { get; set; }
+
+        [NotMapped]
+        public string TableName { get; set; } = "HomeContent";
     }
 }
