@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using MintGarage.Database;
 using MintGarage.Models.ConsultationForms;
 using MintGarage.Models.Partners;
+using MintGarage.Models.FooterContents.FooterSocialMedias;
+using MintGarage.Models.FooterContents.FooterContactInfo;
 
 namespace MintGarage.Controllers
 {
@@ -15,18 +17,28 @@ namespace MintGarage.Controllers
     {
         public IConsultationFormRepository consultationRepository;
         public IPartnerRepository partnerRepository;
+        private IFooterContactInfoRepository footerContactInfoRepository;
+        private IFooterSocialMediaRepository footerSocialMediaRepository;
 
-        public ConsultationFormsController(IConsultationFormRepository consultationRepo, IPartnerRepository partnerRepo)
+        private const String AboutUs = "We are specialists in transforming and organizing any room. " +
+        "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
+
+        public ConsultationFormsController(IConsultationFormRepository consultationRepo, IPartnerRepository partnerRepo,
+            IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
         {
             consultationRepository = consultationRepo;
             partnerRepository = partnerRepo;
+            footerContactInfoRepository = footerContactInfoRepo;
+            footerSocialMediaRepository = footerSocialMediaRepo;
         }
 
         public async Task<IActionResult> Update(string sortOrder, string searchString)
         {
             var forms = consultationRepository.ConsultationForms;
             ViewBag.Partners = partnerRepository.Partners;
-
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             ViewData["CurrentFilter"] = searchString;
 
             // Serach Function
@@ -82,6 +94,9 @@ namespace MintGarage.Controllers
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             return View();
         }
 
@@ -113,6 +128,9 @@ namespace MintGarage.Controllers
                 TempData["Success"] = false;
             }
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             return View(consultationForm);
         }
 
@@ -130,6 +148,9 @@ namespace MintGarage.Controllers
             }
             consultationRepository.DeleteConsultationForm(consultationForm);
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             return RedirectToAction("Update");
         }
 

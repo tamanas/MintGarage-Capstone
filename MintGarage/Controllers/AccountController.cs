@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MintGarage.Models.Partners;
+using MintGarage.Models.FooterContents.FooterSocialMedias;
+using MintGarage.Models.FooterContents.FooterContactInfo;
 
 namespace MintGarage.Controllers
 {
@@ -12,9 +14,17 @@ namespace MintGarage.Controllers
     {
         public IAccountRepository accoutRepository;
         public IPartnerRepository partnerRepository;
+        private IFooterContactInfoRepository footerContactInfoRepository;
+        private IFooterSocialMediaRepository footerSocialMediaRepository;
 
-        public AccountController(IAccountRepository accountRepo, IPartnerRepository partnerRepo)
+        private const String AboutUs = "We are specialists in transforming and organizing any room. " +
+        "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
+
+        public AccountController(IAccountRepository accountRepo, IPartnerRepository partnerRepo, 
+            IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
         {
+            footerContactInfoRepository = footerContactInfoRepo;
+            footerSocialMediaRepository = footerSocialMediaRepo;
             accoutRepository = accountRepo;
             partnerRepository = partnerRepo;
         }
@@ -22,6 +32,9 @@ namespace MintGarage.Controllers
         public IActionResult Login()
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
             return View();
@@ -32,6 +45,9 @@ namespace MintGarage.Controllers
         public IActionResult Login(Account account)
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             if (ModelState.IsValid)
             {
                 Account acc = accoutRepository.Account.FirstOrDefault();
@@ -52,6 +68,9 @@ namespace MintGarage.Controllers
         public IActionResult Update()
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
             return View();
@@ -61,6 +80,9 @@ namespace MintGarage.Controllers
         public IActionResult Update(UpdatePassword updatePassword)
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             if (ModelState.IsValid)
             {
                 Account acc = accoutRepository.Account.FirstOrDefault();
@@ -85,6 +107,9 @@ namespace MintGarage.Controllers
         public IActionResult Logout()
         {
             ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
             return RedirectToAction("index", "Home");
         }
     }

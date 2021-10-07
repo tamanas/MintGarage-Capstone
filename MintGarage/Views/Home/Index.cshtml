@@ -1,8 +1,78 @@
-﻿@{
-    ViewData["Title"] = "Home";
+﻿@model HomeModel
+
+@{
+    Layout = Layout;
 }
+
+<head>
+    <link rel="stylesheet" href="~/css/home.css" />
+</head>
 
 <div class="text-center">
     <h3>Welcome to Mint Garage Home Page</h3>
     <p>We have lots to offer!</p>
 </div>
+
+<div class="img-container">
+    <img src="~/Images/construction.jpg" alt="~/Images/construction.jpg" class="img-thumbnail card-img-top" />
+    <div class="img-text">
+        <p>IT'S TIME TO MINT YOUR GARAGE!</p>
+        <button class="image-btn">BOOK AN IN-HOME CONSULTATION</button>
+    </div>
+</div>
+
+<div class="flex-card-container">
+    @foreach (HomeContent home in Model.HomeContents)
+    {
+        <div class="flip-card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top"/>
+                    <h4>@home.Title</h4>
+                </div>
+                <div class="card-back">
+                    <h4>@home.Title</h4>
+                    <p>@home.Description</p>
+                    <button class="card-button">Get a quote!</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="slideshow-container">
+    <h2>Reviews</h2>
+    @foreach (Review review in Model.Reviews)
+    {
+        <!-- Full-width slides/quotes -->
+        <div class="mySlides">
+            <p>@review.CustomerName</p>
+            <p>@review.Description</p>
+        </div>
+    }
+    <!-- Next/prev buttons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<!-- Dots/bullets/indicators -->
+<div class="dot-container">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+    <span class="dot" onclick="currentSlide(5)"></span>
+</div>
+
+<h2 class="supplier-text">Our Trusted Suppliers</h2>
+<div class="supplier-container">
+    @foreach (Supplier supplier in Model.Suppliers)
+    {
+        <div class="supplier-image">
+            <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top"/>
+        </div>
+    }
+</div>
+
+
+
