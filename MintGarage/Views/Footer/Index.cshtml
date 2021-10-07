@@ -1,1 +1,55 @@
-﻿
+﻿<head>
+    <link rel="stylesheet" href="~/css/footer.css" />
+</head>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <img src="~/Images/mintlogo.png" alt="Mint Logo" />
+            <p class="text-justify">@ViewBag.AboutData</p>
+        </div>
+
+        <div class="col-xs-6 col-md-3">
+            <h6>Links</h6>
+            <ul class="footer-links">
+                <li><a asp-controller="ConsultationForms" asp-action="Create">Consultation</a></li>
+                <li><a asp-controller="Product" asp-action="Index">Products</a></li>
+                <li><a asp-controller="Portfolio" asp-action="Index">Portfolio</a></li>
+                <li><a asp-controller="AboutUs" asp-action="Index">About Us</a></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-6 col-md-3">
+            <h6>Contact Information</h6>
+            <ul class="footer-links">
+                @foreach (SocialMedia social in Model.SocialMedia)
+                {
+                    <li><a href="@social.MediaLink">@social.MediaName</a></li>
+                }
+                @foreach (Contact contact in Model.Contact)
+                {
+                    <li>@contact.EmailAddress</li>
+                    <li>@contact.PhoneNumber</li>
+                }
+            </ul>
+        </div>
+    </div>
+    <hr>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">
+                Copyright &copy; 2017 All Rights Reserved by
+                <a href="#">Scanfcode</a>.
+            </p>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @foreach (Contact contact in Model.Contact)
+            {
+                <p> @contact.PhoneNumber / @contact.EmailAddress </p>
+            }
+        </div>
+    </div>
+</div>

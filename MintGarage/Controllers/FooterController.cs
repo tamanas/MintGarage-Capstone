@@ -30,6 +30,7 @@ namespace MintGarage.Controllers
                 SocialMedia = socialList,
                 Contact = contactList,
             };
+
             return View(footerModel);
         }
     }

@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - MintGarage</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/footer.css" />
 </head>
 <body>
     @* <div class=" container bg-success text-white">
@@ -50,7 +51,7 @@
                             <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Index">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class=" nav-link text-white font-weight-bold" asp-controller="Contacts" asp-action="Index">supplier</a>
+                            <a class=" nav-link text-white font-weight-bold" asp-controller="Footer" asp-action="Index">Footer</a>
                         </li>
                     </ul>
                 </div>
@@ -63,9 +64,57 @@
         </main>
     </div>
 
-    <footer class="border-top text-center footer bg-success text-white">
-        <div class="container-fluid">
-            &copy; 2021 - MintGarage <a asp-area="" asp-controller="Home" asp-action="Privacy" class="h6 text-white font-weight-bold">Privacy</a>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <img src="~/Images/mintlogo.png" alt="Mint Logo" />
+                    <p class="text-justify">@ViewBag.AboutData</p>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Links</h6>
+                    <ul class="footer-links">
+                        <li><a asp-controller="ConsultationForms" asp-action="Create">Consultation</a></li>
+                        <li><a asp-controller="Product" asp-action="Index">Products</a></li>
+                        <li><a asp-controller="Portfolio" asp-action="Index">Portfolio</a></li>
+                        <li><a asp-controller="AboutUs" asp-action="Index">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Contact Information</h6>
+                    <ul class="footer-links">
+                        @foreach (SocialMedia social in ViewBag.SocialMedias)
+                        {
+                            <li><a href="@social.MediaLink">@social.MediaName</a></li>
+                        }
+                        @foreach (Contact contact in ViewBag.Contacts)
+                        {
+                            <li>@contact.EmailAddress</li>
+                            <li>@contact.PhoneNumber</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">
+                        Copyright &copy; 2017 All Rights Reserved by
+                        <a href="#">Scanfcode</a>.
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    @foreach (Contact contact in ViewBag.Contacts)
+                    {
+                        <p> @contact.PhoneNumber / @contact.EmailAddress </p>
+                    }
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

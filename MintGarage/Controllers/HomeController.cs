@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using MintGarage.Models.HomeTab.HomeContents;
 using MintGarage.Models.HomeTab.Reviews;
 using MintGarage.Models.HomeTab.Suppliers;
+using MintGarage.Models.HomeTab.SocialMedias;
+using MintGarage.Models.HomeTab.Contacts;
 
 namespace MintGarage.Controllers
 {
@@ -17,26 +19,34 @@ namespace MintGarage.Controllers
         private IHomeContentRepository homeContentRepo;
         private IReviewRepository reviewRepo;
         private ISupplierRepository supplierRepo;
+        private ISocialMediaRepository socialMediaRepo;
+        private IContactRepository contactRepo;
 
-        public HomeController(IHomeContentRepository homeContentRepository, IReviewRepository reviewRepository, ISupplierRepository suuplierRepository)
+        private const String AboutUs = "We are specialists in transforming and organizing any room. " +
+            "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
+
+        public HomeController(IHomeContentRepository homeContentRepository, IReviewRepository reviewRepository, ISupplierRepository supplierRepository, ISocialMediaRepository socialMediaRepository, IContactRepository contactRepository)
         {
             homeContentRepo = homeContentRepository;
             reviewRepo = reviewRepository;
-            supplierRepo = suuplierRepository;
+            supplierRepo = supplierRepository;
+            socialMediaRepo = socialMediaRepository;
+            contactRepo = contactRepository;
         }
 
         public IActionResult Index()
         {
-            var homeContentsList = homeContentRepo.HomeContents;
-            var reviewList = reviewRepo.Reviews;
-            var suplierList = supplierRepo.Suppliers;
+            ViewBag.SocialMedias = socialMediaRepo.SocialMedias;
+            ViewBag.Contacts = contactRepo.Contacts;
+            ViewBag.AboutData = AboutUs;
 
             HomeModel homeModel = new HomeModel()
             {
-                HomeContent = homeContentsList,
-                Review = reviewList,
-                Supplier = suplierList,
+                HomeContent = homeContentRepo.HomeContents,
+                Review = reviewRepo.Reviews,
+                Supplier = supplierRepo.Suppliers,
             };
+
             return View(homeModel);
         }
 
