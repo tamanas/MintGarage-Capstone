@@ -11,7 +11,7 @@ namespace MintGarage.Controllers
     {
         private IGalleryRepository galleryRepo;
 
-        public GalleryController(GalleryRepository galleryRepository)
+        public GalleryController(IGalleryRepository galleryRepository)
         {
             galleryRepo = galleryRepository;
         }
