@@ -21,7 +21,6 @@ namespace MintGarage.Models.HomeTab.Suppliers
 
         [NotMapped]
         [Display(Name = "Upload Logo")]
-        [Required(ErrorMessage = "Logo Required")]
         public IFormFile ImageFile { get; set; }
 
         [NotMapped]
