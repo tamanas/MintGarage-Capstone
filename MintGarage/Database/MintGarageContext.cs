@@ -16,6 +16,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MintGarage.Models.AboutUsTab.Teams;
+using MintGarage.Models.AboutUsTab.Values;
+using MintGarage.Models.GalleryTab;
 
 namespace MintGarage.Database
 {
@@ -36,6 +39,10 @@ namespace MintGarage.Database
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<FooterContactInfo> FooterContactInfo { get; set; }
         public DbSet<FooterSocialMedia> FooterSocialMedias { get; set; }
+        public DbSet<Team> Team { get; set; }
+        public DbSet<Value> Value { get; set; }
+        public DbSet<Gallery> Gallery { get; set; }
+
     }
 }
 
