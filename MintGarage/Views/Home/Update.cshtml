@@ -12,36 +12,40 @@
 <div class="bg-success font-weight-bold text-center text-white">
     <span>@ViewBag.Message</span>
 </div>
+
+<div class="bg-success text-white text-center font-weight-bold mt-5 mb-2">
+    <p class="h3 p-1">Cards</p>
+</div>
 @if (ViewBag.table == homeContent)
 {
-
+    <div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+    <div class="bg-success font-weight-bold text-center text-white">
+        <span>@ViewBag.Message</span>
+    </div>
     @if (ViewBag.add)
     {
-        <div>
+        <div class="mt-2 mb-2">
             <form asp-action="CreateHomeContent" method="post" enctype="multipart/form-data">
-                <div class="container">
-                    <div class="row">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="row">
-                            <div class="col-sm-2 col-md-2 col-lg-2">
-                                <input asp-for="@Model.HomeContent.Title" class="form-control" placeholder="Card Header" />
-                            </div>
-                            <div class="col-6">
-                                <input asp-for="@Model.HomeContent.Description" class="form-control" placeholder="Card Description" />
-                            </div>
-                            <div class="col-2">
-                                <input asp-for="@Model.HomeContent.ImageFile" accept="image/*" placeholder="Card Logo" />
-                            </div>
-                            <div class="col-2 text-right">
-                                
-                                    <input type="submit" value="Add" class="btn btn-success btn-sm" />
-                                
-                                    <a class="btn btn-info btn-sm" asp-action="Update">Cancel</a>
-                                
-                            </div>
-
-                        </div>
+                <div class="row">
+                    <div class="col-2">
+                        <input asp-for="@Model.HomeContent.Title" class="form-control" placeholder="Card Header" />
                     </div>
+                    <div class="col-6">
+                        <input asp-for="@Model.HomeContent.Description" class="form-control" placeholder="Card Description" />
+                    </div>
+                    <div class="col-2">
+                        <input asp-for="@Model.HomeContent.ImageFile" accept="image/*" />
+                    </div>
+                    <div class="col-2 text-right">
+
+                        <input type="submit" value="Add" class="btn btn-success btn-sm" />
+
+                        <a class="btn btn-info btn-sm" asp-action="Update">Cancel</a>
+
+                    </div>
+
                 </div>
             </form>
 
@@ -52,22 +56,23 @@
     {
         <div>
             <form asp-action="EditHomeContent" method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="@Model.HomeContent.HomeContentsID" hidden />
-                <div class="form-group">
-                    <input asp-for="@Model.HomeContent.Title" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <input asp-for="@Model.HomeContent.Description" class="form-control" />
-                </div>
-                <div class="">
-                    <img src="@("~/Images/" + Model.HomeContent.Image)" width="100" height="70" asp-append-version="true" />
-                    <input asp-for="@Model.HomeContent.Image" hidden />
-                    <input asp-for="@Model.HomeContent.ImageFile" accept="image/*"/>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Edit" class="btn btn-warning" />
-                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                <div class="row">
+                    <div class="col-2">
+                        <input asp-for="@Model.HomeContent.Title" class="form-control" placeholder="Card Header" />
+                    </div>
+                    <div class="col-5">
+                        <input asp-for="@Model.HomeContent.Description" class="form-control" placeholder="Card Description" />
+                    </div>
+                    <div class="col-3">
+                        <img src="@("~/Images/" + Model.HomeContent.Image)" width="90" height="60" asp-append-version="true" />
+                        <input asp-for="@Model.HomeContent.Image" hidden />
+                        <input asp-for="@Model.HomeContent.ImageFile" accept="image/*" />
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" value="Edit" class="btn btn-warning" />
+                        <a class="btn btn-info" asp-action="Update">Cancel</a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -77,36 +82,37 @@
     {
         <div>
             <form asp-action="DeleteHomeContent" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="@Model.HomeContent.HomeContentsID" hidden />
-                <div class="form-group">
-                    <input asp-for="@Model.HomeContent.Title" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <input asp-for="@Model.HomeContent.Description" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <input asp-for="@Model.HomeContent.Image" hidden />
-                    <img src="@("~/Images/" + Model.HomeContent.Image)" width="100" height="70" asp-append-version="true" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                <div class="row">
+                    <div class="col-2">
+                        <input asp-for="@Model.HomeContent.Title" class="form-control" readonly />
+                    </div>
+                    <div class="col-6">
+                        <input asp-for="@Model.HomeContent.Description" class="form-control" readonly />
+                    </div>
+                    <div class="col-2">
+                        <input asp-for="@Model.HomeContent.Image" hidden />
+                        <img src="@("~/Images/" + Model.HomeContent.Image)" width="100" height="70" asp-append-version="true" />
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <a class="btn btn-info" asp-action="Update">Cancel</a>
+                    </div>
                 </div>
             </form>
         </div>
     }
 }
-<div>
-    <table class="table">
+<div class="mt-3 mb-5">
+    <table class="table table-hover">
         <thead>
-            <tr>
-                <th>No.</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th></th>
-                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="homecontent">Add</a></td>
+            <tr class="d-flex" >
+                <th class="col-1">No.</th>
+                <th class="col-2">Title</th>
+                <th class="col-5">Description</th>
+                <th class="col-2">Image</th>
+                <th class="col-1"></th>
+                <th class="col-1 colla"><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="homecontent">Add</a></th>
             </tr>
         </thead>
         <tbody>
@@ -114,55 +120,64 @@
             @foreach (var item in Model.HomeContents)
             {
                 count++;
-                <tr>
-                    <th>@count</th>
-                    <td>@item.Title</td>
-                    <td>@item.Description</td>
-                    <td><img src="@("~/Images/"+item.Image)" width="100" height="70" asp-append-version="true" /></td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.HomeContentsID" asp-route-operation="edit" asp-route-show=true asp-route-table="homecontent">Edit</a></td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.HomeContentsID" asp-route-operation="delete" asp-route-show=true asp-route-table="homecontent">Delete</a></td>
+                <tr class="d-flex">
+                    <th class="col-1">@count</th>
+                    <td class="col-2">@item.Title</td>
+                    <td class="col-5 text-breakable">@item.Description</td>
+                    <td class="col-2"><img src="@("~/Images/"+item.Image)" width="100" height="70" asp-append-version="true" /></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.HomeContentsID" asp-route-operation="edit" asp-route-show=true asp-route-table="homecontent">Edit</a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.HomeContentsID" asp-route-operation="delete" asp-route-show=true asp-route-table="homecontent">Delete</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
 
+
+<div class="bg-success text-white text-center font-weight-bold mt-5 mb-2">
+    <p class="h3 p-1">Reviews</p>
+</div>
 @if (ViewBag.table == review)
 {
+    <div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
     @if (ViewBag.add)
     {
         <div>
             <form asp-action="CreateReview" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <input asp-for="@Model.Review.CustomerName" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <input asp-for="@Model.Review.Description" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add" class="btn btn-success" />
-                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                <div class="row">
+                    <div class="col-2">
+                        <input asp-for="@Model.Review.CustomerName" class="form-control" placeholder="Customer Name" />
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.Review.Description" class="form-control" placeholder="Customer Review" />
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" value="Add" class="btn btn-success" />
+                        <a class="btn btn-info" asp-action="Update">Cancel</a>
+                    </div>
                 </div>
             </form>
         </div>
     }
 
-   @if (ViewBag.edit)
+    @if (ViewBag.edit)
     {
         <div>
             <form asp-action="EditReview" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="@Model.Review.ReviewsID" hidden />
-                <div class="form-group">
-                    <input asp-for="@Model.Review.CustomerName" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <input asp-for="@Model.Review.Description" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Edit" class="btn btn-warning" />
-                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                <div class="row">
+                    <div class="col-2">
+                        <input asp-for="@Model.Review.CustomerName" class="form-control" placeholder="Customer Name" />
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.Review.Description" class="form-control" placeholder="Customer Review" />
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" value="Edit" class="btn btn-warning" />
+                        <a class="btn btn-info" asp-action="Update">Cancel</a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -172,33 +187,33 @@
     {
         <div>
             <form asp-action="DeleteReview" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="@Model.Review.ReviewsID" hidden />
-                <div class="form-group">
-                    <input asp-for="@Model.Review.CustomerName" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <input asp-for="@Model.Review.Description" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                <div class="row">
+                    <div class="col-2">
+                        <input asp-for="@Model.Review.CustomerName" class="form-control" readonly />
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="@Model.Review.Description" class="form-control" readonly />
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <a class="btn btn-info" asp-action="Update">Cancel</a>
+                    </div>
                 </div>
             </form>
         </div>
     }
 }
 
-<div>
-
-    <table class="table">
+<div class="mt-3 mb-5">
+    <table class="table table-hover">
         <thead>
-            <tr>
-                <th>No.</th>
-                <th>Customer Name</th>
-                <th>Description</th>
-                <th></th>
-                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="review">Add</a></td>
+            <tr class="d-flex">
+                <th class="col-1">No.</th>
+                <th class="col-2">Customer Name</th>
+                <th class="col-7">Description</th>
+                <th class="col-1"></th>
+                <th class="col-1"><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="review">Add</a></th>
             </tr>
         </thead>
         <tbody>
@@ -206,34 +221,42 @@
             @foreach (var item in Model.Reviews)
             {
                 count++;
-                <tr>
-                    <th>@count</th>
-                    <td>@item.CustomerName</td>
-                    <td>@item.Description</td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.ReviewsID" asp-route-operation="edit" asp-route-show=true asp-route-table="review">Edit</a></td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.ReviewsID" asp-route-operation="delete" asp-route-show=true asp-route-table="review">Delete</a></td>
+                <tr class="d-flex">
+                    <th class="col-1">@count</th>
+                    <td class="col-2">@item.CustomerName</td>
+                    <td class="col-7 text-breakable">@item.Description</td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.ReviewsID" asp-route-operation="edit" asp-route-show=true asp-route-table="review">Edit</a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.ReviewsID" asp-route-operation="delete" asp-route-show=true asp-route-table="review">Delete</a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
 
+
+<div class="bg-success text-white text-center font-weight-bold mt-5 mb-2">
+    <p class="h3 p-1">Suppliers</p>
+</div>
 @if (ViewBag.table == supplier)
 {
+    <div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
     @if (ViewBag.add)
     {
         <div>
             <form asp-action="CreateSupplier" method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <input asp-for="@Model.Supplier.SuppliersName" class="form-control" />
-                </div>
-                <div class="">
-                    <input asp-for="@Model.Supplier.ImageFile" class="" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add" class="btn btn-success" />
-                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                <div class="row">
+                    <div class="col-3">
+                        <input asp-for="@Model.Supplier.SuppliersName" class="form-control" placeholder="Supplier Name" />
+                    </div>
+                    <div class="col-5">
+                        <input asp-for="@Model.Supplier.ImageFile" class="" />
+                    </div>
+                    <div class="col-2 offset-2">
+                        <input type="submit" value="Add" class="btn btn-success" />
+                        <a class="btn btn-info" asp-action="Update">Cancel</a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -243,20 +266,22 @@
     {
         <div>
             <form asp-action="EditSupplier" method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="@Model.Supplier.SuppliersID" hidden />
-                <div class="form-group">
-                    <input asp-for="@Model.Supplier.SuppliersName" class="form-control" placeholder="Supplier Name" />
-                </div>
-                <div class="form-group">
-                    <img src="@("~/Images/" + Model.Supplier.SupplierLogo)" width="100" height="70" asp-append-version="true" />
-                    <input asp-for="@Model.Supplier.SupplierLogo" hidden />
-                    <input asp-for="@Model.Supplier.ImageFile" accept="image/*" />
-                    <span asp-validation-for="@Model.Supplier.ImageFile" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Edit" class="btn btn-warning" />
-                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                <div class="row">
+
+                    <div class="col-3">
+                        <input asp-for="@Model.Supplier.SuppliersName" class="form-control" placeholder="Supplier Name" />
+                    </div>
+                    <div class="col-5">
+                        <img src="@("~/Images/" + Model.Supplier.SupplierLogo)" width="100" height="70" asp-append-version="true" />
+                        <input asp-for="@Model.Supplier.SupplierLogo" hidden />
+                        <input asp-for="@Model.Supplier.ImageFile" accept="image/*" />
+                        <span asp-validation-for="@Model.Supplier.ImageFile" class="text-danger"></span>
+                    </div>
+                    <div class="col-2 offset-2">
+                        <input type="submit" value="Edit" class="btn btn-warning" />
+                        <a class="btn btn-info" asp-action="Update">Cancel</a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -266,37 +291,34 @@
     {
         <div>
             <form asp-action="DeleteSupplier" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
                 <input asp-for="@Model.Supplier.SuppliersID" hidden />
-                <div class="form-group">
-                    <input asp-for="@Model.Supplier.SuppliersName" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <input asp-for="@Model.Supplier.Description" class="form-control" readonly />
-                </div>
-                <div class="form-group">
-                    <input asp-for="@Model.Supplier.SupplierLogo" hidden />
-                    <img src="@("~/Images/"+Model.Supplier.SupplierLogo)" width="100" height="70" asp-append-version="true" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                    <a class="btn btn-info" asp-action="Update">Cancel</a>
-                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <input asp-for="@Model.Supplier.SuppliersName" class="form-control" readonly />
+                    </div>
+                    <div class="col-5">
+                        <input asp-for="@Model.Supplier.SupplierLogo" hidden />
+                        <img src="@("~/Images/"+Model.Supplier.SupplierLogo)" width="100" height="70" asp-append-version="true" />
+                    </div>
+                    <div class="col-2 offset-2">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <a class="btn btn-info" asp-action="Update">Cancel</a>
+                    </div>
             </form>
         </div>
     }
 
 }
 
-<div>
-    <table class="table">
+<div class="mt-3 mb-5">
+    <table class="table table-hover">
         <thead>
-            <tr>
-                <th>No.</th>
-                <th>Supplier Name</th>
-                <th>Logo</th>
-                <th></th>
-                <td><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="supplier">Add</a></td>
+            <tr class="d-flex">
+                <th class="col-1">No.</th>
+                <th class="col-7">Supplier Name</th>
+                <th class="col-2">Logo</th>
+                <th class="col-1"></th>
+                <th class="col-1"><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="supplier">Add</a></th>
             </tr>
         </thead>
         <tbody>
@@ -304,12 +326,12 @@
             @foreach (var item in Model.Suppliers)
             {
                 count++;
-                <tr>
-                    <th>@count</th>
-                    <td>@item.SuppliersName</td>
-                    <td><img src="@("~/Images/"+item.SupplierLogo)" width="100" height="70" asp-append-version="true" /></td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.SuppliersID" asp-route-operation="edit" asp-route-show=true asp-route-table="supplier">Edit</a></td>
-                    <td><a asp-action="Update" asp-controller="Home" asp-route-id="@item.SuppliersID" asp-route-operation="delete" asp-route-show=true asp-route-table="supplier">Delete</a></td>
+                <tr class="d-flex">
+                    <th class="col-1">@count</th>
+                    <td class="col-7">@item.SuppliersName</td>
+                    <td class="col-2"><img src="@("~/Images/"+item.SupplierLogo)" width="100" height="70" asp-append-version="true" /></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.SuppliersID" asp-route-operation="edit" asp-route-show=true asp-route-table="supplier">Edit</a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.SuppliersID" asp-route-operation="delete" asp-route-show=true asp-route-table="supplier">Delete</a></td>
                 </tr>
             }
         </tbody>
