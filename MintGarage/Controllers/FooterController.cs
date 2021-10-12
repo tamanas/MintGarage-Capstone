@@ -99,7 +99,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
-
+           
             if (ModelState.IsValid)
             {
                 footerContactInfoRepository.Update(footerModel.FooterContact);
@@ -129,6 +129,10 @@ namespace MintGarage.Controllers
             }
             else
             {
+                if (footerModel.FooterSocialMedia.ImageFile == null)
+                {
+                    ModelState.AddModelError("image", "Image is required");
+                }
                 footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
                 footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
                 setViewBag(false, true, false, false);
