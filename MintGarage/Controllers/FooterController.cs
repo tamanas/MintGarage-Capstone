@@ -35,22 +35,6 @@ namespace MintGarage.Controllers
             hostEnv = hostEnvironment;
         }
 
-        public IActionResult Index()
-        {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
-            ViewBag.AboutData = AboutUs;
-
-            FooterModel footerModel = new FooterModel()
-            {
-                FooterContactInfo = footerContactInfoRepository.FooterContactInfo,
-                FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias
-            };
-
-            return View(footerModel);
-        }
-
         public IActionResult Update(int? id, string? operation, bool? show)
         {
             ViewBag.Partners = partnerRepository.Partners;
@@ -60,7 +44,7 @@ namespace MintGarage.Controllers
 
             ViewBag.contactInfoMessage = TempData["AdminFooterContactInfoMessage"];
             ViewBag.socialMediaMessage = TempData["AdminFooterSocialMediaMessage"];
-            setViewBag(false, false, false, false);
+            SetViewBag(false, false, false, false);
 
             if (operation != null && show != null)
             {
@@ -109,7 +93,7 @@ namespace MintGarage.Controllers
             {
                 footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
                 footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-                setViewBag(true, false, false, false);
+                SetViewBag(true, false, false, false);
                 return View("Update", footerModel);
             }
             return RedirectToAction("Update");
@@ -135,7 +119,7 @@ namespace MintGarage.Controllers
                 }
                 footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
                 footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-                setViewBag(false, true, false, false);
+                SetViewBag(false, true, false, false);
                 return View("Update", footerModel);
             }
             return RedirectToAction("Update");
@@ -162,7 +146,7 @@ namespace MintGarage.Controllers
             {
                 footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
                 footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-                setViewBag(false, false, true, false);
+                SetViewBag(false, false, true, false);
                 return View("Update", footerModel);
             }
             return RedirectToAction("Update");
@@ -181,7 +165,7 @@ namespace MintGarage.Controllers
             return RedirectToAction("Update");
         }
 
-        public void setViewBag(bool contactEdit, bool add, bool edit, bool delete)
+        public void SetViewBag(bool contactEdit, bool add, bool edit, bool delete)
         {
             ViewBag.contactEdit = contactEdit;
             ViewBag.add = add;
