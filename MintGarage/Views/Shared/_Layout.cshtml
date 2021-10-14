@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
     <script src="~/js/_layout.js"></script>
 </head>
 <body>
@@ -57,7 +58,7 @@
         </main>
     </div>
 
-    <footer class="bg-success text-white mt-auto mb-0 pb-0">
+    <footer class="border-top bg-success text-white mb-0 footer">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-6">
@@ -91,20 +92,11 @@
                 </div>
             </div>
             <hr>
-            <div class="row">
-                <div class="col-md-8 col-sm-6 col-xs-12">
-                    <p class="copyright-text">
-                        Copyright &copy; 2017 All Rights Reserved by
-                        <a href="#">Scanfcode</a>.
-                    </p>
-                </div>
-
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @foreach (var contact in ViewBag.Contacts)
-                    {
-                        <p> @contact.PhoneNumber / @contact.EmailAddress </p>
-                    }
-                </div>
+                <div class="text-center" >
+                    <div>
+                        Copyright &copy; 2010 - 2021   |   Mint Garage Inc.   |   All Rights Reserved   |   Powered by
+                        <a href="https://safeguardhosting.ca/">SafeGuard Hosting</a>
+                    </div>
             </div>
         </div>
     </footer>
