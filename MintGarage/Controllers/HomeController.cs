@@ -15,6 +15,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.FooterContents.FooterContactInfo;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MintGarage.Controllers
 {
@@ -69,7 +70,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
-            setViewBag(false, false, false, "");
+            SetViewBag(false, false, false, "");
             if (operation != null && show != null && table != "")
             {
                 ViewBag.table = table;
@@ -109,7 +110,7 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && homeModel.HomeContent.ImageFile != null)
             {
                 homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
                 homeContentRepo.AddHomeContents(homeModel.HomeContent);
@@ -117,10 +118,14 @@ namespace MintGarage.Controllers
             }
             else
             {
+                if(homeModel.HomeContent.ImageFile == null)
+                {
+                    ModelState.AddModelError("image", "Image is required");
+                }
                 homeModel.HomeContents = homeContentRepo.HomeContents;
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
-                setViewBag(true, false, false, "homecontent");
+                SetViewBag(true, false, false, "homecontent");
 
                 return View("Update", homeModel);
             }
@@ -136,8 +141,11 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                DeleteImage(homeModel.HomeContent.Image);
-                homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
+                if(homeModel.HomeContent.ImageFile != null)
+                {
+                    DeleteImage(homeModel.HomeContent.Image);
+                    homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
+                }
                 homeContentRepo.UpdateHomeContents(homeModel.HomeContent);
                 TempData["message"] = "Successfully edited Home Content.";
             }
@@ -147,7 +155,7 @@ namespace MintGarage.Controllers
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
 
-                setViewBag(false, true, false, "homecontent");
+                SetViewBag(false, true, false, "homecontent");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -183,7 +191,7 @@ namespace MintGarage.Controllers
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
 
-                setViewBag(true, false, false, "review");
+                SetViewBag(true, false, false, "review");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -207,7 +215,7 @@ namespace MintGarage.Controllers
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
 
-                setViewBag(false, true, false, "review");
+                SetViewBag(false, true, false, "review");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -232,8 +240,8 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
-
-            if (ModelState.IsValid)
+            
+            if (ModelState.IsValid && homeModel.Supplier.ImageFile != null)
             {
                 homeModel.Supplier.SupplierLogo = await SaveImage(homeModel.Supplier.ImageFile);
                 supplierRepo.AddSuppliers(homeModel.Supplier);
@@ -241,10 +249,14 @@ namespace MintGarage.Controllers
             }
             else
             {
+                if (homeModel.Supplier.ImageFile == null)
+                {
+                    ModelState.AddModelError("Image", "Image is required");
+                }
                 homeModel.HomeContents = homeContentRepo.HomeContents;
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
-                setViewBag(true, false, false, "supplier");
+                SetViewBag(true, false, false, "supplier");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -259,8 +271,11 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                DeleteImage(homeModel.Supplier.SupplierLogo);
-                homeModel.HomeContent.Image = await SaveImage(homeModel.Supplier.ImageFile);
+                if (homeModel.Supplier.ImageFile != null)
+                {
+                    DeleteImage(homeModel.Supplier.SupplierLogo);
+                    homeModel.HomeContent.Image = await SaveImage(homeModel.Supplier.ImageFile);
+                }
                 supplierRepo.UpdateSuppliers(homeModel.Supplier);
                 TempData["message"] = "Successfully edited Supplier.";
             }
@@ -269,7 +284,7 @@ namespace MintGarage.Controllers
                 homeModel.HomeContents = homeContentRepo.HomeContents;
                 homeModel.Reviews = reviewRepo.Reviews;
                 homeModel.Suppliers = supplierRepo.Suppliers;
-                setViewBag(false, true, false, "supplier");
+                SetViewBag(false, true, false, "supplier");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
@@ -289,7 +304,7 @@ namespace MintGarage.Controllers
         }
 
 
-        public void setViewBag(bool add, bool edit, bool delete, string table)
+        public void SetViewBag(bool add, bool edit, bool delete, string table)
         {
             ViewBag.add = add;
             ViewBag.edit = edit;

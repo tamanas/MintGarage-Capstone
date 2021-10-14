@@ -223,3 +223,7 @@ q {
     border: none;
     border-radius: 0px;
 }
+
+.text-breakable{
+    word-wrap: break-word;
+}
