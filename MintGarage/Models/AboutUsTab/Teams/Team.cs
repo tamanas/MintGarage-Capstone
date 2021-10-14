@@ -20,7 +20,7 @@ namespace MintGarage.Models.AboutUsTab.Teams
 
         [Display(Name = "Memeber Role")]
         [Required(ErrorMessage = "Enter memeber role")]
-        public string MemeberRole { get; set; }
+        public string MemberRole { get; set; }
 
         [Display(Name = "Member Image")]
         public string MemberImage { get; set; }

@@ -126,6 +126,7 @@ namespace MintGarage.Controllers
             {
                 footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
                 footerSocialMediaRepository.Create(footerModel.FooterSocialMedia);
+                TempData["AdminFooterSocialMediaMessage"] = "Successfully added Social Media.";
             }
             else
             {

@@ -1,10 +1,177 @@
-﻿@{
+﻿@model AboutUsModel
+
+@{
     ViewData["Title"] = "About us";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-
+    string value = "value";
+    string team = "team";
 }
 
-<div class="text-center">
-    <h3>Welcome to Mint Garage About us Update Page</h3>
-    <p>We have lots to offer!</p>
+<div class="bg-success font-weight-bold text-center text-white">
+    <span>@ViewBag.Message</span>
+</div>
+
+@if (ViewBag.table == value)
+{
+    @if (ViewBag.edit)
+    {
+        <div>
+            <form asp-action="EditValue" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Value.ValueID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Value.ValueTitle" class="form-control" />
+                    <span asp-validation-for="@Model.Value.ValueTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Value.ValueDescription" class="form-control" />
+                    <span asp-validation-for="@Model.Value.ValueDescription" class="text-danger"></span>
+                </div>
+                <div class="">
+                    <img src="@("~/Images/"+Model.Value.ValueImage)" width="100" height="70" asp-append-version="true" />
+                    <input asp-for="@Model.Value.ValueImage" hidden />
+                    <input asp-for="@Model.Value.ImageFile" accept="image/*" />
+                    <span asp-validation-for="@Model.Value.ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-warning" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Value Title</th>
+                <th>Value Description</th>
+                <th>Value Image</th>
+                <th></th>
+                <td><a asp-action="Update" asp-controller="AboutUs" asp-route-operation="add" asp-route-show=true asp-route-table="value">Add</a></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Values)
+            {
+                <tr>
+                    <th></th>
+                    <td>@item.ValueTitle</td>
+                    <td>@item.ValueDescription</td>
+                    <td><img src="@("~/Images/"+item.ValueImage)" width="100" height="70" asp-append-version="true" /></td>
+                    <td><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.ValueID" asp-route-operation="edit" asp-route-show=true asp-route-table="value">Edit</a></td>
+                    <td><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.ValueID" asp-route-operation="delete" asp-route-show=true asp-route-table="value">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (ViewBag.table == team)
+{
+    @if (ViewBag.add)
+    {
+        <div>
+            <form asp-action="AddMember" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="@Model.Team.MemberName" class="form-control" />
+                    <span asp-validation-for="@Model.Team.MemberName;" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Team.MemberRole" class="form-control" />
+                    <span asp-validation-for="@Model.Team.MemberRole" class="text-danger"></span>
+                </div>
+                <div class="">
+                    <input asp-for="@Model.Team.ImageFile" accept="image/*" />
+                    <span asp-validation-for="@Model.Team.ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-success" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+
+    @if (ViewBag.edit)
+    {
+        <div>
+            <form asp-action="EditMember" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Team.MemberID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Team.MemberName" class="form-control" placeholder="Social Media Name" />
+                    <span asp-validation-for="@Model.Team.MemberName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Team.MemberRole" class="form-control" placeholder="Social Media URL" />
+                    <span asp-validation-for="@Model.Team.MemberRole" class="text-danger"></span>
+                </div>
+                <div class="">
+                    <img src="@("~/Images/"+Model.Team.MemberImage)" width="100" height="70" asp-append-version="true" />
+                    <input asp-for="@Model.Team.MemberImage" hidden />
+                    <input asp-for="@Model.Team.ImageFile" accept="image/*" />
+                    <span asp-validation-for="@Model.Team.ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-warning" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+
+    @if (ViewBag.delete)
+    {
+        <div>
+            <form asp-action="DeleteMember" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.Team.MemberID" hidden />
+                <div class="form-group">
+                    <input asp-for="@Model.Team.MemberName" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Team.MemberRole" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <input asp-for="@Model.Team.MemberImage" hidden />
+                    <img src="@("~/Images/"+Model.Team.MemberImage)" width="100" height="70" asp-append-version="true" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    <a class="btn btn-info" asp-action="Update">Cancel</a>
+                </div>
+            </form>
+        </div>
+    }
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Member Name</th>
+                <th>Member Role</th>
+                <th>Member Image</th>
+                <th></th>
+                <td><a asp-action="Update" asp-controller="AboutUs" asp-route-operation="add" asp-route-show=true asp-route-table="team">Add</a></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Teams)
+            {
+                <tr>
+                    <th></th>
+                    <td>@item.MemberName</td>
+                    <td>@item.MemberRole</td>
+                    <td><img src="@("~/Images/"+item.MemberImage)" width="100" height="70" asp-append-version="true" /></td>
+                    <td><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="edit" asp-route-show=true asp-route-table="team">Edit</a></td>
+                    <td><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="delete" asp-route-show=true asp-route-table="team">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
