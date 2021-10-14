@@ -150,7 +150,7 @@ namespace MintGarage.Controllers
                     DeleteImage(aboutUsModel.Team.MemberImage);
                     aboutUsModel.Team.MemberImage = await SaveImage(aboutUsModel.Team.ImageFile);
                 }
-                valueRepo.Update(aboutUsModel.Value);
+                teamRepo.Update(aboutUsModel.Team);
                 TempData["message"] = "Successfully edited Team Member.";
             }
             else
