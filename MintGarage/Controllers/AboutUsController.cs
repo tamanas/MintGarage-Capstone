@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models;
 using MintGarage.Models.AboutUsTab.Teams;
 using MintGarage.Models.AboutUsTab.Values;
+using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterContents.FooterSocialMedias;
+using MintGarage.Models.HomeTab.HomeContents;
 using MintGarage.Models.Partners;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.FooterContents.FooterContactInfo;
@@ -12,6 +16,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+
 
 namespace MintGarage.Controllers
 {
@@ -43,7 +48,16 @@ namespace MintGarage.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            AboutUsModel aboutUs = new AboutUsModel()
+            
+            {
+                Teams = teamRepo.Teams,
+                Values = valueRepo.Values,
+            };
+            return View(aboutUs);
         }
 
         public IActionResult Update(int? id, string? operation, bool? show, string? table)

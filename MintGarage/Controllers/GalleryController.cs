@@ -11,6 +11,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using MintGarage.Database;
+using MintGarage.Models;
+using MintGarage.Models.GalleryTab;
+using MintGarage.Models.Partners;
+using MintGarage.Models.FooterContents.FooterSocialMedias;
+using MintGarage.Models.FooterContents.FooterContactInfo;
 
 namespace MintGarage.Controllers
 {
@@ -35,14 +45,76 @@ namespace MintGarage.Controllers
         {
             galleryRepo = galleryRepository;
             partnerRepo = partnerRepository;
-            footerContactInfoRepo = contactInfoRepository;
-            footerSocialMediaRepo = socialMediaRepository;
+            footerContactInfoRepo = footerContactInfoRepository;
+            footerSocialMediaRepo = footerSocialMediaRepository;
             hostEnv = hostEnvironment;
+            _context = context;
         }
 
-        public IActionResult Index()
+        // GET: Galleries
+        public async Task<IActionResult> Index()
         {
+            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
+
+            return View(await _context.Gallery.ToListAsync());
+        }
+
+        // GET: Galleries/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var gallery = await _context.Gallery
+                .FirstOrDefaultAsync(m => m.GalleryID == id);
+            if (gallery == null)
+            {
+                return NotFound();
+            }
+
+            return View(gallery);
+        }
+
+        // GET: Galleries/Create
+        public IActionResult Create()
+        {
+            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
+
             return View();
+        }
+
+        // POST: Galleries/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("GalleryID,BeforeImage,AfterImage")] Gallery gallery)
+        {
+            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
+            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.AboutData = AboutUs;
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(gallery);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(gallery);
         }
 
             
