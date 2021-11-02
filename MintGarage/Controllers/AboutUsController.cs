@@ -48,7 +48,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Partners;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             AboutUsModel aboutUs = new AboutUsModel()
