@@ -21,21 +21,6 @@ namespace MintGarage.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Team",
-                columns: table => new
-                {
-                    MemberID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MemberName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MemeberRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MemberImage = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Team", x => x.MemberID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Value",
                 columns: table => new
                 {
