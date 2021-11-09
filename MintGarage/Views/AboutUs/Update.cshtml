@@ -33,7 +33,7 @@
                         <input asp-for="@Model.Value.ValueTitle" class="form-control" placeholder="Value Title" />
                     </div>
                     <div class="col-5">
-                        <input asp-for="@Model.Value.ValueDescription" class="form-control" />
+                        <input asp-for="@Model.Value.ValueDescription" class="form-control" placeholder="Value Description"/>
                     </div>
                     <div class="col-2">
                         <img src="@("~/Images/"+Model.Value.ValueImage)" width="100" height="70" asp-append-version="true" />
@@ -90,13 +90,13 @@
         <div class="mt-2 mb-2">
             <form asp-action="AddMember" method="post" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-2">
-                        <input asp-for="@Model.Team.MemberName" class="form-control" />
+                    <div class="col-3">
+                        <input asp-for="@Model.Team.MemberName" class="form-control" placeholder="Member Name"/>
                     </div>
-                    <div class="col-5">
-                        <input asp-for="@Model.Team.MemberRole" class="form-control" />
+                    <div class="col-4">
+                        <input asp-for="@Model.Team.MemberRole" class="form-control" placeholder="Member Role"/>
                     </div>
-                    <div class="3">
+                    <div class="col-3">
                         <input asp-for="@Model.Team.ImageFile" accept="image/*" />
                     </div>
                     <div class="col-2">
@@ -114,11 +114,11 @@
             <form asp-action="EditMember" method="post" enctype="multipart/form-data">
                 <input asp-for="@Model.Team.MemberID" hidden />
                 <div class="row">
-                    <div class="col-2">
-                        <input asp-for="@Model.Team.MemberName" class="form-control" placeholder="Social Media Name" />
+                    <div class="col-3">
+                        <input asp-for="@Model.Team.MemberName" class="form-control" placeholder="Member Name" />
                     </div>
-                    <div class="col-5">
-                        <input asp-for="@Model.Team.MemberRole" class="form-control" placeholder="Social Media URL" />
+                    <div class="col-4">
+                        <input asp-for="@Model.Team.MemberRole" class="form-control" placeholder="Member Role" />
                     </div>
                     <div class="col-3">
                         <img src="@("~/Images/"+Model.Team.MemberImage)" width="100" height="70" asp-append-version="true" />
@@ -140,10 +140,10 @@
             <form asp-action="DeleteMember" method="post">
                 <input asp-for="@Model.Team.MemberID" hidden />
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-3">
                         <input asp-for="@Model.Team.MemberName" class="form-control" readonly />
                     </div>
-                    <div class="col-5">
+                    <div class="col-4">
                         <input asp-for="@Model.Team.MemberRole" class="form-control" readonly />
                     </div>
                     <div class="col-3">
@@ -177,7 +177,7 @@
             {
                 count++;
                 <tr class="d-flex">
-                    <td class="col-1"></td>
+                    <td class="col-1">@count</td>
                     <td class="col-2">@item.MemberName</td>
                     <td class="col-4">@item.MemberRole</td>
                     <td class="col-3"><img src="@("~/Images/"+item.MemberImage)" width="100" height="70" asp-append-version="true" /></td>

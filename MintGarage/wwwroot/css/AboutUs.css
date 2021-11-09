@@ -125,7 +125,6 @@ img {
     float: left;
     padding: 0px;
     height: 300px; /* Should be removed. Only for demonstration */
-    padding-left: 100px;
 }
 
 .left {
@@ -143,7 +142,7 @@ img {
     clear: both;
 }
 
-.values-container {
+/*.values-container {
     padding-left: 115px;
 }
-
+*/
