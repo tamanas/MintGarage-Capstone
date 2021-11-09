@@ -18,37 +18,37 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">
             <div class="container">
-                    <a class="navbar-brand text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">Mint Garage</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-flex justify-content-end">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class=" nav-link text-white font-weight-bold" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class=" nav-link text-white font-weight-bold" asp-controller="ConsultationForms" asp-action="Create">Consultation</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class=" nav-link text-white font-weight-bold" asp-controller="Gallery" asp-action="Index">Gallery</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class=" nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    @foreach (var partner in ViewBag.Partners)
-                                    {
-                                        <li><a href=@partner.PartnerUrl>@partner.PartnerName</a></li>
-                                        }
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Index">About Us</a>
-                            </li>
-                        </ul>
-                    </div>
-             </div>
+                <a class="navbar-brand text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">Mint Garage</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-flex justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class=" nav-link text-white font-weight-bold" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class=" nav-link text-white font-weight-bold" asp-controller="ConsultationForms" asp-action="Create">Consultation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class=" nav-link text-white font-weight-bold" asp-controller="Gallery" asp-action="Index">Gallery</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class=" nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @foreach (var partner in ViewBag.Partners)
+                                {
+                                    <li><a href=@partner.PartnerUrl>@partner.PartnerName</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Index">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
     <div class="container mb-5">
@@ -91,16 +91,17 @@
                 </div>
             </div>
             <hr>
-                <div class="text-center" >
-                    <div>
-                        Copyright &copy; 2010 - 2021   |   Mint Garage Inc.   |   All Rights Reserved   |   Powered by
-                        <a href="https://safeguardhosting.ca/">SafeGuard Hosting</a>
-                    </div>
+            <div class="text-center">
+                <div>
+                    Copyright &copy; 2010 - 2021   |   Mint Garage Inc.   |   All Rights Reserved   |   Powered by
+                    <a href="https://safeguardhosting.ca/">SafeGuard Hosting</a>
+                </div>
             </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>initComparisons();</script>
 </body>
 </html>
