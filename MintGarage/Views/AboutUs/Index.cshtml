@@ -4,6 +4,7 @@
     Layout = Layout;
 
 }
+
 <head>
     <link rel="stylesheet" href="~/css/AboutUs.css" />
 </head>
@@ -16,124 +17,86 @@
     </div>
 </div>
 
-<div class="About-CEO" style="width: 100%">
-    <h1>Decades of passion & experience in Mint Garage Inc.</h1>
-    <img src="~/Images/floorpic.jpg" alt="~/Images/floorpic.jpg" class="img-thumbnail card-img-top" style="width:600px" ;"float:right;" />
-    <p>For those of you who don’t know me well, I am an extremely organized person. Those of you who do know me well would say, “extremely” is an understatement! I would simply say that I am passionate about knowing where things are when I need them and things just look better when they are in order, wouldn’t you agree?</p>
+<div class="row">
+    <div class="column1 left" style="background-color: #FFFFFF;">
+        <p> <span style="color: #41ca57;"> Decades of </span> <span>passion & experience in </span> <span style="color: #41ca57;">Mint</span> <span> Garage Inc.</span> </p>
+        <p style="font-size: 13px;">
+            For those of you who don’t know me well, I am an extremely organized person.
+            Those of you who do know me well would say, “extremely” is an understatement!
+            I would simply say that I am passionate about knowing where things are when
+            I need them and things just look better when they are in order, wouldn’t you agree?
+        </p>
+        <br>
+        <img src="~/Images/james.jpg" alt="~/Images/james.jpg" class="img-thumbnail card-img-top" style="width:250px;" />
+        <p> James Secondino <br> CEO & FOUNDER </p>
+
+    </div>
+    <div class="column1 right" style="background-color: #FFFFFF;">
+        <img src="~/Images/floorpic.jpg" alt="~/Images/floorpic.jpg" class="img-thumbnail card-img-top" style="width:680px" />
+    </div>
 </div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 
 <div class="about-section">
     <h1>Transforming Inspiring Spaces</h1>
+    <br />
     <p>
-        Are you tired of getting home from work and having to get out of your car to move things out of the way in your garage before you can park inside? Are you frustrated by being the only one who “knows” where things go in your garage? Isn’t it time you made a permanent and professional overhaul to of the most underutilized spaces in your home? LET US HELP!
-        At Mint Garage we’ll transform your space into a stylish, organized, and clean area of your home that will make you wonder how you ever lived without us!
-        Browse our website, like us on Facebook, follow us on Twitter and Instagram! Get some ideas about what you want your garage to look like – then contact us for a complimentary consultation and we’ll make your dream a reality!
+        Are you tired of getting home from work and having to get out of your car to move things out of the way in your garage before you can park inside? Are you frustrated by being the only one who “knows” where things go in your garage? Isn’t it time you made a permanent and professional overhaul to of the most underutilized spaces in your home? <span style="color: #41ca57;">
+            LET US HELP!
+        </span> <br /> <br />
+        At <span style="color: #41ca57;">Mint </span> Garage we’ll transform your space into a <span style="color: #41ca57;">
+            stylish, organized
+        </span>, and <span style="color: #41ca57;">
+            clean
+        </span> area of your home that will make you wonder how you ever lived without us! <br /> <br />
+        Browse our <span style="color: #41ca57;">website</span>, like us on <span style="color: #41ca57;">Facebook</span>, follow us on <span style="color: #41ca57;">Twitter</span> and <span style="color: #41ca57;">Instagram!</span> Get some ideas about what you want your garage to look like – then <span style="color: #41ca57;">contact us</span> for a <span style="color: #41ca57;">complimentary consultation</span> and <span style="color: #41ca57;">we’ll make your dream a reality</span>!
     </p>
 
 </div>
 
-<div class="values-container">
+<div class="values">
     <h2 style="text-align:center">Our Core Values</h2>
     <p style="text-align:center">At Mint Garage we believe in transforming spaces to the needs, desires and wants of our clients. Making sure no 2 garages are a like.</p>
-
-    <img src="~/Images/HomeAbout.png" alt="~/Images/HomeAbout.png" style="width:200px">
-    <img src="~/Images/gear.png" alt="~/Images/gear.png" style="width:200px">
-    <img src="~/Images/group.png" alt="~/Images/group.png" style="width:200px">
-    <img src="~/Images/light.png" alt="~/Images/light.png" style="width:200px">
+    <div class="values-container">
+        @foreach (Value value in Model.Values)
+        {
+            <div class="column">
+                <div class="value">
+                    <img src="~/Images/@value.ValueImage" alt="@value.ValueImage" alt="Jane" style="width:15%">
+                    <div class="container">
+                        <h2 style="font-size: 13px;">@value.ValueTitle</h2>
+                        <p class="title"  style="font-size: 13px;">@value.ValueDescription</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
-    <h2 style="text-align:center">Meet Our Team</h2>
+
+<h2 style="text-align:center">Meet Our Team</h2>
+<br />
 <p style="text-align:center">Our team consists of highly qualified, experienced and knowledgeable professionals who are dedicated to help our customers in any tranforming or storage projects!</p>
 <div class="row">
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team1.jpg" alt="Jane" style="width:100%">
-            <div class="container">
-                <h2>Jane Doe</h2>
-                <p class="title">CEO & Founder</p>
+    @foreach (Team team in Model.Teams)
+    {
+        <div class="column">
+            <div class="card">
+                <img src="~/Images/@team.MemberImage" alt="@team.MemberImage" alt="Jane" style="width:30%">
+                <div class="container">
+                    <h2>@team.MemberName</h2>
+                    <p class="title">@team.MemeberRole</p>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team2.jpg" alt="Mike" style="width:100%">
-            <div class="container">
-                <h2>Mike Ross</h2>
-                <p class="title">Art Director</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team3.jpg" alt="John" style="width:100%">
-            <div class="container">
-                <h2>John Doe</h2>
-                <p class="title">Designer</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team3.jpg" alt="John" style="width:100%">
-            <div class="container">
-                <h2>John Doe</h2>
-                <p class="title">Designer</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team2.jpg" alt="Mike" style="width:100%">
-            <div class="container">
-                <h2>Mike Ross</h2>
-                <p class="title">Art Director</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team3.jpg" alt="John" style="width:100%">
-            <div class="container">
-                <h2>John Doe</h2>
-                <p class="title">Designer</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team3.jpg" alt="John" style="width:100%">
-            <div class="container">
-                <h2>John Doe</h2>
-                <p class="title">Designer</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team2.jpg" alt="Mike" style="width:100%">
-            <div class="container">
-                <h2>Mike Ross</h2>
-                <p class="title">Art Director</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="column">
-        <div class="card">
-            <img src="/w3images/team3.jpg" alt="John" style="width:100%">
-            <div class="container">
-                <h2>John Doe</h2>
-                <p class="title">Designer</p>
-            </div>
-        </div>
-    </div>
-
+    }
 </div>
-
