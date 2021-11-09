@@ -44,6 +44,7 @@ namespace MintGarage.Controllers
         {
             return View();
         }
+<<<<<<< HEAD
 
 
         public IActionResult Update(int? id, string? operation, bool? show)
@@ -182,5 +183,7 @@ namespace MintGarage.Controllers
                 System.IO.File.Delete(imagePath);
             }
         }
+=======
+>>>>>>> af5ddddbf6e2ea209510eacd7627425b8b35ea5b
     }
 }

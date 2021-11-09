@@ -4,28 +4,26 @@
     ViewData["Title"] = "Index";
 }
 
-<head>
-    <link rel="stylesheet" href="~/css/gallery.css" />
-</head>
+<!--Change button to text and add styling-->
+<div class="img-container">
+    <img src="~/Images/construction.jpg" alt="construction.jpg" class="img-thumbnail card-img-top" />
+    <div class="img-text">
+        <p class="text-title">IT'S TIME TO MINT YOUR GARAGE!</p>
+        <p class="text-slogan">Inspired by Modern Living & Cutting-Edge Construction Techniques</p>
+    </div>
+</div>
 
-<body>
-    <h1>Index</h1>
-
-        @foreach (var item in Model)
-        {
-            <div class="img-comp-container">
-                <div class="img-comp-img">
-                    <img src="~/Images/@Html.DisplayFor(modelItem => item.AfterImage)" alt="@Html.DisplayFor(modelItem => item.AfterImage)" />
-                </div>
-                <div class="img-comp-img img-comp-overlay">
-                    <img src="~/Images/@Html.DisplayFor(modelItem => item.BeforeImage)" alt="@Html.DisplayFor(modelItem => item.BeforeImage)" />
-                </div>
+<div class="img-gallery">
+    @foreach (var item in Model)
+    {
+        <div class="img-comp-container">
+            <div class="img-comp-img">
+                <img src="~/Images/@item.AfterImage" alt="@item.AfterImage" />
             </div>
-        }
-
-        <script>
-            /*Execute a function that will execute an image compare function for each element with the img-comp-overlay class:*/
-            initComparisons();
-        </script>
-    </body>
+            <div class="img-comp-img img-comp-overlay">
+                <img src="~/Images/@item.BeforeImage" alt="@item.BeforeImage" />
+            </div>
+        </div>
+    }
+</div>
 

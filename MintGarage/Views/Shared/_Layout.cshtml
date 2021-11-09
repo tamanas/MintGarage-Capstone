@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MintGarage</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
     <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="~/css/gallery.css" />
     <script src="~/js/_layout.js"></script>
     <script src="~/js/gallery.js"></script>
 </head>
@@ -16,7 +18,6 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">
             <div class="container">
-
                     <a class="navbar-brand text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">Mint Garage</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -47,9 +48,9 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-            </nav>
-        </header>
+             </div>
+        </nav>
+    </header>
     <div class="container mb-5">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -101,6 +102,5 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-@*    @await RenderSectionAsync("Scripts", required: false)
-*@</body>
+</body>
 </html>
