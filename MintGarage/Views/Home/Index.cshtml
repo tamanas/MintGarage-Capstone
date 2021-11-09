@@ -4,17 +4,13 @@
     Layout = Layout;
 }
 
-<head>
-    <link rel="stylesheet" href="~/css/home.css" />
-</head>
-
 <div class="text-center">
     <h3>Welcome to Mint Garage Home Page</h3>
     <p>We have lots to offer!</p>
 </div>
 
 <div class="img-container">
-    <img src="~/Images/construction.jpg" alt="~/Images/construction.jpg" class="img-thumbnail card-img-top" />
+    <img src="~/Images/construction.jpg" alt="construction.jpg" class="img-thumbnail card-img-top" />
     <div class="img-text">
         <p>IT'S TIME TO MINT YOUR GARAGE!</p>
         <button class="image-btn">BOOK AN IN-HOME CONSULTATION</button>
@@ -27,7 +23,7 @@
         <div class="flip-card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top"/>
+                    <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top" />
                     <h4>@home.Title</h4>
                 </div>
                 <div class="card-back">
@@ -69,7 +65,7 @@
     @foreach (Supplier supplier in Model.Suppliers)
     {
         <div class="supplier-image">
-            <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top"/>
+            <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top" />
         </div>
     }
 </div>
