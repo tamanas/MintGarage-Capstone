@@ -27,13 +27,6 @@ namespace MintGarage.Controllers
             footerSocialMediaRepository = footerSocialMediaRepo;
         }
 
-/*        public IActionResult Index()
-        {
-            ViewData["PartnersArray"] = "test";
-            
-            return View("_Layout");
-        }*/
-
         public IActionResult Update(int? id, string? operation, bool? show)
         {
             ViewBag.Partners = partnerRepository.Partners;
@@ -41,7 +34,7 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
-            setViewBag(false, false, false);
+            SetViewBag(false, false, false);
             ViewBag.message = TempData["AdminPartnerMessage"];
 
             if (operation != null && show != null)
@@ -83,7 +76,7 @@ namespace MintGarage.Controllers
             } else
             {
                 partnerUpdateView.Partners = partnerRepository.Partners;
-                setViewBag(true, false, false);
+                SetViewBag(true, false, false);
                 return View("Update", partnerUpdateView);
             }
             return RedirectToAction("Update");
@@ -104,7 +97,7 @@ namespace MintGarage.Controllers
             else
             {
                 partnerUpdateView.Partners = partnerRepository.Partners;
-                setViewBag(false, true, false);
+                SetViewBag(false, true, false);
                 return View("Update", partnerUpdateView);
             }
             return RedirectToAction("Update");
@@ -122,7 +115,7 @@ namespace MintGarage.Controllers
             return RedirectToAction("Update");
         }
 
-        public void setViewBag(bool add, bool edit, bool delete)
+        public void SetViewBag(bool add, bool edit, bool delete)
         {
             ViewBag.add = add;
             ViewBag.edit = edit;

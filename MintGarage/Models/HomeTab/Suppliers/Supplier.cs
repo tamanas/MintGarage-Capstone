@@ -17,14 +17,10 @@ namespace MintGarage.Models.HomeTab.Suppliers
         [Required(ErrorMessage = "Supplier Name Required")]
         public string SuppliersName { get; set; }
 
-        [Display(Name = "Description")]
-        public string Description { get; set; }
-
         public string SupplierLogo { get; set; }
 
         [NotMapped]
         [Display(Name = "Upload Logo")]
-        [Required(ErrorMessage = "Logo Required")]
         public IFormFile ImageFile { get; set; }
 
         [NotMapped]

@@ -21,10 +21,17 @@
     }
 
         .img-container .img-text p {
-            font-size: 44px;
             background: rgba(0, 0, 0, 0.5);
             margin: 30px 200px;
             font-weight: bold;
+        }
+
+        .img-container .img-text .text-title {
+            font-size: 44px;
+        }
+
+        .img-container .img-text .text-slogan {
+            font-size: 28px;
         }
 
     .img-container .img-test .img-btn {
@@ -222,4 +229,8 @@ q {
 .img-thumbnail {
     border: none;
     border-radius: 0px;
+}
+
+.text-breakable{
+    word-wrap: break-word;
 }

@@ -27,7 +27,6 @@ namespace MintGarage.Models.FooterContents.FooterSocialMedias
 
         [NotMapped]
         [Display(Name = "Social Media Logo Image")]
-        //[Required(ErrorMessage = "Social Media Icon Required")]
         public IFormFile ImageFile { get; set; }
     }
 }

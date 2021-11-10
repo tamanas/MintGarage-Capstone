@@ -48,6 +48,38 @@ namespace MintGarage.Models
                 });
                 context.SaveChanges();
             }
+            if (!context.Value.Any())
+            {
+                context.Value.Add(new AboutUsTab.Values.Value()
+                {
+                    ValueTitle = "Great Services",
+                    ValueDescription = "With our range or services from Garage Organization solutions to, " +
+                    "epoxy floors, to our other services we do it all!",
+                    ValueImage = "homeValueIcon.png"
+                });
+                context.Value.Add(new AboutUsTab.Values.Value()
+                {
+                    ValueTitle = "Highest Standards",
+                    ValueDescription = "Every site is managed by a supervisor and daily reports / " +
+                    "inspections are done to ensure our quality guarantee!",
+                    ValueImage = "gearValueIcon.png"
+                });
+                context.Value.Add(new AboutUsTab.Values.Value()
+                {
+                    ValueTitle = "Professional Team",
+                    ValueDescription = "We train our employees using our state of the art " +
+                    "online platform so every job is a consistent one!",
+                    ValueImage = "peopleValueIcon.png"
+                });
+                context.Value.Add(new AboutUsTab.Values.Value()
+                {
+                    ValueTitle = "Creative Solutions",
+                    ValueDescription = "With every customer is a unique solution, thats why in " +
+                    "phase one we show you a visual solution before we do it!",
+                    ValueImage = "lightValueIcon.jpg"
+                });
+                context.SaveChanges();
+            }
             if (!context.Product.Any())
             {
                 context.Product.Add(new Product()

@@ -26,7 +26,6 @@ namespace MintGarage.Models.HomeTab.HomeContents
 
         [NotMapped]
         [Display(Name = "upload Image")]
-        [Required(ErrorMessage = "Image Required here")]
         public IFormFile ImageFile { get; set; }
 
         [NotMapped]

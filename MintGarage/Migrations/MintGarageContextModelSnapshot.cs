@@ -19,6 +19,52 @@ namespace MintGarage.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("MintGarage.Models.AboutUsTab.Teams.Team", b =>
+                {
+                    b.Property<int>("MemberID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("MemberImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MemberName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MemberRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MemberID");
+
+                    b.ToTable("Team");
+                });
+
+            modelBuilder.Entity("MintGarage.Models.AboutUsTab.Values.Value", b =>
+                {
+                    b.Property<int>("ValueID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ValueDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ValueImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ValueTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ValueID");
+
+                    b.ToTable("Value");
+                });
+
             modelBuilder.Entity("MintGarage.Models.Accounts.Account", b =>
                 {
                     b.Property<int>("AccountID")
@@ -131,6 +177,24 @@ namespace MintGarage.Migrations
                     b.HasKey("FooterSocialMediaID");
 
                     b.ToTable("FooterSocialMedias");
+                });
+
+            modelBuilder.Entity("MintGarage.Models.GalleryTab.Gallery", b =>
+                {
+                    b.Property<int>("GalleryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AfterImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BeforeImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GalleryID");
+
+                    b.ToTable("Gallery");
                 });
 
             modelBuilder.Entity("MintGarage.Models.HomeTab.Contacts.Contact", b =>
