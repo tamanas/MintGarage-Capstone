@@ -16,7 +16,7 @@ namespace ConsultationFormTests
     public class ConsultationFormTest
     {
 
-        ConsultationForm form1 = new ConsultationForm {
+        Consultation form1 = new Consultation {
             ConsultationFormID = 1000,
             FirstName = "John", 
             LastName = "Smith", 
@@ -45,7 +45,7 @@ namespace ConsultationFormTests
         [Fact]
         public void ConsultationIdTest()
         {
-            var consultationForm = new ConsultationForm();
+            var consultationForm = new Consultation();
             consultationForm.ConsultationFormID = 100;
 
             Assert.Equal(100, consultationForm.ConsultationFormID);
@@ -54,7 +54,7 @@ namespace ConsultationFormTests
         [Fact]
         public void FirstNameTest()
         {
-            var consultationForm = new ConsultationForm();
+            var consultationForm = new Consultation();
             consultationForm.FirstName = "Jane";
 
             Assert.Equal("Jane", consultationForm.FirstName);
@@ -63,7 +63,7 @@ namespace ConsultationFormTests
         [Fact]
         public void LastNameTest()
         {
-            var consultationForm = new ConsultationForm();
+            var consultationForm = new Consultation();
             consultationForm.LastName = "Doe";
 
             Assert.Equal("Doe", consultationForm.LastName);
@@ -72,7 +72,7 @@ namespace ConsultationFormTests
         [Fact]
         public void EmailAddressTest()
         {
-            var consultationForm = new ConsultationForm();
+            var consultationForm = new Consultation();
             consultationForm.EmailAddress = "Jane.Doe@domain.ca";
 
             Assert.Equal("Jane.Doe@domain.ca", consultationForm.EmailAddress);
@@ -81,7 +81,7 @@ namespace ConsultationFormTests
         [Fact]
         public void PhoneNumberTest()
         {
-            var consultationForm = new ConsultationForm();
+            var consultationForm = new Consultation();
             consultationForm.PhoneNumber = "1234567890";
 
             Assert.Equal("1234567890", consultationForm.PhoneNumber);
@@ -90,7 +90,7 @@ namespace ConsultationFormTests
         [Fact]
         public void ServiceTypeTest()
         {
-            var consultationForm = new ConsultationForm();
+            var consultationForm = new Consultation();
             consultationForm.ServiceType = "Build pool";
 
             Assert.Equal("Build pool", consultationForm.ServiceType);
@@ -99,7 +99,7 @@ namespace ConsultationFormTests
         [Fact]
         public void FormDescriptionTest()
         {
-            var consultationForm = new ConsultationForm();
+            var consultationForm = new Consultation();
             consultationForm.FormDescription = "Need a 10m by 20m pool in backyard";
 
             Assert.Equal("Need a 10m by 20m pool in backyard", consultationForm.FormDescription);

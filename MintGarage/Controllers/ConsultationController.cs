@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MintGarage.Database;
-using MintGarage.Models.ConsultationForms;
+using MintGarage.Models.ConsultationT;
 using MintGarage.Models.Partners;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models;
 
 namespace MintGarage.Controllers
 {
-    public class ConsultationFormsController : Controller
+    public class ConsultationController : Controller
     {
-        public IConsultationFormRepository consultationRepository;
+        public IRepository<Consultation> consultationRepo;
         public IPartnerRepository partnerRepository;
         private IFooterContactInfoRepository footerContactInfoRepository;
         private IFooterSocialMediaRepository footerSocialMediaRepository;
@@ -23,10 +21,10 @@ namespace MintGarage.Controllers
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public ConsultationFormsController(IConsultationFormRepository consultationRepo, IPartnerRepository partnerRepo,
+        public ConsultationController(IRepository<Consultation> consultationRepository, IPartnerRepository partnerRepo,
             IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
         {
-            consultationRepository = consultationRepo;
+            consultationRepo = consultationRepository;
             partnerRepository = partnerRepo;
             footerContactInfoRepository = footerContactInfoRepo;
             footerSocialMediaRepository = footerSocialMediaRepo;
@@ -34,7 +32,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> Update(string sortOrder, string searchString)
         {
-            var forms = consultationRepository.ConsultationForms;
+            var forms = consultationRepo.Items;
             ViewBag.Partners = partnerRepository.Partners;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
@@ -51,11 +49,11 @@ namespace MintGarage.Controllers
                                        || s.PhoneNumber.Contains(searchString)
                                        || s.FormDescription.Contains(searchString) );
             }
-            ViewData["FirstNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "fname_desc" : "";
-            ViewData["LastNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lname_desc" : "";
-            ViewData["EmailSortParm"] = String.IsNullOrEmpty(sortOrder) ? "email_desc" : "";
-            ViewData["ServiceSortParm"] = String.IsNullOrEmpty(sortOrder) ? "service_desc" : "";
-            ViewData["DescSortParm"] = String.IsNullOrEmpty(sortOrder) ? "desc_desc" : "";
+            ViewData["FirstNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "fname_desc" : "fname_asc";
+            ViewData["LastNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lname_desc" : "lname_asc";
+            ViewData["EmailSortParm"] = String.IsNullOrEmpty(sortOrder) ? "email_desc" : "email_asc";
+            ViewData["ServiceSortParm"] = String.IsNullOrEmpty(sortOrder) ? "service_desc" : "service-asc";
+            ViewData["DescSortParm"] = String.IsNullOrEmpty(sortOrder) ? "desc_desc" : "desc_asc";
 
 
             // Sort Function
@@ -64,32 +62,42 @@ namespace MintGarage.Controllers
                 case "fname_desc":
                     forms = forms.OrderByDescending(s => s.FirstName);
                     break;
+                case "fname_asc":
+                    forms = forms.OrderBy(s => s.FirstName);
+                    break;
                 case "lname_desc":
                     forms = forms.OrderByDescending(s => s.LastName);
+                    break;
+                case "lname_asc":
+                    forms = forms.OrderBy(s => s.LastName);
                     break;
                 case "email_desc":
                     forms = forms.OrderByDescending(s => s.EmailAddress);
                     break;
+                case "email_asc":
+                    forms = forms.OrderBy(s => s.EmailAddress);
+                    break;
                 case "service_desc":
                     forms = forms.OrderByDescending(s => s.ServiceType);
+                    break;
+                case "service_asc":
+                    forms = forms.OrderBy(s => s.ServiceType);
                     break;
                 case "desc_desc":
                     forms = forms.OrderByDescending(s => s.FormDescription);
                     break;
-                default:
-                    forms = forms.OrderBy(s => s.FirstName);
-                    forms = forms.OrderBy(s => s.LastName);
-                    forms = forms.OrderBy(s => s.EmailAddress);
-                    forms = forms.OrderBy(s => s.ServiceType);
+                case "desc_asc":
                     forms = forms.OrderBy(s => s.FormDescription);
+                    break;
+                default:
                     break;
             }
             return View(await forms.AsNoTracking().ToListAsync());
         }
 
 
-        // GET: ConsultationForms/Create
-        public IActionResult Create()
+        // GET: ConsultationForms/Index
+        public IActionResult Index()
         {
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
@@ -103,16 +111,16 @@ namespace MintGarage.Controllers
         // POST: ConsultationForms/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ConsultationFormID," +
+        public IActionResult Create([Bind("ConsultationID," +
             "FirstName,LastName,EmailAddress,FormDescription,PhoneNumber," +
-            "ServiceType")] ConsultationForm consultationForm)
+            "ServiceType")] Consultation consultation)
         {
             if (ModelState.IsValid)
             {
-                new Email(consultationForm).SendEmail();
+                new Email(consultation).SendEmail();
                 try
                 {
-                    consultationRepository.AddConsultationForm(consultationForm);
+                    consultationRepo.Create(consultation);
                     TempData["Message"] = "Your consultation request has been sent successfully.";
                     TempData["Success"] = true;
                 }
@@ -121,7 +129,7 @@ namespace MintGarage.Controllers
                     TempData["Message"] = "Unable to send consultation request.";
                     TempData["Success"] = false;
                 }
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             } else
             {
                 TempData["Message"] = "";
@@ -131,7 +139,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
-            return View(consultationForm);
+            return View(consultation);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -140,13 +148,13 @@ namespace MintGarage.Controllers
             {
                 return NotFound();
             }
-            var consultationForm = await consultationRepository.ConsultationForms
-                .FirstOrDefaultAsync(m => m.ConsultationFormID == id);
-            if (consultationForm == null)
+            var consultation = await consultationRepo.Items
+                .FirstOrDefaultAsync(m => m.ConsultationID == id);
+            if (consultation == null)
             {
                 return NotFound();
             }
-            consultationRepository.DeleteConsultationForm(consultationForm);
+            consultationRepo.Delete(consultation);
             ViewBag.Partners = partnerRepository.Partners;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;

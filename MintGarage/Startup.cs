@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MintGarage.Database;
 using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
-using MintGarage.Models.ConsultationForms;
+using MintGarage.Models.ConsultationT;
 using MintGarage.Models;
 using MintGarage.Models.AccountT;
 using MintGarage.Models.HomeTab.Contacts;
@@ -51,7 +51,7 @@ namespace MintGarage
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             // Customer Form
-            services.AddScoped<IConsultationFormRepository, ConsultationFormRepository>();
+            services.AddScoped<IRepository<Consultation>, ConsultationRepository>();
             services.AddScoped<IRepository<Account>, AccountRepository>();
 
             //New

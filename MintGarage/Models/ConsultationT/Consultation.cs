@@ -6,12 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace MintGarage.Models.ConsultationForms
+namespace MintGarage.Models.ConsultationT
 {
-    public class ConsultationForm
+    public class Consultation
     {
         [Key]
-        public int ConsultationFormID { get; set; }
+        public int ConsultationID { get; set; }
 
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "First Name Required")]
