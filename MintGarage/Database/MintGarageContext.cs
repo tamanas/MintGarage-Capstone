@@ -2,9 +2,9 @@
 using MintGarage.Models.AccountT;
 using MintGarage.Models.ConsultationT;
 using MintGarage.Models.PartnerT;
-using MintGarage.Models.HomeTab.HomeContents;
-using MintGarage.Models.HomeTab.Reviews;
-using MintGarage.Models.HomeTab.Suppliers;
+using MintGarage.Models.HomeT.Cards;
+using MintGarage.Models.HomeT.Reviews;
+using MintGarage.Models.HomeT.Suppliers;
 using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.AboutUsT.TeamMembers;
@@ -21,9 +21,9 @@ namespace MintGarage.Database
         public DbSet<Consultation> Consultation { get; set; }
         public DbSet<Account> Account { get; set; }
         public DbSet<Partner> Partner { get; set; }
-        public DbSet<HomeContent> HomeContents { get; set; }
-        public DbSet<Review> Reviews { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Card> Card { get; set; }
+        public DbSet<Review> Review { get; set; }
+        public DbSet<Supplier> Supplier { get; set; }
         public DbSet<ContactInfo> ContactInfo { get; set; }
         public DbSet<SocialMedia> SocialMedia { get; set; }
         public DbSet<TeamMember> TeamMember { get; set; }

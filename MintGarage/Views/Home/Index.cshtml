@@ -13,17 +13,17 @@
 </div>
 
 <div class="flex-card-container">
-    @foreach (HomeContent home in Model.HomeContents)
+    @foreach (Card item in Model.Cards)
     {
         <div class="flip-card">
             <div class="card-inner">
                 <div class="card-front">
-                    <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top" />
-                    <h4>@home.Title</h4>
+                    <img src="~/Images/@item.Image" alt="@item.Image" class="img-thumbnail card-img-top" />
+                    <h4>@item.Title</h4>
                 </div>
                 <div class="card-back">
-                    <h4>@home.Title</h4>
-                    <p>@home.Description</p>
+                    <h4>@item.Title</h4>
+                    <p>@item.Description</p>
                     <button class="card-button">Get a quote!</button>
                 </div>
             </div>

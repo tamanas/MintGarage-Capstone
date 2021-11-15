@@ -1,17 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace MintGarage.Models.HomeTab.HomeContents
+namespace MintGarage.Models.HomeT.Cards
 {
-    public class HomeContent
+    public class Card
     {
         [Key]
-        public int HomeContentsID { get; set; }
+        public int CardID { get; set; }
 
         [Display(Name = "Title")]
         [Required(ErrorMessage = "Title Required")]
@@ -27,8 +23,5 @@ namespace MintGarage.Models.HomeTab.HomeContents
         [NotMapped]
         [Display(Name = "upload Image")]
         public IFormFile ImageFile { get; set; }
-
-        [NotMapped]
-        public string TableName { get; set; } = "HomeContent";
     }
 }

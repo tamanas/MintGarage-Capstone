@@ -6,24 +6,23 @@ namespace MintGarage.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-      
             migrationBuilder.CreateTable(
-                name: "HomeContents",
+                name: "Card",
                 columns: table => new
                 {
-                    HomeContentsID = table.Column<int>(type: "int", nullable: false)
+                    CardID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HomeContents", x => x.HomeContentsID);
+                    table.PrimaryKey("PK_Card", x => x.CardID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reviews",
+                name: "Review",
                 columns: table => new
                 {
                     ReviewsID = table.Column<int>(type: "int", nullable: false)
@@ -33,36 +32,34 @@ namespace MintGarage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.ReviewsID);
+                    table.PrimaryKey("PK_Review", x => x.ReviewsID);
                 });
 
-
             migrationBuilder.CreateTable(
-                name: "Suppliers",
+                name: "Supplier",
                 columns: table => new
                 {
                     SuppliersID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SuppliersName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SupplierLogo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SupplierLogo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Suppliers", x => x.SuppliersID);
+                    table.PrimaryKey("PK_Supplier", x => x.SuppliersID);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "HomeContents");
+                name: "Card");
 
             migrationBuilder.DropTable(
-                name: "Reviews");
+                name: "Review");
 
             migrationBuilder.DropTable(
-                name: "Suppliers");
+                name: "Supplier");
         }
     }
 }

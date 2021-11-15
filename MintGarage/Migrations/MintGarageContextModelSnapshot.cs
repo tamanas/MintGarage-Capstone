@@ -181,9 +181,9 @@ namespace MintGarage.Migrations
                     b.ToTable("Gallery");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.HomeTab.HomeContents.HomeContent", b =>
+            modelBuilder.Entity("MintGarage.Models.HomeT.Cards.Card", b =>
                 {
-                    b.Property<int>("HomeContentsID")
+                    b.Property<int>("CardID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -199,12 +199,12 @@ namespace MintGarage.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("HomeContentsID");
+                    b.HasKey("CardID");
 
-                    b.ToTable("HomeContents");
+                    b.ToTable("Card");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.HomeTab.Reviews.Review", b =>
+            modelBuilder.Entity("MintGarage.Models.HomeT.Reviews.Review", b =>
                 {
                     b.Property<int>("ReviewsID")
                         .ValueGeneratedOnAdd()
@@ -221,10 +221,10 @@ namespace MintGarage.Migrations
 
                     b.HasKey("ReviewsID");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Review");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.HomeTab.Suppliers.Supplier", b =>
+            modelBuilder.Entity("MintGarage.Models.HomeT.Suppliers.Supplier", b =>
                 {
                     b.Property<int>("SuppliersID")
                         .ValueGeneratedOnAdd()
@@ -240,7 +240,7 @@ namespace MintGarage.Migrations
 
                     b.HasKey("SuppliersID");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Supplier");
                 });
 
             modelBuilder.Entity("MintGarage.Models.PartnerT.Partner", b =>

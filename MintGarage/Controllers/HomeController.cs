@@ -5,9 +5,9 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using MintGarage.Models.HomeTab.HomeContents;
-using MintGarage.Models.HomeTab.Reviews;
-using MintGarage.Models.HomeTab.Suppliers;
+using MintGarage.Models.HomeT.Cards;
+using MintGarage.Models.HomeT.Reviews;
+using MintGarage.Models.HomeT.Suppliers;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
@@ -19,9 +19,9 @@ namespace MintGarage.Controllers
     public class HomeController : Controller
     {
         public IRepository<Partner> partnerRepo;
-        private IHomeContentRepository homeContentRepo;
-        private IReviewRepository reviewRepo;
-        private ISupplierRepository supplierRepo;
+        private IRepository<Card> cardRepo;
+        private IRepository<Review> reviewRepo;
+        private IRepository<Supplier> supplierRepo;
         private IRepository<ContactInfo> contactInfoRepo;
         private IRepository<SocialMedia> socialMediaRepo;
 
@@ -30,13 +30,13 @@ namespace MintGarage.Controllers
         private IWebHostEnvironment hostEnv;
         private string imageFolder = "/Images/";
 
-        public HomeController(IRepository<Partner> partnerRepository, IHomeContentRepository homeContentRepository, 
-                                            IReviewRepository reviewRepository, ISupplierRepository supplierRepository,
+        public HomeController(IRepository<Partner> partnerRepository, IRepository<Card> cardRepository, 
+                                            IRepository<Review> reviewRepository, IRepository<Supplier> supplierRepository,
                                             IWebHostEnvironment hostEnvironment, IRepository<SocialMedia> mediaRepository,
                                             IRepository<ContactInfo> contactRepository)
         {
             partnerRepo = partnerRepository;
-            homeContentRepo = homeContentRepository;
+            cardRepo = cardRepository;
             reviewRepo = reviewRepository;
             supplierRepo = supplierRepository;
             socialMediaRepo = mediaRepository;
@@ -53,9 +53,9 @@ namespace MintGarage.Controllers
 
             HomeModel homeModel = new HomeModel()
             {
-                HomeContents = homeContentRepo.HomeContents,
-                Reviews = reviewRepo.Reviews,
-                Suppliers = supplierRepo.Suppliers,
+                Cards = cardRepo.Items,
+                Reviews = reviewRepo.Items,
+                Suppliers = supplierRepo.Items,
             };
             return View(homeModel);
         }
@@ -87,49 +87,49 @@ namespace MintGarage.Controllers
 
 
             HomeModel homeModel = new HomeModel();
-            homeModel.HomeContents = homeContentRepo.HomeContents;
-            homeModel.Reviews = reviewRepo.Reviews;
-            homeModel.Suppliers = supplierRepo.Suppliers;
+            homeModel.Cards = cardRepo.Items;
+            homeModel.Reviews = reviewRepo.Items;
+            homeModel.Suppliers = supplierRepo.Items;
 
             if (id != null && operation != "add")
             {
-                homeModel.HomeContent = homeContentRepo.HomeContents.FirstOrDefault(s => s.HomeContentsID == id);
-                homeModel.Review = reviewRepo.Reviews.FirstOrDefault(s => s.ReviewsID == id);
-                homeModel.Supplier = supplierRepo.Suppliers.FirstOrDefault(s => s.SuppliersID == id);
+                homeModel.Card = cardRepo.Items.FirstOrDefault(s => s.CardID == id);
+                homeModel.Review = reviewRepo.Items.FirstOrDefault(s => s.ReviewsID == id);
+                homeModel.Supplier = supplierRepo.Items.FirstOrDefault(s => s.SuppliersID == id);
             }
             return View(homeModel);
         }
 
-        public async Task<IActionResult> CreateHomeContent(HomeModel homeModel)
+        public async Task<IActionResult> CreateCard(HomeModel homeModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid && homeModel.HomeContent.ImageFile != null)
+            if (ModelState.IsValid && homeModel.Card.ImageFile != null)
             {
-                homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
-                homeContentRepo.AddHomeContents(homeModel.HomeContent);
+                homeModel.Card.Image = await SaveImage(homeModel.Card.ImageFile);
+                cardRepo.Create(homeModel.Card);
                 TempData["message"] = "Successfully added new Home Content.";
             }
             else
             {
-                if(homeModel.HomeContent.ImageFile == null)
+                if(homeModel.Card.ImageFile == null)
                 {
                     ModelState.AddModelError("image", "Image is required");
                 }
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
-                SetViewBag(true, false, false, "homecontent");
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
+                SetViewBag(true, false, false, "card");
 
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
         }
 
-        public async Task<IActionResult> EditHomeContent(HomeModel homeModel)
+        public async Task<IActionResult> EditCard(HomeModel homeModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -138,34 +138,34 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                if(homeModel.HomeContent.ImageFile != null)
+                if(homeModel.Card.ImageFile != null)
                 {
-                    DeleteImage(homeModel.HomeContent.Image);
-                    homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
+                    DeleteImage(homeModel.Card.Image);
+                    homeModel.Card.Image = await SaveImage(homeModel.Card.ImageFile);
                 }
-                homeContentRepo.UpdateHomeContents(homeModel.HomeContent);
+                cardRepo.Update(homeModel.Card);
                 TempData["message"] = "Successfully edited Home Content.";
             }
             if(!ModelState.IsValid)
             {
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
 
-                SetViewBag(false, true, false, "homecontent");
+                SetViewBag(false, true, false, "card");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
         }
 
-        public IActionResult DeleteHomeContent(HomeModel homeModel)
+        public IActionResult DeleteCard(HomeModel homeModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            DeleteImage(homeModel.HomeContent.Image);
-            homeContentRepo.DeleteHomeContents(homeModel.HomeContent);
+            DeleteImage(homeModel.Card.Image);
+            cardRepo.Delete(homeModel.Card);
             TempData["message"] = "Successfully deleted Home Content.";
             return RedirectToAction("Update");
         }
@@ -179,14 +179,14 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                reviewRepo.AddReviews(homeModel.Review);
+                reviewRepo.Create(homeModel.Review);
                 TempData["message"] = "Successfully added new Review.";
             }
             else
             {
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
 
                 SetViewBag(true, false, false, "review");
                 return View("Update", homeModel);
@@ -203,14 +203,14 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                reviewRepo.UpdateReviews(homeModel.Review);
+                reviewRepo.Update(homeModel.Review);
                 TempData["message"] = "Successfully edited Review.";
             }
             else
             {
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
 
                 SetViewBag(false, true, false, "review");
                 return View("Update", homeModel);
@@ -225,7 +225,7 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            reviewRepo.DeleteReviews(homeModel.Review);
+            reviewRepo.Delete(homeModel.Review);
             TempData["message"] = "Successfully deleted Review.";
             return RedirectToAction("Update");
         }
@@ -241,7 +241,7 @@ namespace MintGarage.Controllers
             if (ModelState.IsValid && homeModel.Supplier.ImageFile != null)
             {
                 homeModel.Supplier.SupplierLogo = await SaveImage(homeModel.Supplier.ImageFile);
-                supplierRepo.AddSuppliers(homeModel.Supplier);
+                supplierRepo.Create(homeModel.Supplier);
                 TempData["message"] = "Successfully added new Supplier.";
             }
             else
@@ -250,9 +250,9 @@ namespace MintGarage.Controllers
                 {
                     ModelState.AddModelError("Image", "Image is required");
                 }
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
                 SetViewBag(true, false, false, "supplier");
                 return View("Update", homeModel);
             }
@@ -271,16 +271,16 @@ namespace MintGarage.Controllers
                 if (homeModel.Supplier.ImageFile != null)
                 {
                     DeleteImage(homeModel.Supplier.SupplierLogo);
-                    homeModel.HomeContent.Image = await SaveImage(homeModel.Supplier.ImageFile);
+                    homeModel.Supplier.SupplierLogo = await SaveImage(homeModel.Supplier.ImageFile);
                 }
-                supplierRepo.UpdateSuppliers(homeModel.Supplier);
+                supplierRepo.Update(homeModel.Supplier);
                 TempData["message"] = "Successfully edited Supplier.";
             }
             else
             {
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
                 SetViewBag(false, true, false, "supplier");
                 return View("Update", homeModel);
             }
@@ -295,7 +295,7 @@ namespace MintGarage.Controllers
             ViewBag.AboutData = AboutUs;
 
             DeleteImage(homeModel.Supplier.SupplierLogo);
-            supplierRepo.DeleteSuppliers(homeModel.Supplier);
+            supplierRepo.Delete(homeModel.Supplier);
             TempData["message"] = "Successfully deleted Supplier.";
             return RedirectToAction("Update");
         }
