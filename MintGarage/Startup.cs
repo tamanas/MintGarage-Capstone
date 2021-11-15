@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MintGarage.Database;
-using MintGarage.Models.Categories;
-using MintGarage.Models.Products;
 using MintGarage.Models.ConsultationT;
 using MintGarage.Models;
 using MintGarage.Models.AccountT;
@@ -46,15 +44,8 @@ namespace MintGarage
                 options.UseSqlServer(Configuration["ConnectionStrings:MintGarageConnStr"]);
             });
 
-            // Products
-            //services.AddScoped<IMintGarageDBInitializer, MintGarageDBInitializer>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            // Customer Form
             services.AddScoped<IRepository<Consultation>, ConsultationRepository>();
             services.AddScoped<IRepository<Account>, AccountRepository>();
-
-            //New
             services.AddScoped<IContactRepository, ContactsRepository>();
             services.AddScoped<IHomeContentRepository, HomeContentRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
@@ -62,7 +53,6 @@ namespace MintGarage
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<IFooterContactInfoRepository, FooterContactInfoRepository>();
             services.AddScoped<IFooterSocialMediaRepository, FooterSocialMediaRepository>();
-
             services.AddScoped<IRepository<Partner>, PartnerRepository>();
             services.AddScoped<IRepository<TeamMember>, TeamMemberRepository>();
             services.AddScoped<IRepository<Value>, ValueRepository>();

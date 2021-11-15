@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MintGarage.Models.AccountT;
-using MintGarage.Models.Categories;
 using MintGarage.Models.ConsultationT;
 using MintGarage.Models.PartnerT;
 using MintGarage.Models.HomeTab.Contacts;
@@ -8,7 +7,6 @@ using MintGarage.Models.HomeTab.HomeContents;
 using MintGarage.Models.HomeTab.Reviews;
 using MintGarage.Models.HomeTab.SocialMedias;
 using MintGarage.Models.HomeTab.Suppliers;
-using MintGarage.Models.Products;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.AboutUsT.TeamMembers;
@@ -22,8 +20,6 @@ namespace MintGarage.Database
         public MintGarageContext(DbContextOptions<MintGarageContext> option) : base(option)
         {
         }
-        public DbSet<Product> Product { get; set; }
-        public DbSet<Category> Category { get; set; }
         public DbSet<Consultation> Consultation { get; set; }
         public DbSet<Account> Account { get; set; }
         public DbSet<Partner> Partner { get; set; }

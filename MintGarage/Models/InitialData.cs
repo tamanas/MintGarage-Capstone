@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MintGarage.Database;
-using MintGarage.Models.Categories;
-using MintGarage.Models.Products;
 using MintGarage.Models.AccountT;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using System.Linq;
@@ -23,13 +21,7 @@ namespace MintGarage.Models
             {
                 context.Database.Migrate();
             }
-            if (!context.Category.Any())
-            {
-                context.Category.Add(new Category() { Name = "Hook" });
-                context.Category.Add(new Category() { Name = "Shelf" });
-                context.Category.Add(new Category() { Name = "Basket" });
-                context.SaveChanges();
-            }
+          
 
             if (!context.Account.Any())
             {
@@ -77,31 +69,7 @@ namespace MintGarage.Models
                 });
                 context.SaveChanges();
             }
-            if (!context.Product.Any())
-            {
-                context.Product.Add(new Product()
-                {
-                    ProductName = "Shelf",
-                    ProductPrice = 4.99,
-                    ProductImage = "Shelf.png",
-                    CategoryID = 2
-                });
-                context.Product.Add(new Product()
-                {
-                    ProductName = "Recycle Bin Hook",
-                    ProductPrice = 5.99,
-                    ProductImage = "RecycleBinHook.png",
-                    CategoryID = 1
-                });
-                context.Product.Add(new Product()
-                {
-                    ProductName = "Big Rectangle Basket",
-                    ProductPrice = 10.99,
-                    ProductImage = "BigRectangleBasket.png",
-                    CategoryID = 3
-                });
-                context.SaveChanges();
-            }
+      
         }
 
     }
