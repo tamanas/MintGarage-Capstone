@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models;
 using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models.FooterT.SocialMedias;
-using MintGarage.Models.GalleryTab;
+using MintGarage.Models.GalleryT;
 using MintGarage.Models.PartnerT;
 using System;
 using System.IO;

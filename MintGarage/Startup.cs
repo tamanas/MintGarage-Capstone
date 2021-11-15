@@ -15,7 +15,7 @@ using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.PartnerT;
 using MintGarage.Models.AboutUsT.TeamMembers;
 using MintGarage.Models.AboutUsT.Values;
-using MintGarage.Models.GalleryTab;
+using MintGarage.Models.GalleryT;
 
 namespace MintGarage
 {

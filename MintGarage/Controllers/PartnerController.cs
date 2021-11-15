@@ -8,7 +8,7 @@ using MintGarage.Models;
 
 namespace MintGarage.Controllers
 {
-    public class PartnersController : Controller
+    public class PartnerController : Controller
     {
 
         public IRepository<Partner> partnerRepo;
@@ -18,7 +18,7 @@ namespace MintGarage.Controllers
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public PartnersController(IRepository<Partner> partnerRepository, 
+        public PartnerController(IRepository<Partner> partnerRepository, 
             IRepository<ContactInfo> contactRepo, IRepository<SocialMedia> mediaRepo)
         {
             partnerRepo = partnerRepository;
@@ -61,7 +61,7 @@ namespace MintGarage.Controllers
             return View(partnerUpdateView);
         }
 
-        public IActionResult Create(PartnerModel partnerUpdateView)
+        public IActionResult Create(PartnerModel partnerModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -70,13 +70,13 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                partnerRepo.Create(partnerUpdateView.Partner);
+                partnerRepo.Create(partnerModel.Partner);
                 TempData["AdminPartnerMessage"] = "Successfully added new Partner.";
             } else
             {
-                partnerUpdateView.Partners = partnerRepo.Items;
+                partnerModel.Partners = partnerRepo.Items;
                 SetViewBag(true, false, false);
-                return View("Update", partnerUpdateView);
+                return View("Update", partnerModel);
             }
             return RedirectToAction("Update");
         }
@@ -102,14 +102,14 @@ namespace MintGarage.Controllers
             return RedirectToAction("Update");
         }
 
-        public IActionResult Delete(PartnerModel partnerUpdateView)
+        public IActionResult Delete(PartnerModel partnerModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            partnerRepo.Delete(partnerUpdateView.Partner);
+            partnerRepo.Delete(partnerModel.Partner);
             TempData["AdminPartnerMessage"] = "Successfully deleted Partner.";
             return RedirectToAction("Update");
         }
