@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MintGarage.Models;
-using MintGarage.Models.Accounts;
+using MintGarage.Models.AccountT;
 using MintGarage.Models.Categories;
 using MintGarage.Models.ConsultationForms;
 using MintGarage.Models.Partners;

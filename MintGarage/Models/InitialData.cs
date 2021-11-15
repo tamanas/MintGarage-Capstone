@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MintGarage.Database;
 using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
-using MintGarage.Models.Accounts;
+using MintGarage.Models.AccountT;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 
 using System;

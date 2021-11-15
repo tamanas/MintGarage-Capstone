@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MintGarage.Models.Accounts
+namespace MintGarage.Models.AccountT
 {
     public class UpdatePassword
     {

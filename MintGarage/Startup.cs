@@ -8,7 +8,7 @@ using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
 using MintGarage.Models.ConsultationForms;
 using MintGarage.Models;
-using MintGarage.Models.Accounts;
+using MintGarage.Models.AccountT;
 using MintGarage.Models.HomeTab.Contacts;
 using MintGarage.Models.HomeTab.HomeContents;
 using MintGarage.Models.HomeTab.Reviews;
@@ -52,7 +52,7 @@ namespace MintGarage
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             // Customer Form
             services.AddScoped<IConsultationFormRepository, ConsultationFormRepository>();
-            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IRepository<Account>, AccountRepository>();
 
             //New
             services.AddScoped<IContactRepository, ContactsRepository>();

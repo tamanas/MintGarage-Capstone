@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MintGarage.Models.Accounts;
+using MintGarage.Models.AccountT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using MintGarage.Models.Partners;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models;
 
 namespace MintGarage.Controllers
 {
     public class AccountController : Controller
     {
-        public IAccountRepository accoutRepository;
+        public IRepository<Account> accoutRepo;
         public IPartnerRepository partnerRepository;
         private IFooterContactInfoRepository footerContactInfoRepository;
         private IFooterSocialMediaRepository footerSocialMediaRepository;
@@ -20,12 +21,12 @@ namespace MintGarage.Controllers
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public AccountController(IAccountRepository accountRepo, IPartnerRepository partnerRepo, 
+        public AccountController(IRepository<Account> accountRepository, IPartnerRepository partnerRepo, 
             IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
         {
             footerContactInfoRepository = footerContactInfoRepo;
             footerSocialMediaRepository = footerSocialMediaRepo;
-            accoutRepository = accountRepo;
+            accoutRepo = accountRepository;
             partnerRepository = partnerRepo;
         }
 
@@ -50,7 +51,7 @@ namespace MintGarage.Controllers
             ViewBag.AboutData = AboutUs;
             if (ModelState.IsValid)
             {
-                Account acc = accoutRepository.Account.FirstOrDefault();
+                Account acc = accoutRepo.Items.FirstOrDefault();
                 if (acc.Username == account.Username && acc.Password == account.Password)
                 {
                     return RedirectToAction("Update", "Home");
@@ -80,7 +81,7 @@ namespace MintGarage.Controllers
             ViewBag.AboutData = AboutUs;
             if (ModelState.IsValid)
             {
-                Account acc = accoutRepository.Account.FirstOrDefault();
+                Account acc = accoutRepo.Items.FirstOrDefault();
                 
                 if (!acc.Password.Equals(updatePassword.CurrectPassword))
                 {
@@ -90,7 +91,7 @@ namespace MintGarage.Controllers
                 if (acc.Password.Equals(updatePassword.CurrectPassword))
                 {
                     acc.Password = updatePassword.NewPassword;
-                    accoutRepository.Update(acc);
+                    accoutRepo.Update(acc);
                     TempData["Message"] = "Password updated successfully.";
                     TempData["Success"] = true;
                 }
