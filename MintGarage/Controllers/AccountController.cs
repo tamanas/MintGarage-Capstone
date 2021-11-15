@@ -55,14 +55,9 @@ namespace MintGarage.Controllers
                 {
                     return RedirectToAction("Update", "Home");
                 }
-                else
-                {
-                    TempData["Message"] = "Invalid username or password. Please try again!";
-                    TempData["Success"] = false;
-                    return RedirectToAction("Login");
-                }
+                ModelState.AddModelError("error", "Invalid username or password. Please try again!");
             }
-            return View(account);
+            return View();
         }
 
         public IActionResult Update()

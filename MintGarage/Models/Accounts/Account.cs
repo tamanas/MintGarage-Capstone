@@ -11,13 +11,11 @@ namespace MintGarage.Models.Accounts
         [Key]
         public int AccountID { get; set; }
 
-        [Display(Name = "Username")]
-        [Required(ErrorMessage = "Enter Username")]
+        [Required(ErrorMessage="Enter username")]
         public string Username { get; set; }
 
-        [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Enter Password")]
+        [Required(ErrorMessage = "Enter password")]
         public string Password { get; set; }
     }
 }
