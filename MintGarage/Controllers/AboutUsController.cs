@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models;
-using MintGarage.Models.AboutUsTab.Teams;
-using MintGarage.Models.AboutUsTab.Values;
+using MintGarage.Models.AboutUsT.TeamMembers;
+using MintGarage.Models.AboutUsT.Values;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.PartnerT;
@@ -20,8 +20,8 @@ namespace MintGarage.Controllers
         private IRepository<Partner> partnerRepo;
         private IFooterContactInfoRepository footerContactInfoRepo;
         private IFooterSocialMediaRepository footerSocialMediaRepo;
-        private ITeamRepository teamRepo;
-        private IValueRepository valueRepo;
+        private IRepository<TeamMember> teamMemberRepo;
+        private IRepository<Value> valueRepo;
 
         private IWebHostEnvironment hostEnv;
         private string imageFolder = "/Images/";
@@ -30,13 +30,13 @@ namespace MintGarage.Controllers
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
         public AboutUsController(IRepository<Partner> partnerRepository, IFooterContactInfoRepository footerContactInfoRepository,
-            IFooterSocialMediaRepository footerSocialMediaRepository, ITeamRepository teamRepository, IValueRepository valueRepository,
+            IFooterSocialMediaRepository footerSocialMediaRepository, IRepository<TeamMember> teamMemberRepository, IRepository<Value> valueRepository,
             IWebHostEnvironment hostEnvironment)
         {
             partnerRepo = partnerRepository;
             footerContactInfoRepo = footerContactInfoRepository;
             footerSocialMediaRepo = footerSocialMediaRepository;
-            teamRepo = teamRepository;
+            teamMemberRepo = teamMemberRepository;
             valueRepo = valueRepository;
             hostEnv = hostEnvironment;
         }
@@ -49,8 +49,8 @@ namespace MintGarage.Controllers
             AboutUsModel aboutUs = new AboutUsModel()
             
             {
-                Teams = teamRepo.Teams,
-                Values = valueRepo.Values,
+                TeamMembers = teamMemberRepo.Items,
+                Values = valueRepo.Items,
             };
             return View(aboutUs);
         }
@@ -83,13 +83,13 @@ namespace MintGarage.Controllers
             }
 
             AboutUsModel aboutUsModel = new AboutUsModel();
-            aboutUsModel.Values = valueRepo.Values;
-            aboutUsModel.Teams = teamRepo.Teams;
+            aboutUsModel.Values = valueRepo.Items;
+            aboutUsModel.TeamMembers = teamMemberRepo.Items;
 
             if (id != null && operation != "add")
             {
-                aboutUsModel.Value = valueRepo.Values.FirstOrDefault(s => s.ValueID == id);
-                aboutUsModel.Team = teamRepo.Teams.FirstOrDefault(s => s.MemberID == id);
+                aboutUsModel.Value = valueRepo.Items.FirstOrDefault(s => s.ValueID == id);
+                aboutUsModel.TeamMember = teamMemberRepo.Items.FirstOrDefault(s => s.MemberID == id);
             }
 
             return View(aboutUsModel);
@@ -114,8 +114,8 @@ namespace MintGarage.Controllers
             }
             else
             {
-                aboutUsModel.Values = valueRepo.Values;
-                aboutUsModel.Teams = teamRepo.Teams;
+                aboutUsModel.Values = valueRepo.Items;
+                aboutUsModel.TeamMembers = teamMemberRepo.Items;
                 setViewBag(false, true, false, "value");
                 return View("Update", aboutUsModel);
             }
@@ -129,16 +129,16 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid && aboutUsModel.Team.ImageFile != null)
+            if (ModelState.IsValid && aboutUsModel.TeamMember.ImageFile != null)
             {
-                aboutUsModel.Team.MemberImage = await SaveImage(aboutUsModel.Team.ImageFile);
-                teamRepo.Add(aboutUsModel.Team);
+                aboutUsModel.TeamMember.MemberImage = await SaveImage(aboutUsModel.TeamMember.ImageFile);
+                teamMemberRepo.Create(aboutUsModel.TeamMember);
                 TempData["message"] = "Successfully added Team Member.";
             }
             else
             {
-                aboutUsModel.Values = valueRepo.Values;
-                aboutUsModel.Teams = teamRepo.Teams;
+                aboutUsModel.Values = valueRepo.Items;
+                aboutUsModel.TeamMembers = teamMemberRepo.Items;
                 setViewBag(true, false, false, "team");
                 return View("Update", aboutUsModel);
             }
@@ -154,18 +154,18 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                if (aboutUsModel.Team.ImageFile != null)
+                if (aboutUsModel.TeamMember.ImageFile != null)
                 {
-                    DeleteImage(aboutUsModel.Team.MemberImage);
-                    aboutUsModel.Team.MemberImage = await SaveImage(aboutUsModel.Team.ImageFile);
+                    DeleteImage(aboutUsModel.TeamMember.MemberImage);
+                    aboutUsModel.TeamMember.MemberImage = await SaveImage(aboutUsModel.TeamMember.ImageFile);
                 }
-                teamRepo.Update(aboutUsModel.Team);
+                teamMemberRepo.Update(aboutUsModel.TeamMember);
                 TempData["message"] = "Successfully edited Team Member.";
             }
             else
             {
-                aboutUsModel.Values = valueRepo.Values;
-                aboutUsModel.Teams = teamRepo.Teams;
+                aboutUsModel.Values = valueRepo.Items;
+                aboutUsModel.TeamMembers = teamMemberRepo.Items;
                 setViewBag(false, true, false, "team");
                 return View("Update", aboutUsModel);
             }
@@ -179,8 +179,8 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
-            DeleteImage(aboutUsModel.Team.MemberImage);
-            teamRepo.Delete(aboutUsModel.Team);
+            DeleteImage(aboutUsModel.TeamMember.MemberImage);
+            teamMemberRepo.Delete(aboutUsModel.TeamMember);
             TempData["message"] = "Successfully deleted Team Member.";
             return RedirectToAction("Update");
         }

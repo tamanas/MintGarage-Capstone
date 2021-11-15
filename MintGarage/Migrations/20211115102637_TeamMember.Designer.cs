@@ -10,18 +10,18 @@ using MintGarage.Database;
 namespace MintGarage.Migrations
 {
     [DbContext(typeof(MintGarageContext))]
-    [Migration("20211014182836_Team")]
-    partial class Team
+    [Migration("20211115102637_TeamMember")]
+    partial class TeamMember
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MintGarage.Models.AboutUsTab.Teams.Team", b =>
+            modelBuilder.Entity("MintGarage.Models.AboutUsT.TeamMembers.TeamMember", b =>
                 {
                     b.Property<int>("MemberID")
                         .ValueGeneratedOnAdd()
@@ -41,10 +41,10 @@ namespace MintGarage.Migrations
 
                     b.HasKey("MemberID");
 
-                    b.ToTable("Team");
+                    b.ToTable("TeamMember");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.AboutUsTab.Values.Value", b =>
+            modelBuilder.Entity("MintGarage.Models.AboutUsT.Values.Value", b =>
                 {
                     b.Property<int>("ValueID")
                         .ValueGeneratedOnAdd()
@@ -67,7 +67,7 @@ namespace MintGarage.Migrations
                     b.ToTable("Value");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.Accounts.Account", b =>
+            modelBuilder.Entity("MintGarage.Models.AccountT.Account", b =>
                 {
                     b.Property<int>("AccountID")
                         .ValueGeneratedOnAdd()
@@ -102,9 +102,9 @@ namespace MintGarage.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.ConsultationForms.ConsultationForm", b =>
+            modelBuilder.Entity("MintGarage.Models.ConsultationT.Consultation", b =>
                 {
-                    b.Property<int>("ConsultationFormID")
+                    b.Property<int>("ConsultationID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -132,9 +132,9 @@ namespace MintGarage.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ConsultationFormID");
+                    b.HasKey("ConsultationID");
 
-                    b.ToTable("ConsultationForm");
+                    b.ToTable("Consultation");
                 });
 
             modelBuilder.Entity("MintGarage.Models.FooterContents.FooterContactInfo.FooterContactInfo", b =>
@@ -296,9 +296,6 @@ namespace MintGarage.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SupplierLogo")
                         .HasColumnType("nvarchar(max)");
 
@@ -311,7 +308,7 @@ namespace MintGarage.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.Partners.Partner", b =>
+            modelBuilder.Entity("MintGarage.Models.PartnerT.Partner", b =>
                 {
                     b.Property<int>("PartnerID")
                         .ValueGeneratedOnAdd()

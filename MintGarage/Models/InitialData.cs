@@ -6,11 +6,8 @@ using MintGarage.Models.Categories;
 using MintGarage.Models.Products;
 using MintGarage.Models.AccountT;
 using MintGarage.Models.FooterContents.FooterContactInfo;
-
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using MintGarage.Models.AboutUsT.Values;
 
 namespace MintGarage.Models
 {
@@ -50,28 +47,28 @@ namespace MintGarage.Models
             }
             if (!context.Value.Any())
             {
-                context.Value.Add(new AboutUsTab.Values.Value()
+                context.Value.Add(new Value()
                 {
                     ValueTitle = "Great Services",
                     ValueDescription = "With our range or services from Garage Organization solutions to, " +
                     "epoxy floors, to our other services we do it all!",
                     ValueImage = "homeValueIcon.png"
                 });
-                context.Value.Add(new AboutUsTab.Values.Value()
+                context.Value.Add(new Value()
                 {
                     ValueTitle = "Highest Standards",
                     ValueDescription = "Every site is managed by a supervisor and daily reports / " +
                     "inspections are done to ensure our quality guarantee!",
                     ValueImage = "gearValueIcon.png"
                 });
-                context.Value.Add(new AboutUsTab.Values.Value()
+                context.Value.Add(new Value()
                 {
                     ValueTitle = "Professional Team",
                     ValueDescription = "We train our employees using our state of the art " +
                     "online platform so every job is a consistent one!",
                     ValueImage = "peopleValueIcon.png"
                 });
-                context.Value.Add(new AboutUsTab.Values.Value()
+                context.Value.Add(new Value()
                 {
                     ValueTitle = "Creative Solutions",
                     ValueDescription = "With every customer is a unique solution, thats why in " +

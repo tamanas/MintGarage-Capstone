@@ -49,25 +49,6 @@
     </p>
 </div>
 
-@*<div class="values">
-    <h2 style="text-align:center">Our Core Values</h2>
-    <p style="text-align:center">At Mint Garage we believe in transforming spaces to the needs, desires and wants of our clients. Making sure no 2 garages are a like.</p>
-    <div class="values-container">
-        @foreach (Value value in Model.Values)
-        {
-
-            <div class="column">
-                <div class="value">
-                    <img src="~/Images/@value.ValueImage" alt="@value.ValueImage" style="width:15%">
-                    <div class="container">
-                        <h2 style="font-size: 13px;">@value.ValueTitle</h2>
-                        <p class="title"  style="font-size: 13px;">@value.ValueDescription</p>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-</div>*@
 
 <div class="mt-5 mb-5 text-center">
     <h2>Our Core Values</h2>
@@ -96,17 +77,17 @@
     <h2>Meet Our Team</h2>
     <h6 class="font-weight-bolder">Our team consists of highly qualified, experienced and knowledgeable professionals who are dedicated to help our customers in any tranforming or storage projects!</h6>
     <div class="row">
-        @foreach (Team team in Model.Teams)
+        @foreach (TeamMember member in Model.TeamMembers)
         {
             <div class="column">
                 <div class="card">
                     <div class="d-flex align-items-center justify-content-around">
                         <div class=" pt-2 pb-2">
-                            <img src="~/Images/@team.MemberImage" alt="@team.MemberImage" style="width:100px">
+                            <img src="~/Images/@member.MemberImage" alt="@member.MemberImage" style="width:100px">
                         </div>
                         <div class=" pt-2 pb-2">
-                            <h4>@team.MemberName</h4>
-                            <p class="title">@team.MemberRole</p>
+                            <h4>@member.MemberName</h4>
+                            <p class="title">@member.MemberRole</p>
                         </div>
                     </div>
                 </div>

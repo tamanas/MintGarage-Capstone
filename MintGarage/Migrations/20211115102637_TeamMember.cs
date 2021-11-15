@@ -2,12 +2,12 @@
 
 namespace MintGarage.Migrations
 {
-    public partial class Team : Migration
+    public partial class TeamMember : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Team",
+                name: "TeamMember",
                 columns: table => new
                 {
                     MemberID = table.Column<int>(type: "int", nullable: false)
@@ -18,14 +18,14 @@ namespace MintGarage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Team", x => x.MemberID);
+                    table.PrimaryKey("PK_TeamMember", x => x.MemberID);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Team");
+                name: "TeamMember");
         }
     }
 }

@@ -11,8 +11,8 @@ using MintGarage.Models.HomeTab.Suppliers;
 using MintGarage.Models.Products;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.AboutUsTab.Teams;
-using MintGarage.Models.AboutUsTab.Values;
+using MintGarage.Models.AboutUsT.TeamMembers;
+using MintGarage.Models.AboutUsT.Values;
 using MintGarage.Models.GalleryTab;
 
 namespace MintGarage.Database
@@ -34,7 +34,7 @@ namespace MintGarage.Database
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<FooterContactInfo> FooterContactInfo { get; set; }
         public DbSet<FooterSocialMedia> FooterSocialMedias { get; set; }
-        public DbSet<Team> Team { get; set; }
+        public DbSet<TeamMember> TeamMember { get; set; }
         public DbSet<Value> Value { get; set; }
         public DbSet<Gallery> Gallery { get; set; }
 

@@ -42,9 +42,6 @@ namespace MintGarage.Migrations
                 name: "Gallery");
 
             migrationBuilder.DropTable(
-                name: "Team");
-
-            migrationBuilder.DropTable(
                 name: "Value");
         }
     }

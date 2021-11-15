@@ -19,7 +19,7 @@ namespace MintGarage.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MintGarage.Models.AboutUsTab.Teams.Team", b =>
+            modelBuilder.Entity("MintGarage.Models.AboutUsT.TeamMembers.TeamMember", b =>
                 {
                     b.Property<int>("MemberID")
                         .ValueGeneratedOnAdd()
@@ -39,10 +39,10 @@ namespace MintGarage.Migrations
 
                     b.HasKey("MemberID");
 
-                    b.ToTable("Team");
+                    b.ToTable("TeamMember");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.AboutUsTab.Values.Value", b =>
+            modelBuilder.Entity("MintGarage.Models.AboutUsT.Values.Value", b =>
                 {
                     b.Property<int>("ValueID")
                         .ValueGeneratedOnAdd()
@@ -306,7 +306,7 @@ namespace MintGarage.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.Partners.Partner", b =>
+            modelBuilder.Entity("MintGarage.Models.PartnerT.Partner", b =>
                 {
                     b.Property<int>("PartnerID")
                         .ValueGeneratedOnAdd()

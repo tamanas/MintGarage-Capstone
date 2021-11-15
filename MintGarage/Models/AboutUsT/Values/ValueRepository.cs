@@ -1,19 +1,21 @@
 ﻿using MintGarage.Database;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace MintGarage.Models.AboutUsTab.Values
+namespace MintGarage.Models.AboutUsT.Values
 {
-    public class ValueRepository : IValueRepository
+    public class ValueRepository : IRepository<Value>
     {
         private MintGarageContext context;
         public ValueRepository(MintGarageContext ctx)
         {
             context = ctx;
         }
-        public IQueryable<Value> Values => context.Value;
+        public IQueryable<Value> Items => context.Value;
+
+        public void Create(Value item)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public void Update(Value value)
         {
@@ -21,9 +23,15 @@ namespace MintGarage.Models.AboutUsTab.Values
             Save();
         }
 
+        public void Delete(Value item)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Save()
         {
             context.SaveChanges();
         }
+    
     }
 }
