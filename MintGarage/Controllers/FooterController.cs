@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
@@ -9,16 +8,15 @@ using MintGarage.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using MintGarage.Models.Partners;
+using MintGarage.Models.PartnerT;
 
 namespace MintGarage.Controllers
 {
     public class FooterController : Controller
     {
-
         private IFooterContactInfoRepository footerContactInfoRepository;
         private IFooterSocialMediaRepository footerSocialMediaRepository;
-        public IPartnerRepository partnerRepository;
+        public IRepository<Partner> partnerRepo;
         private IWebHostEnvironment hostEnv;
         private string imageFolder = "/Images/";
 
@@ -27,17 +25,17 @@ namespace MintGarage.Controllers
 
         public FooterController(IFooterContactInfoRepository footerContactInfoRepo,
             IFooterSocialMediaRepository footerSocialMediaRepo, IWebHostEnvironment hostEnvironment,
-            IPartnerRepository partnerRepo)
+            IRepository<Partner> partnerRepository)
         {
             footerContactInfoRepository = footerContactInfoRepo;
             footerSocialMediaRepository = footerSocialMediaRepo;
-            partnerRepository = partnerRepo;
+            partnerRepo = partnerRepository;
             hostEnv = hostEnvironment;
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -79,7 +77,7 @@ namespace MintGarage.Controllers
 
         public IActionResult EditFooterContactInfo(FooterModel footerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -101,7 +99,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> AddSocialMedia(FooterModel footerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -128,7 +126,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditSocialMedia(FooterModel footerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -155,7 +153,7 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteSocialMedia(FooterModel footerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;

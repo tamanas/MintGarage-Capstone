@@ -5,9 +5,8 @@ using MintGarage.Models;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.GalleryTab;
-using MintGarage.Models.Partners;
+using MintGarage.Models.PartnerT;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace MintGarage.Controllers
     public class GalleryController : Controller
     {
         private IRepository<Gallery> galleryRepo;
-        public IPartnerRepository partnerRepo;
+        public IRepository<Partner> partnerRepo;
         private IFooterContactInfoRepository footerContactInfoRepo;
         private IFooterSocialMediaRepository footerSocialMediaRepo;
         private IWebHostEnvironment hostEnv;
@@ -29,7 +28,7 @@ namespace MintGarage.Controllers
 
 
 
-        public GalleryController(IRepository<Gallery> galleryRepository, IPartnerRepository partnerRepository,
+        public GalleryController(IRepository<Gallery> galleryRepository, IRepository<Partner> partnerRepository,
                                                 IFooterContactInfoRepository contactInfoRepository, IFooterSocialMediaRepository socialMediaRepository,
                                                 IWebHostEnvironment hostEnvironment)
         {
@@ -42,7 +41,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -51,7 +50,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.message = TempData["message"];
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
@@ -85,7 +84,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> Create(GalleryModel galleryModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -113,7 +112,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> Edit(GalleryModel galleryModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -144,7 +143,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Delete(GalleryModel galleryModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;

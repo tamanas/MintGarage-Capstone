@@ -5,15 +5,10 @@ using MintGarage.Models.AboutUsTab.Teams;
 using MintGarage.Models.AboutUsTab.Values;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.HomeTab.HomeContents;
-using MintGarage.Models.Partners;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.PartnerT;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
@@ -22,7 +17,7 @@ namespace MintGarage.Controllers
 {
     public class AboutUsController : Controller
     {
-        private IPartnerRepository partnerRepo;
+        private IRepository<Partner> partnerRepo;
         private IFooterContactInfoRepository footerContactInfoRepo;
         private IFooterSocialMediaRepository footerSocialMediaRepo;
         private ITeamRepository teamRepo;
@@ -34,7 +29,7 @@ namespace MintGarage.Controllers
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public AboutUsController(IPartnerRepository partnerRepository, IFooterContactInfoRepository footerContactInfoRepository,
+        public AboutUsController(IRepository<Partner> partnerRepository, IFooterContactInfoRepository footerContactInfoRepository,
             IFooterSocialMediaRepository footerSocialMediaRepository, ITeamRepository teamRepository, IValueRepository valueRepository,
             IWebHostEnvironment hostEnvironment)
         {
@@ -48,7 +43,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             AboutUsModel aboutUs = new AboutUsModel()
@@ -62,7 +57,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Update(int? id, string? operation, bool? show, string? table)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -102,7 +97,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditValue(AboutUsModel aboutUsModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -129,7 +124,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> AddMember(AboutUsModel aboutUsModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -152,7 +147,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditMember(AboutUsModel aboutUsModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -179,7 +174,7 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteMember(AboutUsModel aboutUsModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;

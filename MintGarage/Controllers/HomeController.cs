@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MintGarage.Models;
-using MintGarage.Models.Partners;
+using MintGarage.Models.PartnerT;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,13 +13,12 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.FooterContents.FooterContactInfo;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MintGarage.Controllers
 {
     public class HomeController : Controller
     {
-        public IPartnerRepository partnerRepository;
+        public IRepository<Partner> partnerRepo;
         private IHomeContentRepository homeContentRepo;
         private IReviewRepository reviewRepo;
         private ISupplierRepository supplierRepo;
@@ -33,12 +30,12 @@ namespace MintGarage.Controllers
         private IWebHostEnvironment hostEnv;
         private string imageFolder = "/Images/";
 
-        public HomeController(IPartnerRepository partnerRepo, IHomeContentRepository homeContentRepository, 
+        public HomeController(IRepository<Partner> partnerRepository, IHomeContentRepository homeContentRepository, 
                                             IReviewRepository reviewRepository, ISupplierRepository supplierRepository,
                                             IWebHostEnvironment hostEnvironment, IFooterSocialMediaRepository socialMediaRepository,
                                             IFooterContactInfoRepository contactRepository)
         {
-            partnerRepository = partnerRepo;
+            partnerRepo = partnerRepository;
             homeContentRepo = homeContentRepository;
             reviewRepo = reviewRepository;
             supplierRepo = supplierRepository;
@@ -49,7 +46,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -65,7 +62,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Update(int? id, string? operation, bool? show, string? table)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.message = TempData["message"];
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
@@ -105,7 +102,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> CreateHomeContent(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -134,7 +131,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditHomeContent(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -163,7 +160,7 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteHomeContent(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -175,7 +172,7 @@ namespace MintGarage.Controllers
 
         public IActionResult CreateReview(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -199,7 +196,7 @@ namespace MintGarage.Controllers
 
         public IActionResult EditReview(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -223,7 +220,7 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteReview(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -236,7 +233,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> CreateSupplier(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -264,7 +261,7 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditSupplier(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -292,7 +289,7 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteSupplier(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -335,7 +332,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Privacy()
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -347,7 +344,7 @@ namespace MintGarage.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;

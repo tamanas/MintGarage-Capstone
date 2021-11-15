@@ -16,7 +16,7 @@ using MintGarage.Models.HomeTab.SocialMedias;
 using MintGarage.Models.HomeTab.Suppliers;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.Partners;
+using MintGarage.Models.PartnerT;
 using MintGarage.Models.AboutUsTab.Teams;
 using MintGarage.Models.AboutUsTab.Values;
 using MintGarage.Models.GalleryTab;
@@ -63,7 +63,7 @@ namespace MintGarage
             services.AddScoped<IFooterContactInfoRepository, FooterContactInfoRepository>();
             services.AddScoped<IFooterSocialMediaRepository, FooterSocialMediaRepository>();
 
-            services.AddScoped<IPartnerRepository, PartnerRepository>();
+            services.AddScoped<IRepository<Partner>, PartnerRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IValueRepository, ValueRepository>();
             services.AddScoped<IRepository<Gallery>, GalleryRepository>();

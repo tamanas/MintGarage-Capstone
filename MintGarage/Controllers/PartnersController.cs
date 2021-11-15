@@ -1,35 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MintGarage.Models.Partners;
+using MintGarage.Models.PartnerT;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models;
 
 namespace MintGarage.Controllers
 {
     public class PartnersController : Controller
     {
 
-        public IPartnerRepository partnerRepository;
+        public IRepository<Partner> partnerRepo;
         private IFooterContactInfoRepository footerContactInfoRepository;
         private IFooterSocialMediaRepository footerSocialMediaRepository;
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public PartnersController(IPartnerRepository partnerRepo, 
+        public PartnersController(IRepository<Partner> partnerRepository, 
             IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
         {
-            partnerRepository = partnerRepo;
+            partnerRepo = partnerRepository;
             footerContactInfoRepository = footerContactInfoRepo;
             footerSocialMediaRepository = footerSocialMediaRepo;
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -53,64 +52,64 @@ namespace MintGarage.Controllers
                 }
             }
 
-            PartnerUpdateView partnerUpdateView = new PartnerUpdateView();
-            partnerUpdateView.Partners = partnerRepository.Partners;
+            PartnerModel partnerUpdateView = new PartnerModel();
+            partnerUpdateView.Partners = partnerRepo.Items;
             if (id != null && operation != "add")
             {
-                partnerUpdateView.Partner = partnerRepository.Partners.FirstOrDefault(s => s.PartnerID == id); ;
+                partnerUpdateView.Partner = partnerRepo.Items.FirstOrDefault(s => s.PartnerID == id); ;
             }
             return View(partnerUpdateView);
         }
 
-        public IActionResult Create(PartnerUpdateView partnerUpdateView)
+        public IActionResult Create(PartnerModel partnerUpdateView)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
-                partnerRepository.Create(partnerUpdateView.Partner);
+                partnerRepo.Create(partnerUpdateView.Partner);
                 TempData["AdminPartnerMessage"] = "Successfully added new Partner.";
             } else
             {
-                partnerUpdateView.Partners = partnerRepository.Partners;
+                partnerUpdateView.Partners = partnerRepo.Items;
                 SetViewBag(true, false, false);
                 return View("Update", partnerUpdateView);
             }
             return RedirectToAction("Update");
         }
 
-        public IActionResult Edit(PartnerUpdateView partnerUpdateView)
+        public IActionResult Edit(PartnerModel partnerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
-                partnerRepository.Edit(partnerUpdateView.Partner);
+                partnerRepo.Update(partnerModel.Partner);
                 TempData["AdminPartnerMessage"] = "Successfully edited Partner.";
             }
             else
             {
-                partnerUpdateView.Partners = partnerRepository.Partners;
+                partnerModel.Partners = partnerRepo.Items;
                 SetViewBag(false, true, false);
-                return View("Update", partnerUpdateView);
+                return View("Update", partnerModel);
             }
             return RedirectToAction("Update");
         }
 
-        public IActionResult Delete(PartnerUpdateView partnerUpdateView)
+        public IActionResult Delete(PartnerModel partnerUpdateView)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
-            partnerRepository.Delete(partnerUpdateView.Partner);
+            partnerRepo.Delete(partnerUpdateView.Partner);
             TempData["AdminPartnerMessage"] = "Successfully deleted Partner.";
             return RedirectToAction("Update");
         }

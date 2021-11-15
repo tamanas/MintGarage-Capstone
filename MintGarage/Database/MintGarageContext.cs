@@ -2,7 +2,7 @@
 using MintGarage.Models.AccountT;
 using MintGarage.Models.Categories;
 using MintGarage.Models.ConsultationT;
-using MintGarage.Models.Partners;
+using MintGarage.Models.PartnerT;
 using MintGarage.Models.HomeTab.Contacts;
 using MintGarage.Models.HomeTab.HomeContents;
 using MintGarage.Models.HomeTab.Reviews;

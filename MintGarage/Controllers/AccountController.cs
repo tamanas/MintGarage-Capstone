@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models.AccountT;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MintGarage.Models.Partners;
+using MintGarage.Models.PartnerT;
 using MintGarage.Models.FooterContents.FooterSocialMedias;
 using MintGarage.Models.FooterContents.FooterContactInfo;
 using MintGarage.Models;
@@ -14,25 +12,25 @@ namespace MintGarage.Controllers
     public class AccountController : Controller
     {
         public IRepository<Account> accoutRepo;
-        public IPartnerRepository partnerRepository;
+        public IRepository<Partner> partnerRepo;
         private IFooterContactInfoRepository footerContactInfoRepository;
         private IFooterSocialMediaRepository footerSocialMediaRepository;
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public AccountController(IRepository<Account> accountRepository, IPartnerRepository partnerRepo, 
+        public AccountController(IRepository<Account> accountRepository, IRepository<Partner> partnerRepository, 
             IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
         {
             footerContactInfoRepository = footerContactInfoRepo;
             footerSocialMediaRepository = footerSocialMediaRepo;
             accoutRepo = accountRepository;
-            partnerRepository = partnerRepo;
+            partnerRepo = partnerRepository;
         }
 
         public IActionResult Login()
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -45,7 +43,7 @@ namespace MintGarage.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(Account account)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -63,7 +61,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Update()
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -75,7 +73,7 @@ namespace MintGarage.Controllers
         [HttpPost]
         public IActionResult Update(UpdatePassword updatePassword)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
@@ -102,7 +100,7 @@ namespace MintGarage.Controllers
 
         public IActionResult Logout()
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
