@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace MintGarage.Models.HomeTab.Contacts
+namespace MintGarage.Models.FooterT.ContactInformation
 {
-    public class Contact
+    public class ContactInfo
     {
         [Key]
-        public int ContactsID { get; set; }
-
-        [Display(Name = "Address")]
-        public string Address { get; set; }
+        public int ContactInfoID { get; set; }
 
         [Display(Name = "Phone Number")]
+        [Required(ErrorMessage = "Phone Number Required")]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Must be 10 digits")]
         public string PhoneNumber { get; set; }
 
@@ -25,4 +18,3 @@ namespace MintGarage.Models.HomeTab.Contacts
         public string EmailAddress { get; set; }
     }
 }
-

@@ -2,8 +2,8 @@
 using MintGarage.Models.PartnerT;
 using System;
 using System.Linq;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterT.SocialMedias;
+using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
 
 namespace MintGarage.Controllers
@@ -12,25 +12,25 @@ namespace MintGarage.Controllers
     {
 
         public IRepository<Partner> partnerRepo;
-        private IFooterContactInfoRepository footerContactInfoRepository;
-        private IFooterSocialMediaRepository footerSocialMediaRepository;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
         public PartnersController(IRepository<Partner> partnerRepository, 
-            IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
+            IRepository<ContactInfo> contactRepo, IRepository<SocialMedia> mediaRepo)
         {
             partnerRepo = partnerRepository;
-            footerContactInfoRepository = footerContactInfoRepo;
-            footerSocialMediaRepository = footerSocialMediaRepo;
+            contactInfoRepo = contactRepo;
+            socialMediaRepo = mediaRepo;
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             SetViewBag(false, false, false);
@@ -64,8 +64,8 @@ namespace MintGarage.Controllers
         public IActionResult Create(PartnerModel partnerUpdateView)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
@@ -84,8 +84,8 @@ namespace MintGarage.Controllers
         public IActionResult Edit(PartnerModel partnerModel)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
@@ -105,8 +105,8 @@ namespace MintGarage.Controllers
         public IActionResult Delete(PartnerModel partnerUpdateView)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             partnerRepo.Delete(partnerUpdateView.Partner);

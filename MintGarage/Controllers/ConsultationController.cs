@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MintGarage.Models.ConsultationT;
 using MintGarage.Models.PartnerT;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterT.SocialMedias;
+using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
 
 namespace MintGarage.Controllers
@@ -15,27 +15,27 @@ namespace MintGarage.Controllers
     {
         public IRepository<Consultation> consultationRepo;
         public IRepository<Partner> partnerRepo;
-        private IFooterContactInfoRepository footerContactInfoRepository;
-        private IFooterSocialMediaRepository footerSocialMediaRepository;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
         public ConsultationController(IRepository<Consultation> consultationRepository, IRepository<Partner> partnerRepository,
-            IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
+            IRepository<ContactInfo> contactRepo, IRepository<SocialMedia> mediaRepo)
         {
             consultationRepo = consultationRepository;
             partnerRepo = partnerRepository;
-            footerContactInfoRepository = footerContactInfoRepo;
-            footerSocialMediaRepository = footerSocialMediaRepo;
+            contactInfoRepo = contactRepo;
+            socialMediaRepo = mediaRepo;
         }
 
         public async Task<IActionResult> Update(string sortOrder, string searchString)
         {
             var forms = consultationRepo.Items;
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             ViewData["CurrentFilter"] = searchString;
 
@@ -102,8 +102,8 @@ namespace MintGarage.Controllers
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             return View();
         }
@@ -136,8 +136,8 @@ namespace MintGarage.Controllers
                 TempData["Success"] = false;
             }
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             return View(consultation);
         }
@@ -156,8 +156,8 @@ namespace MintGarage.Controllers
             }
             consultationRepo.Delete(consultation);
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             return RedirectToAction("Update");
         }

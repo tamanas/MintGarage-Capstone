@@ -6,21 +6,7 @@ namespace MintGarage.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Contacts",
-                columns: table => new
-                {
-                    ContactsID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contacts", x => x.ContactsID);
-                });
-
+      
             migrationBuilder.CreateTable(
                 name: "HomeContents",
                 columns: table => new
@@ -50,20 +36,6 @@ namespace MintGarage.Migrations
                     table.PrimaryKey("PK_Reviews", x => x.ReviewsID);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "SocialMedias",
-                columns: table => new
-                {
-                    MediaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MediaName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MediaLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MediaImage = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SocialMedias", x => x.MediaID);
-                });
 
             migrationBuilder.CreateTable(
                 name: "Suppliers",
@@ -84,16 +56,10 @@ namespace MintGarage.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Contacts");
-
-            migrationBuilder.DropTable(
                 name: "HomeContents");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
-
-            migrationBuilder.DropTable(
-                name: "SocialMedias");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");

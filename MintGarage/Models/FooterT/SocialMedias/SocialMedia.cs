@@ -1,17 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace MintGarage.Models.FooterContents.FooterSocialMedias
+namespace MintGarage.Models.FooterT.SocialMedias
 {
-    public class FooterSocialMedia
+    public class SocialMedia
     {
         [Key]
-        public int FooterSocialMediaID { get; set; }
+        public int SocialMediaID { get; set; }
 
         [Display(Name = "Social Media Name")]
         [Required(ErrorMessage = "Social Media Name required")]

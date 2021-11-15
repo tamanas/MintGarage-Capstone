@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MintGarage.Database;
 using MintGarage.Models.AccountT;
-using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterT.ContactInformation;
 using System.Linq;
 using MintGarage.Models.AboutUsT.Values;
 
@@ -28,9 +28,9 @@ namespace MintGarage.Models
                 context.Account.Add(new Account() { Username = "admin", Password = "admin" });
                 context.SaveChanges();
             }
-            if (!context.FooterContactInfo.Any())
+            if (!context.ContactInfo.Any())
             {
-                context.FooterContactInfo.Add(new FooterContactInfo()
+                context.ContactInfo.Add(new ContactInfo()
                 {
                     PhoneNumber = "6475230914",
                     EmailAddress = "Info@mintgarage.ca"

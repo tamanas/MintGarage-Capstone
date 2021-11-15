@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models;
-using MintGarage.Models.FooterContents.FooterContactInfo;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
+using MintGarage.Models.FooterT.ContactInformation;
+using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.GalleryTab;
 using MintGarage.Models.PartnerT;
 using System;
@@ -17,8 +17,8 @@ namespace MintGarage.Controllers
     {
         private IRepository<Gallery> galleryRepo;
         public IRepository<Partner> partnerRepo;
-        private IFooterContactInfoRepository footerContactInfoRepo;
-        private IFooterSocialMediaRepository footerSocialMediaRepo;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
         private IWebHostEnvironment hostEnv;
         GalleryModel galleryModel = new GalleryModel();
 
@@ -29,21 +29,21 @@ namespace MintGarage.Controllers
 
 
         public GalleryController(IRepository<Gallery> galleryRepository, IRepository<Partner> partnerRepository,
-                                                IFooterContactInfoRepository contactInfoRepository, IFooterSocialMediaRepository socialMediaRepository,
+                                                IRepository<ContactInfo> contactInfoRepository, IRepository<SocialMedia> socialMediaRepository,
                                                 IWebHostEnvironment hostEnvironment)
         {
             galleryRepo = galleryRepository;
             partnerRepo = partnerRepository;
-            footerContactInfoRepo = contactInfoRepository;
-            footerSocialMediaRepo = socialMediaRepository;
+            contactInfoRepo = contactInfoRepository;
+            socialMediaRepo = socialMediaRepository;
             hostEnv = hostEnvironment;
         }
 
         public IActionResult Index()
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             return View(galleryRepo.Items);
         }
@@ -52,8 +52,8 @@ namespace MintGarage.Controllers
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.message = TempData["message"];
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             SetViewBag(false, false, false);
             if (operation != null && show != null)
@@ -85,8 +85,8 @@ namespace MintGarage.Controllers
         public async Task<IActionResult> Create(GalleryModel galleryModel)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid && galleryModel.Gallery.BeforeImageFile != null && galleryModel.Gallery.AfterImageFile != null)
@@ -113,8 +113,8 @@ namespace MintGarage.Controllers
         public async Task<IActionResult> Edit(GalleryModel galleryModel)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
@@ -144,8 +144,8 @@ namespace MintGarage.Controllers
         public IActionResult Delete(GalleryModel galleryModel)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             DeleteImage(galleryModel.Gallery.BeforeImage);

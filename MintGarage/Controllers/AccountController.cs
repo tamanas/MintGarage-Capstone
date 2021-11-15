@@ -3,8 +3,8 @@ using MintGarage.Models.AccountT;
 using System;
 using System.Linq;
 using MintGarage.Models.PartnerT;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterT.SocialMedias;
+using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
 
 namespace MintGarage.Controllers
@@ -13,17 +13,17 @@ namespace MintGarage.Controllers
     {
         public IRepository<Account> accoutRepo;
         public IRepository<Partner> partnerRepo;
-        private IFooterContactInfoRepository footerContactInfoRepository;
-        private IFooterSocialMediaRepository footerSocialMediaRepository;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
         public AccountController(IRepository<Account> accountRepository, IRepository<Partner> partnerRepository, 
-            IFooterContactInfoRepository footerContactInfoRepo, IFooterSocialMediaRepository footerSocialMediaRepo)
+            IRepository<ContactInfo> contactRepo, IRepository<SocialMedia> mediaRepo)
         {
-            footerContactInfoRepository = footerContactInfoRepo;
-            footerSocialMediaRepository = footerSocialMediaRepo;
+            contactInfoRepo = contactRepo;
+            socialMediaRepo = mediaRepo;
             accoutRepo = accountRepository;
             partnerRepo = partnerRepository;
         }
@@ -31,8 +31,8 @@ namespace MintGarage.Controllers
         public IActionResult Login()
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
@@ -44,8 +44,8 @@ namespace MintGarage.Controllers
         public IActionResult Login(Account account)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             if (ModelState.IsValid)
             {
@@ -62,8 +62,8 @@ namespace MintGarage.Controllers
         public IActionResult Update()
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
@@ -74,8 +74,8 @@ namespace MintGarage.Controllers
         public IActionResult Update(UpdatePassword updatePassword)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             if (ModelState.IsValid)
             {
@@ -101,8 +101,8 @@ namespace MintGarage.Controllers
         public IActionResult Logout()
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             return RedirectToAction("index", "Home");
         }

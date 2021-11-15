@@ -21,13 +21,13 @@
     </div>
     <div class="mt-2 mb-2">
         <form asp-action="EditFooterContactInfo" method="post">
-            <input asp-for="@Model.FooterContact.FooterContactInfoID" hidden />
+            <input asp-for="@Model.ContactInfo.ContactInfoID" hidden />
             <div class="row">
                 <div class="col-4">
-                    <input asp-for="@Model.FooterContact.PhoneNumber" class="form-control" placeholder="Phone Number" />
+                    <input asp-for="@Model.ContactInfo.PhoneNumber" class="form-control" placeholder="Phone Number" />
                 </div>
                 <div class="col-6">
-                    <input asp-for="@Model.FooterContact.EmailAddress" class="form-control" placeholder="Email" />
+                    <input asp-for="@Model.ContactInfo.EmailAddress" class="form-control" placeholder="Email" />
                 </div>
                 <div class="col-2">
                     <input type="submit" value="Edit" class="btn btn-warning" />
@@ -51,14 +51,14 @@
         </thead>
         <tbody>
             @{count = 0;}
-            @foreach (var item in Model.FooterContactInfo)
+            @foreach (var item in Model.ContactInfos)
             {
                 count++;
                 <tr>
                     <th class="col-1">@count</th>
                     <td class="col-4">@item.PhoneNumber</td>
                     <td class="col-6">@item.EmailAddress</td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterContactInfoID" asp-route-operation="contactEdit" asp-route-show=true>Edit</a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.ContactInfoID" asp-route-operation="contactEdit" asp-route-show=true>Edit</a></td>
                 </tr>
             }
         </tbody>
@@ -79,13 +79,13 @@
         <form asp-action="AddSocialMedia" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-2">
-                    <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" placeholder="Name" />
+                    <input asp-for="@Model.SocialMedia.Name" class="form-control" placeholder="Name" />
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" placeholder="URL"/>
+                    <input asp-for="@Model.SocialMedia.SocialMediaUrl" class="form-control" placeholder="URL"/>
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="image/*"/>
+                    <input asp-for="@Model.SocialMedia.ImageFile" accept="image/*"/>
                 </div>
                 <div class="col-2">
                     <input type="submit" value="Add" class="btn btn-success" />
@@ -100,18 +100,18 @@
 {
     <div class="mt-2 mb-2">
         <form asp-action="EditSocialMedia" method="post" enctype="multipart/form-data">
-            <input asp-for="@Model.FooterSocialMedia.FooterSocialMediaID" hidden />
+            <input asp-for="@Model.SocialMedia.SocialMediaID" hidden />
             <div class="row">
                 <div class="col-2">
-                    <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" placeholder="Social Media Name" />
+                    <input asp-for="@Model.SocialMedia.Name" class="form-control" placeholder="Social Media Name" />
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" placeholder="Social Media URL" />
+                    <input asp-for="@Model.SocialMedia.SocialMediaUrl" class="form-control" placeholder="Social Media URL" />
                 </div>
                 <div class="col-4">
-                    <img src="@("~/Images/" + Model.FooterSocialMedia.SocialMediaLogo)" width="100" height="70" asp-append-version="true" />
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaLogo" hidden />
-                    <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="image/*" />
+                    <img src="@("~/Images/" + Model.SocialMedia.SocialMediaLogo)" width="100" height="70" asp-append-version="true" />
+                    <input asp-for="@Model.SocialMedia.SocialMediaLogo" hidden />
+                    <input asp-for="@Model.SocialMedia.ImageFile" accept="image/*" />
                 </div>
                 <div class="col-2">
                     <input type="submit" value="Edit" class="btn btn-warning" />
@@ -126,17 +126,17 @@
 {
     <div>
         <form asp-action="DeleteSocialMedia" method="post">
-            <input asp-for="@Model.FooterSocialMedia.FooterSocialMediaID" hidden />
+            <input asp-for="@Model.SocialMedia.SocialMediaID" hidden />
             <div class="row">
                 <div class="col-2">
-                    <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" readonly />
+                    <input asp-for="@Model.SocialMedia.Name" class="form-control" readonly />
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" readonly />
+                    <input asp-for="@Model.SocialMedia.SocialMediaUrl" class="form-control" readonly />
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaLogo" hidden />
-                    <img src="@("~/Images/" + Model.FooterSocialMedia.SocialMediaLogo)" width="100" height="70" asp-append-version="true" />
+                    <input asp-for="@Model.SocialMedia.SocialMediaLogo" hidden />
+                    <img src="@("~/Images/" + Model.SocialMedia.SocialMediaLogo)" width="100" height="70" asp-append-version="true" />
                 </div>
                 <div class="col-2">
                     <input type="submit" value="Delete" class="btn btn-danger" />
@@ -162,7 +162,7 @@
         </thead>
         <tbody>
             @{count = 0;}
-            @foreach (var item in Model.FooterSocialMedias)
+            @foreach (var item in Model.SocialMedias)
             {
                 count++;
                 <tr>
@@ -170,8 +170,8 @@
                     <td class="col-2">@item.Name</td>
                     <td class="col-5">@item.SocialMediaUrl</td>
                     <td class="col-2"><img src="@("~/Images/"+item.SocialMediaLogo)" width="100" height="70" asp-append-version="true" /></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.SocialMediaID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.SocialMediaID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
                 </tr>
             }
         </tbody>

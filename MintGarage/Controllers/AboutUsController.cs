@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models;
 using MintGarage.Models.AboutUsT.TeamMembers;
 using MintGarage.Models.AboutUsT.Values;
-using MintGarage.Models.FooterContents.FooterContactInfo;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
+using MintGarage.Models.FooterT.ContactInformation;
+using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.PartnerT;
 using System;
 using System.Linq;
@@ -18,8 +18,8 @@ namespace MintGarage.Controllers
     public class AboutUsController : Controller
     {
         private IRepository<Partner> partnerRepo;
-        private IFooterContactInfoRepository footerContactInfoRepo;
-        private IFooterSocialMediaRepository footerSocialMediaRepo;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
         private IRepository<TeamMember> teamMemberRepo;
         private IRepository<Value> valueRepo;
 
@@ -29,13 +29,13 @@ namespace MintGarage.Controllers
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public AboutUsController(IRepository<Partner> partnerRepository, IFooterContactInfoRepository footerContactInfoRepository,
-            IFooterSocialMediaRepository footerSocialMediaRepository, IRepository<TeamMember> teamMemberRepository, IRepository<Value> valueRepository,
+        public AboutUsController(IRepository<Partner> partnerRepository, IRepository<ContactInfo> contactRepository,
+            IRepository<SocialMedia> mediaRepository, IRepository<TeamMember> teamMemberRepository, IRepository<Value> valueRepository,
             IWebHostEnvironment hostEnvironment)
         {
             partnerRepo = partnerRepository;
-            footerContactInfoRepo = footerContactInfoRepository;
-            footerSocialMediaRepo = footerSocialMediaRepository;
+            contactInfoRepo = contactRepository;
+            socialMediaRepo = mediaRepository;
             teamMemberRepo = teamMemberRepository;
             valueRepo = valueRepository;
             hostEnv = hostEnvironment;
@@ -44,8 +44,8 @@ namespace MintGarage.Controllers
         public IActionResult Index()
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             AboutUsModel aboutUs = new AboutUsModel()
             
             {
@@ -58,8 +58,8 @@ namespace MintGarage.Controllers
         public IActionResult Update(int? id, string? operation, bool? show, string? table)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             ViewBag.message = TempData["message"];
 
@@ -98,8 +98,8 @@ namespace MintGarage.Controllers
         public async Task<IActionResult> EditValue(AboutUsModel aboutUsModel)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
@@ -125,8 +125,8 @@ namespace MintGarage.Controllers
         public async Task<IActionResult> AddMember(AboutUsModel aboutUsModel)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid && aboutUsModel.TeamMember.ImageFile != null)
@@ -148,8 +148,8 @@ namespace MintGarage.Controllers
         public async Task<IActionResult> EditMember(AboutUsModel aboutUsModel)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
@@ -175,8 +175,8 @@ namespace MintGarage.Controllers
         public IActionResult DeleteMember(AboutUsModel aboutUsModel)
         {
             ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             DeleteImage(aboutUsModel.TeamMember.MemberImage);
