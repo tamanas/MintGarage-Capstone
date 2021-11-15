@@ -16,7 +16,7 @@ namespace MintGarage.Controllers
 {
     public class GalleryController : Controller
     {
-        private IGalleryRepository galleryRepo;
+        private IRepository<Gallery> galleryRepo;
         public IPartnerRepository partnerRepo;
         private IFooterContactInfoRepository footerContactInfoRepo;
         private IFooterSocialMediaRepository footerSocialMediaRepo;
@@ -29,7 +29,7 @@ namespace MintGarage.Controllers
 
 
 
-        public GalleryController(IGalleryRepository galleryRepository, IPartnerRepository partnerRepository,
+        public GalleryController(IRepository<Gallery> galleryRepository, IPartnerRepository partnerRepository,
                                                 IFooterContactInfoRepository contactInfoRepository, IFooterSocialMediaRepository socialMediaRepository,
                                                 IWebHostEnvironment hostEnvironment)
         {
@@ -46,7 +46,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
             ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
-            return View(galleryRepo.Galleries);
+            return View(galleryRepo.Items);
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)
@@ -73,11 +73,11 @@ namespace MintGarage.Controllers
                 }
             }
 
-            galleryModel.Galleries = galleryRepo.Galleries;
+            galleryModel.Galleries = galleryRepo.Items;
 
             if (id != null && operation != "add")
             {
-                galleryModel.Gallery = galleryRepo.Galleries.FirstOrDefault(s => s.GalleryID == id);
+                galleryModel.Gallery = galleryRepo.Items.FirstOrDefault(s => s.GalleryID == id);
             }
             return View(galleryModel);
         }
@@ -95,7 +95,7 @@ namespace MintGarage.Controllers
                 galleryModel.Gallery.BeforeImage = await SaveImage(galleryModel.Gallery.BeforeImageFile);
                 galleryModel.Gallery.AfterImage = await SaveImage(galleryModel.Gallery.AfterImageFile);
 
-                galleryRepo.Add(galleryModel.Gallery);
+                galleryRepo.Create(galleryModel.Gallery);
                 TempData["message"] = "Successfully added new Gallery Images.";
             }
             else
@@ -104,7 +104,7 @@ namespace MintGarage.Controllers
                 {
                     ModelState.AddModelError("Image", "Before and After images are required");
                 }
-                galleryModel.Galleries = galleryRepo.Galleries;
+                galleryModel.Galleries = galleryRepo.Items;
                 SetViewBag(true, false, false);
                 return View("Update", galleryModel);
             }
@@ -135,7 +135,7 @@ namespace MintGarage.Controllers
             }
             else
             {
-                galleryModel.Galleries = galleryRepo.Galleries;
+                galleryModel.Galleries = galleryRepo.Items;
                 SetViewBag(false, true, false);
                 return View("Update", galleryModel);
             }

@@ -66,7 +66,7 @@ namespace MintGarage
             services.AddScoped<IPartnerRepository, PartnerRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IValueRepository, ValueRepository>();
-            services.AddScoped<IGalleryRepository, GalleryRepository>();
+            services.AddScoped<IRepository<Gallery>, GalleryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

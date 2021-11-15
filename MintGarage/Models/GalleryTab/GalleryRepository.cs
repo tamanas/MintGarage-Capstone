@@ -6,30 +6,28 @@ using System.Threading.Tasks;
 
 namespace MintGarage.Models.GalleryTab
 {
-    public class GalleryRepository : IGalleryRepository
+    public class GalleryRepository : IRepository<Gallery>
     {
         private MintGarageContext context;
         public GalleryRepository(MintGarageContext ctx)
         {
             context = ctx;
         }
-        public IQueryable<Gallery> Galleries => context.Gallery;
+        public IQueryable<Gallery> Items => context.Gallery;
 
-        public void Add(Gallery gallery)
+        public void Create(Gallery item)
         {
-            context.Gallery.Add(gallery);
+            context.Gallery.Add(item);
             Save();
         }
-
-        public void Delete(Gallery gallery)
+        public void Update(Gallery item)
         {
-            context.Gallery.Remove(gallery);
+            context.Gallery.Update(item);
             Save();
         }
-
-        public void Update(Gallery gallery)
+        public void Delete(Gallery item)
         {
-            context.Gallery.Update(gallery);
+            context.Gallery.Remove(item);
             Save();
         }
         public void Save()
