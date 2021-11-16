@@ -1,0 +1,26 @@
+﻿
+#partners-dropdown a {
+    text-decoration: none;
+    color: #41ca57;
+}
+
+#partners-dropdown .partner-list-item:not(:last-child) {
+    border-bottom: 2px solid #41ca57;
+}
+
+.partner-list-item {
+    padding: 5px 10px 5px 10px;
+}
+
+#partners-dropdown .partner-list-item:first-child {
+    padding: 0px 10px 5px 10px;
+}
+
+#partners-dropdown .partner-list-item:last-child {
+    padding: 5px 10px 0px 10px;
+}
+
+#partners-dropdown li:hover {
+    background-color: lightgrey;
+}
+
