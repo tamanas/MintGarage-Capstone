@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
     <link rel="stylesheet" href="~/css/gallery.css" />
+    <link rel="stylesheet" href="~/css/partnersDropdown.css" />
     <script src="~/js/_layout.js"></script>
     <script src="~/js/gallery.js"></script>
 </head>
@@ -36,18 +37,19 @@
                         <li class="nav-item">
                             <a class=" nav-link text-white font-weight-bold" asp-controller="Gallery" asp-action="Index">Gallery</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class=" nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                @foreach (var partner in ViewBag.Partners)
-                                {
-                                    <li><a href=@partner.PartnerUrl>@partner.PartnerName</a></li>
-                                }
-                            </ul>
-                        </li>
                         <li class="nav-item">
                             <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Index">About Us</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
+                            <ul id="partners-dropdown" class="dropdown-menu">
+                                @foreach (var partner in ViewBag.Partners)
+                                {
+                                    <li class="partner-list-item"><a href=@partner.PartnerUrl>@partner.PartnerName</a></li>
+                                }
+                            </ul>
+                        </li>
+
                     </ul>
                 </div>
             </div>
