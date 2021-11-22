@@ -21,3 +21,10 @@
     }
 }
 
+.admin-btn li:hover{
+    background-color: lightgrey;
+}
+
+.admin-btn li{
+    width: 100%;
+}
