@@ -30,7 +30,7 @@
             <th  class="col-1">Phone Number</th>
             <th class="col-2"><a asp-action="Update" asp-route-sortCol="service"  asp-route-sort="@ViewData["allow"]">Service Type <i class="bi bi-arrow-down-up"></i></a></th>
             <th  class="col-3"><a asp-action="Update" asp-route-sortCol="description"  asp-route-sort="@ViewData["allow"]">Description <i class="bi bi-arrow-down-up"></i></a></th>
-            <th  class="col-1">Delete</th>
+            <th  class="col-1 text-right">Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -45,7 +45,7 @@
                 <td  class="col-1">@item.PhoneNumber</td>
                 <td  class="col-2">@item.ServiceType</td>
                 <td  class="col-3 text-breakable">@item.FormDescription</td>
-                <td  class="col-1"><a asp-action="Delete" asp-controller="ConsultationForms" asp-route-id="@item.ConsultationFormID" onclick="return confirm('Are you sure you to delete this?')"> <i class="bi bi-trash"></i></a></td>
+                <td  class="col-1 text-right"><a asp-action="Delete" asp-controller="ConsultationForms" asp-route-id="@item.ConsultationFormID" onclick="return confirm('Are you sure you to delete this?')">Delete <i class="bi bi-trash"></i></a></td>
             </tr>
         }
     </tbody>
