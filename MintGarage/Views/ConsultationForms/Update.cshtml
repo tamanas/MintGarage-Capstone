@@ -3,43 +3,51 @@
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var count = 0;
 }
 
 <form asp-action="Update" method="get">
-    <div class="form-actions no-color mt-5">
-        <p>
-            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-success" />
-            <a asp-action="Index" class="btn btn-info">Clear</a>
-        </p>
+    <div class="input-group input-group-sm mb-3 mt-5 justify-content-center">
+        <input  class="w-50 px-2" type="text" name="SearchString" value="@ViewData["CurrentFilter"]" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
+        <div class="input-group-append">
+                <a asp-action="Update" class="input-group-text"><i class="bi bi-x-lg"></i></a>
+        </div>
+        <input type="submit" value="Search" class="btn btn-info ml-2 mr-2" />
     </div>
 </form>
+
 <div>
-<table class="table">
+<table class="table consultation-table">
     <thead>
+        <tr class="h5 bg-dark text-white text-center font-weight-bold">
+            <th colspan="8">Consultation</th>
+        </tr>
         <tr>
-            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["FirstNameSortParm"]">First Name</a></th>
-            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["LastNameSortParm"]">Last Name</a></th>
-            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["EmailSortParm"]">Email Address</a></th>
-            <th>Phone Number</th>
-            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["ServiceSortParm"]">Service Type</a></th>
-            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["DescSortParm"]">Description</a></th>
-            <th></th>
+            <th  class="col-1">No. </th>
+            <th  class="col-1"><a asp-action="Update" asp-route-sortCol="fname"  asp-route-sort="@ViewData["allow"]">First Name <i class="bi bi-arrow-down-up"></i></a></th>
+            <th  class="col-1"><a asp-action="Update" asp-route-sortCol="lname"  asp-route-sort="@ViewData["allow"]">Last Name <i class="bi bi-arrow-down-up"></i></a></th>
+            <th  class="col-2"><a asp-action="Update" asp-route-sortCol="email"  asp-route-sort="@ViewData["allow"]">Email Address <i class="bi bi-arrow-down-up"></i></a></th>
+            <th  class="col-1">Phone Number</th>
+            <th class="col-2"><a asp-action="Update" asp-route-sortCol="service"  asp-route-sort="@ViewData["allow"]">Service Type <i class="bi bi-arrow-down-up"></i></a></th>
+            <th  class="col-3"><a asp-action="Update" asp-route-sortCol="description"  asp-route-sort="@ViewData["allow"]">Description <i class="bi bi-arrow-down-up"></i></a></th>
+            <th  class="col-1">Delete</th>
         </tr>
     </thead>
     <tbody>
-            @foreach (var item in Model)
-            {
+        @foreach (var item in Model)
+        {
+            count++;
             <tr>
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.EmailAddress</td>
-                <td>@item.PhoneNumber</td>
-                <td>@item.ServiceType</td>
-                <td>@item.FormDescription</td>
-                <td><a asp-action="Delete" asp-controller="ConsultationForms" asp-route-id="@item.ConsultationFormID" onclick="return confirm('Are you sure you to delete this?')">Delete</a></td>
+                <td  class="col-1">@count</td>
+                <td  class="col-1">@item.FirstName</td>
+                <td  class="col-1">@item.LastName</td>
+                <td  class="col-2">@item.EmailAddress</td>
+                <td  class="col-1">@item.PhoneNumber</td>
+                <td  class="col-2">@item.ServiceType</td>
+                <td  class="col-3 text-breakable">@item.FormDescription</td>
+                <td  class="col-1"><a asp-action="Delete" asp-controller="ConsultationForms" asp-route-id="@item.ConsultationFormID" onclick="return confirm('Are you sure you to delete this?')"> <i class="bi bi-trash"></i></a></td>
             </tr>
-            }
-        </tbody>
+        }
+    </tbody>
     </table>
 </div>
