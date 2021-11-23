@@ -7,7 +7,7 @@
 }
 
 <div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
-    <p class="h3 p-1">Gallery</p>
+    <p class="h4 p-1">Gallery</p>
 </div>
 <div>
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -93,7 +93,7 @@
             <th class="col-5">Before Image</th>
             <th class="col-4">After Image</th>
             <th class="col-1"></th>
-            <th class="col-1"><a asp-action="Update" asp-controller="Gallery" asp-route-operation="add" asp-route-show=true>Add</a></th>
+            <th class="col-1"><a asp-action="Update" asp-controller="Gallery" asp-route-operation="add" asp-route-show=true><i class="bi bi-plus-lg"></i></a></th>
         </tr>
     </thead>
     <tbody>
@@ -105,8 +105,8 @@
             <th class="col-1">@count</th>
             <td class="col-5"><img src="@("~/Images/"+item.BeforeImage)" width="100" height="70" asp-append-version="true" /></td>
             <td class="col-4"><img src="@("~/Images/"+item.AfterImage)" width="100" height="70" asp-append-version="true" /></td>
-            <td class="col-1"><a asp-action="Update" asp-controller="Gallery" asp-route-id="@item.GalleryID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
-            <td class="col-1"><a asp-action="Update" asp-controller="Gallery" asp-route-id="@item.GalleryID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
+            <td class="col-1"><a asp-action="Update" asp-controller="Gallery" asp-route-id="@item.GalleryID" asp-route-operation="edit" asp-route-show=true><i class="bi bi-pencil-fill"></i></a></td>
+            <td class="col-1"><a asp-action="Update" asp-controller="Gallery" asp-route-id="@item.GalleryID" asp-route-operation="delete" asp-route-show=true><i class="bi bi-x-lg"></i></a></td>
         </tr>
         }
     </tbody>
