@@ -33,21 +33,10 @@
     }
 
 .footer-links {
-    padding-left: 0;
     list-style: none
 }
 
 .footer-links li {
-    display: block
-}
-
-.footer-links .email {
-    list-style-image: url('../Images/email-icon.png')
-    }
-
-
-.footer-links .phone {
-    list-style-image: url('../Images/phone-icon.png')
 }
 
 .footer-links a {

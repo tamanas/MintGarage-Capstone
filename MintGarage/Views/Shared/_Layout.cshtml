@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="~/css/home.css" />
     <link rel="stylesheet" href="~/css/login.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/footer.css" />
-    <link rel="stylesheet" href="~/css/gallery.css" />
+@*    <link rel="stylesheet" href="~/css/footer.css" />
+*@    <link rel="stylesheet" href="~/css/gallery.css" />
     <link rel="stylesheet" href="~/css/partnersDropdown.css" />
     <script src="~/js/_layout.js"></script>
     <script src="~/js/gallery.js"></script>
 </head>
-<body>
+<body style="min-height:100vh;display:flex;flex-direction:column;">
 
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success box-shadow mb-3 fixed-top">
@@ -57,21 +57,21 @@
         @RenderSection("sidemenu", false)
     </header>
     <br />
-    <div class="container mb-5 pt-5">
+    <div class="container mb-5 pt-5" style="">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="bg-success text-white mb-0 footer fixed-bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-6">
+    <footer class="bg-success text-white pb-2 footer" style="margin-top:auto;">
+        <div class="">
+            <div class="" style="display:flex;flex-wrap:wrap;">
+                <div class="col-6 text-breakable">
                     <img src="~/Images/mintlogo.png" alt="Mint Logo" />
                     <p class="text-justify">@ViewBag.AboutData</p>
                 </div>
 
-                <div class="col-xs-6 col-md-3">
+                <div class="col-3">
                     <h6>Links</h6>
                     <ul class="footer-links">
                         <li><a asp-controller="ConsultationForms" asp-action="Create">Consultation</a></li>
@@ -81,9 +81,9 @@
                     </ul>
                 </div>
 
-                <div class="col-xs-6 col-md-3">
+                <div class="col-3">
                     <h6>Contact Information</h6>
-                    <ul class="footer-links">
+                    <ul class="">
                         @foreach (var social in ViewBag.SocialMedias)
                         {
                             <li><a href="@social.SocialMediaUrl">@social.Name</a></li>
