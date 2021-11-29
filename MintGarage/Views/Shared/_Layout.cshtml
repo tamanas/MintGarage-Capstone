@@ -16,7 +16,7 @@
     <script src="~/js/_layout.js"></script>
     <script src="~/js/gallery.js"></script>
 </head>
-<body style="min-height:100vh;display:flex;flex-direction:column;">
+<body>
 
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success box-shadow mb-3 fixed-top">
@@ -57,31 +57,21 @@
         @RenderSection("sidemenu", false)
     </header>
     <br />
-    <div class="container mb-5 pt-5" style="">
+    <div class="container mb-5 pt-5">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="bg-success text-white pb-2 footer" style="margin-top:auto;">
-        <div class="">
+    <footer class="bg-success text-white pb-3 footer">
+        <div class="container">
             <div class="" style="display:flex;flex-wrap:wrap;">
-                <div class="col-6 text-breakable">
+                <div class="col-8 text-wrap">
                     <img src="~/Images/mintlogo.png" alt="Mint Logo" />
                     <p class="text-justify">@ViewBag.AboutData</p>
                 </div>
 
-                <div class="col-3">
-                    <h6>Links</h6>
-                    <ul class="footer-links">
-                        <li><a asp-controller="ConsultationForms" asp-action="Create">Consultation</a></li>
-                        <li><a asp-controller="Product" asp-action="Index">Products</a></li>
-                        <li><a asp-controller="Portfolio" asp-action="Index">Portfolio</a></li>
-                        <li><a asp-controller="AboutUs" asp-action="Index">About Us</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-3">
+                <div class="col-4">
                     <h6>Contact Information</h6>
                     <ul class="">
                         @foreach (var social in ViewBag.SocialMedias)
@@ -97,7 +87,7 @@
                 </div>
             </div>
             <hr>
-            <div class="text-center">
+            <div class="text-center text-wrap">
                 <div>
                     Copyright &copy; 2010 - 2021   |   Mint Garage Inc.   |   All Rights Reserved   |   Powered by
                     <a href="https://safeguardhosting.ca/">SafeGuard Hosting</a>

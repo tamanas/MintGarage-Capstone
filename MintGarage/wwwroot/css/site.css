@@ -67,3 +67,9 @@ html {
     white-space: nowrap;
 }
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
