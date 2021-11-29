@@ -63,17 +63,17 @@
         </main>
     </div>
 
-    <footer class="bg-success text-white pb-3 footer">
+    <footer class="bg-success text-white pb-3 footer footer-container">
         <div class="container">
-            <div class="" style="display:flex;flex-wrap:wrap;">
+            <div style="display: flex; flex-wrap: wrap;">
                 <div class="col-8 text-wrap">
                     <img src="~/Images/mintlogo.png" alt="Mint Logo" />
                     <p class="text-justify">@ViewBag.AboutData</p>
                 </div>
 
-                <div class="col-4">
+                <div class="col-4 pt-3">
                     <h6>Contact Information</h6>
-                    <ul class="">
+                    <ul class="contact-list">
                         @foreach (var social in ViewBag.SocialMedias)
                         {
                             <li><a href="@social.SocialMediaUrl">@social.Name</a></li>

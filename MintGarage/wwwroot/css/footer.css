@@ -1,3 +1,7 @@
 ﻿.footer-container {
     margin-top: auto;
 }
+
+.contact-list {
+    list-style: none;
+}

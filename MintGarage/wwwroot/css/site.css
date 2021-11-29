@@ -63,8 +63,7 @@ html {
   position: absolute;
   width: 100%;
   line-height: 20px; /* Vertically center the text there */
-    bottom: 0;
-    white-space: nowrap;
+  bottom: 0;
 }
 
 body {
