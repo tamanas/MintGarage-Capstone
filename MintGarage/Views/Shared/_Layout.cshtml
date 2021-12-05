@@ -43,13 +43,8 @@
                             <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Index">About Us</a>
                         </li>
                         <li class="nav-item dropdown">
-<<<<<<< HEAD
-                            <a class=" nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partner" asp-action="Index">Partners<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-=======
                             <a class="nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
                             <ul id="partners-dropdown" class="dropdown-menu">
->>>>>>> 60f0b9ea8913a40cbd23c6389b2a621005de825e
                                 @foreach (var partner in ViewBag.Partners)
                                 {
                                     <li class="partner-list-item"><a href=@partner.PartnerUrl>@partner.PartnerName</a></li>
@@ -77,29 +72,9 @@
                     <img class="footer-img" src="~/Images/mintlogo.png" alt="Mint Logo" />
                     <p class="text-justify">@ViewBag.AboutData</p>
                 </div>
-
-<<<<<<< HEAD
-                <div class="col-xs-6 col-md-3">
-                    <h6>Links</h6>
-                    <ul class="footer-links">
-                        <li><a asp-controller="Consultation" asp-action="Index">Consultation</a></li>
-                        <li><a asp-controller="Gallery" asp-action="Index">Gallery</a></li>
-                        <li><a asp-controller="AboutUs" asp-action="Index">About Us</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-xs-6 col-md-3">
-                    <h6>Contact Information</h6>
-                    <ul class="footer-links">
-                        @foreach (var social in ViewBag.SocialMedias)
-                        {
-                            <li><a href="@social.SocialMediaUrl">@social.Name</a></li>
-                        }
-=======
                 <div class="col-4 pt-3">
                     <h6><u>Contact Information</u></h6>
                     <div>
->>>>>>> 60f0b9ea8913a40cbd23c6389b2a621005de825e
                         @foreach (var contact in ViewBag.Contacts)
                         {
                              <span><i class="bi bi-geo-alt"></i>  @contact.Address</span><br />
