@@ -82,11 +82,13 @@
                         }
                         @foreach (var contact in ViewBag.Contacts)
                         {
-                            <li><i class="bi bi-envelope"></i> @contact.EmailAddress</li>
+                            <li><i class="bi bi-geo-alt"></i>  @contact.Address</li>
+                            <li><i class="bi bi-envelope"></i>  @contact.EmailAddress</li>
                             <li>
-                                <i class=" bi bi-telephone-forward-fill"></i>
-                                 +1 (@contact.PhoneNumber.Substring(0, 3))-@contact.PhoneNumber.Substring(3, 3)-@contact.PhoneNumber.Substring(6)
+                                <i class=" bi bi-telephone-forward"></i>
+                                +1 (@contact.PhoneNumber.Substring(0, 3))-@contact.PhoneNumber.Substring(3, 3)-@contact.PhoneNumber.Substring(6)
                             </li>
+                            <li><i class="bi bi-clock"></i>  @contact.WorkingHour</li>
                         }
                     </ul>
                 </div>
