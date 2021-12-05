@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/css/login.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
+    <link rel="stylesheet" href="~/css/footer.css" />
     <link rel="stylesheet" href="~/css/gallery.css" />
     <link rel="stylesheet" href="~/css/consultation.css" />
     <link rel="stylesheet" href="~/css/partnersDropdown.css" />
@@ -64,7 +65,7 @@
         </main>
     </div>
 
-    <footer class="bg-success text-white pb-3">
+    <footer class="bg-success text-white pb-3 test">
         <div class="container">
             <div style="display: flex; flex-wrap: wrap;">
                 <div class="col-8 text-wrap">
@@ -74,15 +75,18 @@
 
                 <div class="col-4 pt-3">
                     <h6>Contact Information</h6>
-                    <ul class="contact-list">
+                    <ul class="contact-list" style="list-style:none;">
                         @foreach (var social in ViewBag.SocialMedias)
                         {
                             <li><a href="@social.SocialMediaUrl">@social.Name</a></li>
                         }
                         @foreach (var contact in ViewBag.Contacts)
                         {
-                            <li>@contact.EmailAddress</li>
-                            <li>@contact.PhoneNumber</li>
+                            <li><i class="bi bi-envelope"></i> @contact.EmailAddress</li>
+                            <li>
+                                <i class=" bi bi-telephone-forward-fill"></i>
+                                 +1 (@contact.PhoneNumber.Substring(0, 3))-@contact.PhoneNumber.Substring(3, 3)-@contact.PhoneNumber.Substring(6)
+                            </li>
                         }
                     </ul>
                 </div>
