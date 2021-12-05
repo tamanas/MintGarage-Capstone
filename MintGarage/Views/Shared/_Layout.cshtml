@@ -65,39 +65,42 @@
         </main>
     </div>
 
-    <footer class="bg-success text-white pb-3 test">
+    <footer class="bg-success text-white pb-3">
         <div class="container">
             <div style="display: flex; flex-wrap: wrap;">
                 <div class="col-8 text-wrap">
-                    <img src="~/Images/mintlogo.png" alt="Mint Logo" />
+                    <img class="footer-img" src="~/Images/mintlogo.png" alt="Mint Logo" />
                     <p class="text-justify">@ViewBag.AboutData</p>
                 </div>
 
                 <div class="col-4 pt-3">
-                    <h6>Contact Information</h6>
-                    <ul class="contact-list" style="list-style:none;">
-                        @foreach (var social in ViewBag.SocialMedias)
-                        {
-                            <li><a href="@social.SocialMediaUrl">@social.Name</a></li>
-                        }
+                    <h6><u>Contact Information</u></h6>
+                    <div>
                         @foreach (var contact in ViewBag.Contacts)
                         {
-                            <li><i class="bi bi-geo-alt"></i>  @contact.Address</li>
-                            <li><i class="bi bi-envelope"></i>  @contact.EmailAddress</li>
-                            <li>
+                             <span><i class="bi bi-geo-alt"></i>  @contact.Address</span><br />
+                            <span><i class="bi bi-envelope"></i>  @contact.EmailAddress</span><br />
+                            <span>
                                 <i class=" bi bi-telephone-forward"></i>
                                 +1 (@contact.PhoneNumber.Substring(0, 3))-@contact.PhoneNumber.Substring(3, 3)-@contact.PhoneNumber.Substring(6)
-                            </li>
-                            <li><i class="bi bi-clock"></i>  @contact.WorkingHour</li>
+                            </span><br />
+                            <span><i class="bi bi-clock"></i>  @contact.WorkingHour</span><br />
                         }
-                    </ul>
+                    </div>
                 </div>
             </div>
-            <hr>
+            <hr />
+            <p class="text-center justify-content-between footer-links">
+                @foreach (var social in ViewBag.SocialMedias)
+                {
+                    <span class="px-3"><i class=@social.SocialMediaIcon></i> <a href="@social.SocialMediaUrl">@social.Name</a></span>
+                }
+            </p>
+            <hr />
             <div class="text-center text-wrap">
-                <div>
+                <div class="footer-links">
                     Copyright &copy; 2010 - 2021   |   Mint Garage Inc.   |   All Rights Reserved   |   Powered by
-                    <a href="https://safeguardhosting.ca/">SafeGuard Hosting</a>
+                    <a href="https://safeguardhosting.ca/"><u>SafeGuard Hosting</u></a>
                 </div>
             </div>
         </div>

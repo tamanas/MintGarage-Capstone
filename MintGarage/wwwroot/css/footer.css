@@ -3,6 +3,11 @@
     flex: 1 1 auto;
 }
 
-.contact-list {
-    list-style: none;
+.footer-links a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer-img {
+    width: 200px;
 }

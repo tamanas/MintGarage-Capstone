@@ -106,18 +106,13 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid && footerModel.FooterSocialMedia.ImageFile != null)
+            if (ModelState.IsValid)
             {
-                footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
                 footerSocialMediaRepository.Create(footerModel.FooterSocialMedia);
                 TempData["AdminFooterSocialMediaMessage"] = "Successfully added Social Media.";
             }
             else
             {
-                if (footerModel.FooterSocialMedia.ImageFile == null)
-                {
-                    ModelState.AddModelError("image", "Image is required");
-                }
                 footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
                 footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
                 SetViewBag(false, true, false, false);
@@ -135,11 +130,6 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                if (footerModel.FooterSocialMedia.ImageFile != null)
-                {
-                    DeleteImage(footerModel.FooterSocialMedia.SocialMediaLogo);
-                    footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
-                }
                 footerSocialMediaRepository.Edit(footerModel.FooterSocialMedia);
                 TempData["AdminFooterSocialMediaMessage"] = "Successfully edited Social Media.";
             }
@@ -160,7 +150,6 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
             ViewBag.AboutData = AboutUs;
 
-            DeleteImage(footerModel.FooterSocialMedia.SocialMediaLogo);
             footerSocialMediaRepository.Delete(footerModel.FooterSocialMedia);
             TempData["AdminFooterSocialMediaMessage"] = "Successfully deleted Social Media.";
             return RedirectToAction("Update");
@@ -172,28 +161,6 @@ namespace MintGarage.Controllers
             ViewBag.add = add;
             ViewBag.edit = edit;
             ViewBag.delete = delete;
-        }
-
-        public async Task<string> SaveImage(IFormFile imageFile)
-        {
-            string imageName = Path.GetFileNameWithoutExtension(imageFile.FileName) +
-                                        DateTime.Now.ToString("yyMMddssffff") +
-                                        Path.GetExtension(imageFile.FileName);
-            string imagePath = Path.Combine(hostEnv.WebRootPath + imageFolder, imageName);
-            using (var fileStream = new FileStream(imagePath, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(fileStream);
-            }
-            return imageName;
-        }
-
-        public void DeleteImage(string imageName)
-        {
-            string imagePath = Path.Combine(hostEnv.WebRootPath + imageFolder, imageName);
-            if (System.IO.File.Exists(imagePath))
-            {
-                System.IO.File.Delete(imagePath);
-            }
         }
     }
 }

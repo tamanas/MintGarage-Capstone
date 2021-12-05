@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MintGarage.Database;
 
 namespace MintGarage.Migrations
 {
     [DbContext(typeof(MintGarageContext))]
-    partial class MintGarageContextModelSnapshot : ModelSnapshot
+    [Migration("20211205081837_footerSocialMediaUpdate")]
+    partial class footerSocialMediaUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
