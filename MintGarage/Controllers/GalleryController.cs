@@ -89,7 +89,7 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid && galleryModel.Gallery.BeforeImageFile != null && galleryModel.Gallery.AfterImageFile != null)
+            if (galleryModel.Gallery.BeforeImageFile != null && galleryModel.Gallery.AfterImageFile != null)
             {
                 galleryModel.Gallery.BeforeImage = await SaveImage(galleryModel.Gallery.BeforeImageFile);
                 galleryModel.Gallery.AfterImage = await SaveImage(galleryModel.Gallery.AfterImageFile);

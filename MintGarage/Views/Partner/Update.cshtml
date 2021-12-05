@@ -6,7 +6,7 @@
     var count = 0;
 }
 
-<div class="bg-success font-weight-bold text-center text-white">
+<div class="bg-success font-weight-bold text-center text-white mt-5">
     <span>@ViewBag.Message</span>
 </div>
 <div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
@@ -86,7 +86,7 @@
                 <th class="col-3">Partner</th>
                 <th class="col-6">URL</th>
                 <th class="col-1"></th>
-                <th class="col-1 text-right"><a asp-action="Update" asp-controller="Partners" asp-route-operation="add" asp-route-show=true>Add <i class="bi bi-plus-circle"></i></a></th>
+                <th class="col-1 text-right"><a asp-action="Update" asp-controller="Partner" asp-route-operation="add" asp-route-show=true>Add <i class="bi bi-plus-circle"></i></a></th>
             </tr>
         </thead>
         <tbody>
@@ -97,8 +97,8 @@
                     <th class="col-1">@count</th>
                     <td class="col-3">@item.PartnerName</td>
                     <td class="col-6">@item.PartnerUrl</td>
-                    <td class="col-1 text-right"><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID" asp-route-operation="edit" asp-route-show=true>Edit <i class="bi bi-pencil-fill"></i></a></td>
-                    <td class="col-1 text-right"><a asp-action="Update" asp-controller="Partners" asp-route-id="@item.PartnerID" asp-route-operation="delete" asp-route-show=true>Delete <i class="bi bi-trash-fill"></i></a></td>
+                    <td class="col-1 text-right"><a asp-action="Update" asp-controller="Partner" asp-route-id="@item.PartnerID" asp-route-operation="edit" asp-route-show=true>Edit <i class="bi bi-pencil-fill"></i></a></td>
+                    <td class="col-1 text-right"><a asp-action="Update" asp-controller="Partner" asp-route-id="@item.PartnerID" asp-route-operation="delete" asp-route-show=true>Delete <i class="bi bi-trash-fill"></i></a></td>
                 </tr>
             }
         </tbody>

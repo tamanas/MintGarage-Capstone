@@ -49,8 +49,9 @@ namespace MintGarage.Controllers
                                        || s.PhoneNumber.Contains(searchString)
                                        || s.FormDescription.Contains(searchString) );
             }
-      
+
             ViewData["allow"] = !sort;
+
             // Sort Function
             switch (sortCol)
             {
@@ -58,24 +59,34 @@ namespace MintGarage.Controllers
                     if(sort) forms = forms.OrderByDescending(s => s.FirstName);
                     else forms = forms.OrderBy(s => s.FirstName);
                     break;
-                case "lname":
-                    if (sort) forms = forms.OrderByDescending(s => s.LastName);
-                    else forms = forms.OrderBy(s => s.LastName);
+                case "fname_asc":
+                    forms = forms.OrderBy(s => s.FirstName);
                     break;
-                case "email":
-                    if (sort) forms = forms.OrderByDescending(s => s.EmailAddress);
-                    else forms = forms.OrderBy(s => s.EmailAddress);
+                case "lname_desc":
+                    forms = forms.OrderByDescending(s => s.LastName);
                     break;
-                case "service":
-                    if(sort) forms = forms.OrderByDescending(s => s.ServiceType);
-                    else forms = forms.OrderBy(s => s.ServiceType);
+                case "lname_asc":
+                    forms = forms.OrderBy(s => s.LastName);
                     break;
-                case "description":
-                    if(sort) forms = forms.OrderByDescending(s => s.FormDescription);
-                    else forms = forms.OrderBy(s => s.FormDescription);
+                case "email_desc":
+                    forms = forms.OrderByDescending(s => s.EmailAddress);
+                    break;
+                case "email_asc":
+                    forms = forms.OrderBy(s => s.EmailAddress);
+                    break;
+                case "service_desc":
+                    forms = forms.OrderByDescending(s => s.ServiceType);
+                    break;
+                case "service_asc":
+                    forms = forms.OrderBy(s => s.ServiceType);
+                    break;
+                case "desc_desc":
+                    forms = forms.OrderByDescending(s => s.FormDescription);
+                    break;
+                case "desc_asc":
+                    forms = forms.OrderBy(s => s.FormDescription);
                     break;
                 default:
-                    forms = forms.OrderBy(s => s.FirstName);
                     break;
             }
             return View(await forms.AsNoTracking().ToListAsync());

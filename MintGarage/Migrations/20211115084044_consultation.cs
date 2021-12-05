@@ -6,10 +6,6 @@ namespace MintGarage.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Description",
-                table: "Suppliers");
-
             migrationBuilder.CreateTable(
                 name: "Consultation",
                 columns: table => new
@@ -33,12 +29,6 @@ namespace MintGarage.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Consultation");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description",
-                table: "Suppliers",
-                type: "nvarchar(max)",
-                nullable: true);
         }
     }
 }

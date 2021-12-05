@@ -9,7 +9,7 @@ using MintGarage.Database;
 namespace MintGarage.Migrations
 {
     [DbContext(typeof(MintGarageContext))]
-    [Migration("20211115122902_Home")]
+    [Migration("20211205104457_Home")]
     partial class Home
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,6 +128,10 @@ namespace MintGarage.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("EmailAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -136,6 +140,10 @@ namespace MintGarage.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("WorkingHour")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ContactInfoID");
 
@@ -153,7 +161,8 @@ namespace MintGarage.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SocialMediaLogo")
+                    b.Property<string>("SocialMediaIcon")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SocialMediaUrl")
@@ -165,7 +174,7 @@ namespace MintGarage.Migrations
                     b.ToTable("SocialMedia");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.GalleryTab.Gallery", b =>
+            modelBuilder.Entity("MintGarage.Models.GalleryT.Gallery", b =>
                 {
                     b.Property<int>("GalleryID")
                         .ValueGeneratedOnAdd()

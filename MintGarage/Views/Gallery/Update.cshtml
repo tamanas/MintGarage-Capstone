@@ -6,14 +6,15 @@
     var count = 0;
 }
 
-<div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
-    <p class="h4 p-1">Gallery</p>
-</div>
 <div>
     <div asp-validation-summary="All" class="text-danger"></div>
 </div>
-<div class="bg-success font-weight-bold text-center text-white">
+<div class="bg-success font-weight-bold text-center text-white mt-5">
     <span>@ViewBag.Message</span>
+</div>
+
+<div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
+    <p class="h4 p-1">Gallery</p>
 </div>
 @if (ViewBag.add)
 {

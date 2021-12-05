@@ -18,7 +18,6 @@ namespace MintGarage.Controllers
         private IRepository<SocialMedia> socialMediaRepo;
         public IRepository<Partner> partnerRepo;
         private IWebHostEnvironment hostEnv;
-        private string imageFolder = "/Images/";
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
@@ -39,6 +38,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
+            ViewBag.message = TempData["message"];
 
             ViewBag.contactInfoMessage = TempData["AdminFooterContactInfoMessage"];
             ViewBag.socialMediaMessage = TempData["AdminFooterSocialMediaMessage"];
@@ -85,7 +85,7 @@ namespace MintGarage.Controllers
             if (ModelState.IsValid)
             {
                 contactInfoRepo.Update(footerModel.ContactInfo);
-                TempData["AdminFooterContactInfoMessage"] = "Successfully edited Contact Info.";
+                TempData["message"] = "Successfully edited Contact Info.";
             }
             else
             {
@@ -97,7 +97,7 @@ namespace MintGarage.Controllers
             return RedirectToAction("Update");
         }
 
-        public IActionResult AddSocialMedia(FooterModel footerModel)
+        public async Task<IActionResult> AddSocialMedia(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -107,10 +107,11 @@ namespace MintGarage.Controllers
             if (ModelState.IsValid)
             {
                 socialMediaRepo.Create(footerModel.SocialMedia);
-                TempData["AdminFooterSocialMediaMessage"] = "Successfully added Social Media.";
+                TempData["message"] = "Successfully added Social Media.";
             }
             else
             {
+  
                 footerModel.ContactInfos = contactInfoRepo.Items;
                 footerModel.SocialMedias = socialMediaRepo.Items;
                 SetViewBag(false, true, false, false);
@@ -119,7 +120,7 @@ namespace MintGarage.Controllers
             return RedirectToAction("Update");
         }
 
-        public IActionResult EditSocialMedia(FooterModel footerModel)
+        public async Task<IActionResult> EditSocialMedia(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -129,7 +130,7 @@ namespace MintGarage.Controllers
             if (ModelState.IsValid)
             {
                 socialMediaRepo.Update(footerModel.SocialMedia);
-                TempData["AdminFooterSocialMediaMessage"] = "Successfully edited Social Media.";
+                TempData["message"] = "Successfully edited Social Media.";
             }
             else
             {
@@ -149,7 +150,7 @@ namespace MintGarage.Controllers
             ViewBag.AboutData = AboutUs;
 
             socialMediaRepo.Delete(footerModel.SocialMedia);
-            TempData["AdminFooterSocialMediaMessage"] = "Successfully deleted Social Media.";
+            TempData["message"] = "Successfully deleted Social Media.";
             return RedirectToAction("Update");
         }
 

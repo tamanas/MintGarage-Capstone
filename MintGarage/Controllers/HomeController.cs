@@ -111,7 +111,7 @@ namespace MintGarage.Controllers
             {
                 homeModel.Card.Image = await SaveImage(homeModel.Card.ImageFile);
                 cardRepo.Create(homeModel.Card);
-                TempData["message"] = "Successfully added new Home Content.";
+                TempData["message"] = "Successfully added new Card.";
             }
             else
             {
@@ -144,7 +144,7 @@ namespace MintGarage.Controllers
                     homeModel.Card.Image = await SaveImage(homeModel.Card.ImageFile);
                 }
                 cardRepo.Update(homeModel.Card);
-                TempData["message"] = "Successfully edited Home Content.";
+                TempData["message"] = "Successfully edited Card.";
             }
             if(!ModelState.IsValid)
             {
@@ -166,7 +166,7 @@ namespace MintGarage.Controllers
             ViewBag.AboutData = AboutUs;
             DeleteImage(homeModel.Card.Image);
             cardRepo.Delete(homeModel.Card);
-            TempData["message"] = "Successfully deleted Home Content.";
+            TempData["message"] = "Successfully deleted Card.";
             return RedirectToAction("Update");
         }
 

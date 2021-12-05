@@ -9,7 +9,7 @@
     var count = 0;
 }
 
-<div class="bg-success font-weight-bold text-center text-white">
+<div class="bg-success font-weight-bold text-center text-white mt-5">
     <span>@ViewBag.Message</span>
 </div>
 
@@ -108,7 +108,7 @@
                 <th class="col-5">Description</th>
                 <th class="col-2">Image</th>
                 <th class="col-1"></th>
-                <th class="col-1 text-right"><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table="homecontent">Add <i class="bi bi-plus-circle"></i></a></th>
+                <th class="col-1 text-right"><a asp-action="Update" asp-controller="Home" asp-route-operation="add" asp-route-show=true asp-route-table=@card>Add <i class="bi bi-plus-circle"></i></a></th>
             </tr>
         </thead>
         <tbody>
@@ -121,8 +121,8 @@
                     <td class="col-2">@item.Title</td>
                     <td class="col-5 text-breakable">@item.Description</td>
                     <td class="col-2"><img src="@("~/Images/"+item.Image)" width="100" height="70" asp-append-version="true" /></td>
-                    <td class="col-1 text-right"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.CardID" asp-route-operation="edit" asp-route-show=true asp-route-table="homecontent">Edit <i class="bi bi-pencil-fill"></i></a></td>
-                    <td class="col-1 text-right"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.CardID" asp-route-operation="delete" asp-route-show=true asp-route-table="homecontent">Delete <i class="bi bi-trash-fill"></i></a></td>
+                    <td class="col-1 text-right"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.CardID" asp-route-operation="edit" asp-route-show=true asp-route-table=@card>Edit <i class="bi bi-pencil-fill"></i></a></td>
+                    <td class="col-1 text-right"><a asp-action="Update" asp-controller="Home" asp-route-id="@item.CardID" asp-route-operation="delete" asp-route-show=true asp-route-table=@card>Delete <i class="bi bi-trash-fill"></i></a></td>
                 </tr>
             }
         </tbody>
@@ -247,7 +247,7 @@
                         <input asp-for="@Model.Supplier.SuppliersName" class="form-control" placeholder="Supplier Name" />
                     </div>
                     <div class="col-5">
-                        <input asp-for="@Model.Supplier.ImageFile" class="" />
+                        <input asp-for="@Model.Supplier.ImageFile" class="" accept="image/*"/>
                     </div>
                     <div class="col-2 offset-2 text-right">
                         <input type="submit" value="Add" class="btn btn-success" />

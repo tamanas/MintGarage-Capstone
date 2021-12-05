@@ -305,7 +305,7 @@ namespace MintGarage.Migrations
 
                     b.HasKey("SuppliersID");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Supplier");
                 });
 
             modelBuilder.Entity("MintGarage.Models.Partners.Partner", b =>
