@@ -119,50 +119,6 @@ namespace MintGarage.Migrations
                     b.ToTable("Consultation");
                 });
 
-            modelBuilder.Entity("MintGarage.Models.FooterT.ContactInformation.ContactInfo", b =>
-                {
-                    b.Property<int>("ContactInfoID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("ContactInfoID");
-
-                    b.ToTable("ContactInfo");
-                });
-
-            modelBuilder.Entity("MintGarage.Models.FooterT.SocialMedias.SocialMedia", b =>
-                {
-                    b.Property<int>("SocialMediaID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SocialMediaLogo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SocialMediaUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SocialMediaID");
-
-                    b.ToTable("SocialMedia");
-                });
-
             modelBuilder.Entity("MintGarage.Models.GalleryTab.Gallery", b =>
                 {
                     b.Property<int>("GalleryID")

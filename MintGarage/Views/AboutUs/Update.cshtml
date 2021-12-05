@@ -13,7 +13,7 @@
 </div>
 
 <div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
-    <p class="h3 p-1">Values</p>
+    <p class="h4 p-1">Values</p>
 </div>
 @if (ViewBag.table == value)
 {
@@ -40,7 +40,7 @@
                         <input asp-for="@Model.Value.ValueImage" hidden />
                         <input asp-for="@Model.Value.ImageFile" accept="image/*" />
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 text-right">
                         <input type="submit" value="Edit" class="btn btn-warning" />
                         <a class="btn btn-info" asp-action="Update">Cancel</a>
                     </div>
@@ -57,7 +57,7 @@
                 <th class="col-3">Value Title</th>
                 <th class="col-5">Value Description</th>
                 <th class="col-2">Value Image</th>
-                <th class="col-1"></th>
+                <th class="col-1">Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -70,7 +70,7 @@
                     <td class="col-3">@item.ValueTitle</td>
                     <td class="col-5">@item.ValueDescription</td>
                     <td class="col-2"><img src="@("~/Images/"+item.ValueImage)" width="100" height="70" asp-append-version="true" /></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.ValueID" asp-route-operation="edit" asp-route-show=true asp-route-table="value">Edit</a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.ValueID" asp-route-operation="edit" asp-route-show=true asp-route-table="value">Edit <i class="bi bi-pencil-fill"></i></a></td>
                 </tr>
             }
         </tbody>
@@ -78,7 +78,7 @@
 </div>
 
 <div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
-    <p class="h3 p-1">Team Members</p>
+    <p class="h4 p-1">Team Members</p>
 </div>
 @if (ViewBag.table == team)
 {
@@ -99,7 +99,7 @@
                     <div class="col-3">
                         <input asp-for="@Model.TeamMember.ImageFile" accept="image/*" />
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 text-right">
                         <input type="submit" value="Add" class="btn btn-success" />
                         <a class="btn btn-info" asp-action="Update">Cancel</a>
                     </div>
@@ -168,7 +168,7 @@
                 <th class="col-4">Member Role</th>
                 <th class="col-3">Member Image</th>
                 <th class="col-1"></th>
-                <th class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-operation="add" asp-route-show=true asp-route-table="team">Add</a></th>
+                <th class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-operation="add" asp-route-show=true asp-route-table="team">Add <i class="bi bi-plus-circle"></i></a></th>
             </tr>
         </thead>
         <tbody>
@@ -181,8 +181,8 @@
                     <td class="col-2">@item.MemberName</td>
                     <td class="col-4">@item.MemberRole</td>
                     <td class="col-3"><img src="@("~/Images/"+item.MemberImage)" width="100" height="70" asp-append-version="true" /></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="edit" asp-route-show=true asp-route-table="team">Edit</a></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="delete" asp-route-show=true asp-route-table="team">Delete</a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="edit" asp-route-show=true asp-route-table="team">Edit <i class="bi bi-pencil-fill"></a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="delete" asp-route-show=true asp-route-table="team">Delete <i class="bi bi-trash-fill"></a></td>
                 </tr>
             }
         </tbody>

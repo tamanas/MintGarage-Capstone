@@ -30,7 +30,7 @@ namespace MintGarage.Controllers
             socialMediaRepo = mediaRepo;
         }
 
-        public async Task<IActionResult> Update(string sortOrder, string searchString)
+        public async Task<IActionResult> Update(string sortCol, bool sort, string searchString)
         {
             var forms = consultationRepo.Items;
             ViewBag.Partners = partnerRepo.Items;
@@ -49,47 +49,33 @@ namespace MintGarage.Controllers
                                        || s.PhoneNumber.Contains(searchString)
                                        || s.FormDescription.Contains(searchString) );
             }
-            ViewData["FirstNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "fname_desc" : "fname_asc";
-            ViewData["LastNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "lname_desc" : "lname_asc";
-            ViewData["EmailSortParm"] = String.IsNullOrEmpty(sortOrder) ? "email_desc" : "email_asc";
-            ViewData["ServiceSortParm"] = String.IsNullOrEmpty(sortOrder) ? "service_desc" : "service-asc";
-            ViewData["DescSortParm"] = String.IsNullOrEmpty(sortOrder) ? "desc_desc" : "desc_asc";
-
-
+      
+            ViewData["allow"] = !sort;
             // Sort Function
-            switch (sortOrder)
+            switch (sortCol)
             {
-                case "fname_desc":
-                    forms = forms.OrderByDescending(s => s.FirstName);
+                case "fname":
+                    if(sort) forms = forms.OrderByDescending(s => s.FirstName);
+                    else forms = forms.OrderBy(s => s.FirstName);
                     break;
-                case "fname_asc":
-                    forms = forms.OrderBy(s => s.FirstName);
+                case "lname":
+                    if (sort) forms = forms.OrderByDescending(s => s.LastName);
+                    else forms = forms.OrderBy(s => s.LastName);
                     break;
-                case "lname_desc":
-                    forms = forms.OrderByDescending(s => s.LastName);
+                case "email":
+                    if (sort) forms = forms.OrderByDescending(s => s.EmailAddress);
+                    else forms = forms.OrderBy(s => s.EmailAddress);
                     break;
-                case "lname_asc":
-                    forms = forms.OrderBy(s => s.LastName);
+                case "service":
+                    if(sort) forms = forms.OrderByDescending(s => s.ServiceType);
+                    else forms = forms.OrderBy(s => s.ServiceType);
                     break;
-                case "email_desc":
-                    forms = forms.OrderByDescending(s => s.EmailAddress);
-                    break;
-                case "email_asc":
-                    forms = forms.OrderBy(s => s.EmailAddress);
-                    break;
-                case "service_desc":
-                    forms = forms.OrderByDescending(s => s.ServiceType);
-                    break;
-                case "service_asc":
-                    forms = forms.OrderBy(s => s.ServiceType);
-                    break;
-                case "desc_desc":
-                    forms = forms.OrderByDescending(s => s.FormDescription);
-                    break;
-                case "desc_asc":
-                    forms = forms.OrderBy(s => s.FormDescription);
+                case "description":
+                    if(sort) forms = forms.OrderByDescending(s => s.FormDescription);
+                    else forms = forms.OrderBy(s => s.FormDescription);
                     break;
                 default:
+                    forms = forms.OrderBy(s => s.FirstName);
                     break;
             }
             return View(await forms.AsNoTracking().ToListAsync());

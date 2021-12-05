@@ -30,11 +30,11 @@ namespace MintGarage.Models.ConsultationT
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Must be 10 digits")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Service Type")]
+        [Display(Name = "Subject")]
         [Required(ErrorMessage = "Service Type Required")]
         public string ServiceType { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "How can we help?")]
         public string FormDescription { get; set; }
 
     }

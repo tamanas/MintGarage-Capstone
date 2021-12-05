@@ -97,34 +97,7 @@ namespace MintGarage.Controllers
             return RedirectToAction("Update");
         }
 
-        public async Task<IActionResult> AddSocialMedia(FooterModel footerModel)
-        {
-            ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = socialMediaRepo.Items;
-            ViewBag.Contacts = contactInfoRepo.Items;
-            ViewBag.AboutData = AboutUs;
-
-            if (ModelState.IsValid && footerModel.SocialMedia.ImageFile != null)
-            {
-                footerModel.SocialMedia.SocialMediaLogo = await SaveImage(footerModel.SocialMedia.ImageFile);
-                socialMediaRepo.Create(footerModel.SocialMedia);
-                TempData["AdminFooterSocialMediaMessage"] = "Successfully added Social Media.";
-            }
-            else
-            {
-                if (footerModel.SocialMedia.ImageFile == null)
-                {
-                    ModelState.AddModelError("image", "Image is required");
-                }
-                footerModel.ContactInfos = contactInfoRepo.Items;
-                footerModel.SocialMedias = socialMediaRepo.Items;
-                SetViewBag(false, true, false, false);
-                return View("Update", footerModel);
-            }
-            return RedirectToAction("Update");
-        }
-
-        public async Task<IActionResult> EditSocialMedia(FooterModel footerModel)
+        public IActionResult AddSocialMedia(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -133,11 +106,28 @@ namespace MintGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                if (footerModel.SocialMedia.ImageFile != null)
-                {
-                    DeleteImage(footerModel.SocialMedia.SocialMediaLogo);
-                    footerModel.SocialMedia.SocialMediaLogo = await SaveImage(footerModel.SocialMedia.ImageFile);
-                }
+                socialMediaRepo.Create(footerModel.SocialMedia);
+                TempData["AdminFooterSocialMediaMessage"] = "Successfully added Social Media.";
+            }
+            else
+            {
+                footerModel.ContactInfos = contactInfoRepo.Items;
+                footerModel.SocialMedias = socialMediaRepo.Items;
+                SetViewBag(false, true, false, false);
+                return View("Update", footerModel);
+            }
+            return RedirectToAction("Update");
+        }
+
+        public IActionResult EditSocialMedia(FooterModel footerModel)
+        {
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
+            ViewBag.AboutData = AboutUs;
+
+            if (ModelState.IsValid)
+            {
                 socialMediaRepo.Update(footerModel.SocialMedia);
                 TempData["AdminFooterSocialMediaMessage"] = "Successfully edited Social Media.";
             }
@@ -158,7 +148,6 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            DeleteImage(footerModel.SocialMedia.SocialMediaLogo);
             socialMediaRepo.Delete(footerModel.SocialMedia);
             TempData["AdminFooterSocialMediaMessage"] = "Successfully deleted Social Media.";
             return RedirectToAction("Update");
@@ -170,28 +159,6 @@ namespace MintGarage.Controllers
             ViewBag.add = add;
             ViewBag.edit = edit;
             ViewBag.delete = delete;
-        }
-
-        public async Task<string> SaveImage(IFormFile imageFile)
-        {
-            string imageName = Path.GetFileNameWithoutExtension(imageFile.FileName) +
-                                        DateTime.Now.ToString("yyMMddssffff") +
-                                        Path.GetExtension(imageFile.FileName);
-            string imagePath = Path.Combine(hostEnv.WebRootPath + imageFolder, imageName);
-            using (var fileStream = new FileStream(imagePath, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(fileStream);
-            }
-            return imageName;
-        }
-
-        public void DeleteImage(string imageName)
-        {
-            string imagePath = Path.Combine(hostEnv.WebRootPath + imageFolder, imageName);
-            if (System.IO.File.Exists(imagePath))
-            {
-                System.IO.File.Delete(imagePath);
-            }
         }
     }
 }

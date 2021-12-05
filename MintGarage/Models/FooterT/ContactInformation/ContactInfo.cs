@@ -16,5 +16,13 @@ namespace MintGarage.Models.FooterT.ContactInformation
         [Required(ErrorMessage = "Email Required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string EmailAddress { get; set; }
+
+        [Display(Name = "Address")]
+        [Required(ErrorMessage = "Address Required")]
+        public string Address { get; set; }
+
+        [Display(Name = "Working Hour")]
+        [Required(ErrorMessage = "Working Hour Required")]
+        public string WorkingHour { get; set; }
     }
 }

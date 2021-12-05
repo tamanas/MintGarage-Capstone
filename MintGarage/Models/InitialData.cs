@@ -33,7 +33,9 @@ namespace MintGarage.Models
                 context.ContactInfo.Add(new ContactInfo()
                 {
                     PhoneNumber = "6475230914",
-                    EmailAddress = "Info@mintgarage.ca"
+                    EmailAddress = "Info@mintgarage.ca",
+                    Address = "Toronto, GTA",
+                    WorkingHour = "Mon – Sat : 8:00 am – 6:00 pm"
                 });
                 context.SaveChanges();
             }
