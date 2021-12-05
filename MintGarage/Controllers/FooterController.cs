@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using MintGarage.Models.PartnerT;
 
 namespace MintGarage.Controllers
@@ -97,7 +94,7 @@ namespace MintGarage.Controllers
             return RedirectToAction("Update");
         }
 
-        public async Task<IActionResult> AddSocialMedia(FooterModel footerModel)
+        public IActionResult AddSocialMedia(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -120,7 +117,7 @@ namespace MintGarage.Controllers
             return RedirectToAction("Update");
         }
 
-        public async Task<IActionResult> EditSocialMedia(FooterModel footerModel)
+        public IActionResult EditSocialMedia(FooterModel footerModel)
         {
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;

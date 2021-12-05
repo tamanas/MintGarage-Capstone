@@ -8,7 +8,6 @@
     <img src="~/Images/construction.jpg" alt="construction.jpg" class="img-thumbnail card-img-top" />
     <div class="img-text">
         <p>IT'S TIME TO MINT YOUR GARAGE!</p>
-        <button class="image-btn">BOOK AN IN-HOME CONSULTATION</button>
     </div>
 </div>
 
@@ -21,10 +20,10 @@
                     <img src="~/Images/@item.Image" alt="@item.Image" class="img-thumbnail card-img-top" />
                     <h4>@item.Title</h4>
                 </div>
-                <div class="card-back">
+                <div class="card-back mt-4">
                     <h4>@item.Title</h4>
                     <p>@item.Description</p>
-                    <button class="card-button">Get a quote!</button>
+                    <a class="btn btn-light" asp-action="Index" asp-controller="Consultation">Get a guoate</a>
                 </div>
             </div>
         </div>
