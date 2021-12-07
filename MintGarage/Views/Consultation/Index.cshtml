@@ -1,63 +1,64 @@
-﻿@model Consultation
+﻿@model ConsultationModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
+<div class="img-container">
+    <img src="@(Model.ImageFile+Model.TabImage)" alt="@Model.TabImage" class="img-thumbnail card-img-top" asp-append-version="true"/>
+    <div class="img-text">
+        <h4 class="text-center">@Model.TabImageSlogon</h4>
+    </div>
+</div>
 
-<div class="container">
-    <h3 class="text-center">Talk to Us - We're Here to Help</h3>
-    <hr style="width:15%;height:2px;border-radius:2px;color:limegreen;background-color:limegreen">
-    <h6 class="text-center">
-        No job would be too big or too small, so if you would be interested in getting some info,
-        feel free to get in touch with us or pass our info along to anyone you know might benefit
-        from what Mint Garage can offer.
-    </h6>
-    <br>
+<div class="my-4">
+    <h3 class="text-center">@Model.ConsultTitle</h3>
+    <hr class="underline"> 
+    <p class="text-center">@Model.ConsultDesc</p>
 </div>
 
 <div class="container">
     <div class="row border border-secondary rounded">
-        <div class="col-md-12">
+        <div class="col-md-12 my-4">
             <form asp-action="Create" method="post" class="form-horizontal">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label asp-for="FirstName" class="control-label"></label>
+                        <label asp-for="@Model.Consultation.FirstName" class="control-label"></label>
                         <label class="text-danger">*</label>
-                        <input asp-for="FirstName" class="form-control bg-light" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                        <input asp-for="@Model.Consultation.FirstName" class="form-control bg-light" />
+                        <span asp-validation-for="@Model.Consultation.FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group col">
-                        <label asp-for="LastName" class="control-label"></label>
+                        <label asp-for="@Model.Consultation.LastName" class="control-label"></label>
                         <label class="text-danger">*</label>
-                        <input asp-for="LastName" class="form-control bg-light" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
+                        <input asp-for="@Model.Consultation.LastName" class="form-control bg-light" />
+                        <span asp-validation-for="@Model.Consultation.LastName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label asp-for="EmailAddress" class="control-label"></label>
+                        <label asp-for="@Model.Consultation.EmailAddress" class="control-label"></label>
                         <label class="text-danger">*</label>
-                        <input asp-for="EmailAddress" class="form-control bg-light" />
-                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        <input asp-for="@Model.Consultation.EmailAddress" class="form-control bg-light" />
+                        <span asp-validation-for="@Model.Consultation.EmailAddress" class="text-danger"></span>
                     </div>
                     <div class="form-group col">
-                        <label asp-for="PhoneNumber" class="control-label"></label>
-                        <input asp-for="PhoneNumber" class="form-control bg-light" />
-                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        <label asp-for="@Model.Consultation.PhoneNumber" class="control-label"></label>
+                        <input asp-for="@Model.Consultation.PhoneNumber" class="form-control bg-light" />
+                        <span asp-validation-for="@Model.Consultation.PhoneNumber" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ServiceType" class="control-label"></label>
+                    <label asp-for="@Model.Consultation.ServiceType" class="control-label"></label>
                     <label class="text-danger">*</label>
-                    <input asp-for="ServiceType" class="form-control bg-light" />
-                    <span asp-validation-for="ServiceType" class="text-danger"></span>
+                    <input asp-for="@Model.Consultation.ServiceType" class="form-control bg-light" />
+                    <span asp-validation-for="@Model.Consultation.ServiceType" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="FormDescription" class="control-label"></label>
-                    <textarea asp-for="FormDescription" class="form-control bg-light" rows="4"></textarea>
-                    <span asp-validation-for="FormDescription" class="text-danger"></span>
+                    <label asp-for="@Model.Consultation.FormDescription" class="control-label"></label>
+                    <textarea asp-for="@Model.Consultation.FormDescription" class="form-control bg-light" rows="4"></textarea>
+                    <span asp-validation-for="@Model.Consultation.FormDescription" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Request Free Consultation" class="btn btn-success" />

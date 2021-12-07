@@ -17,6 +17,7 @@ namespace MintGarage.Controllers
         public IRepository<Partner> partnerRepo;
         private IRepository<ContactInfo> contactInfoRepo;
         private IRepository<SocialMedia> socialMediaRepo;
+        public ConsultationModel consultationModel = new ConsultationModel();
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
@@ -30,7 +31,7 @@ namespace MintGarage.Controllers
             socialMediaRepo = mediaRepo;
         }
 
-        public async Task<IActionResult> Update(string sortCol, bool sort, string searchString)
+        public IActionResult Update(string sortCol, bool sort, string searchString)
         {
             var forms = consultationRepo.Items;
             ViewBag.Partners = partnerRepo.Items;
@@ -89,7 +90,8 @@ namespace MintGarage.Controllers
                 default:
                     break;
             }
-            return View(await forms.AsNoTracking().ToListAsync());
+            consultationModel.Consultations = forms;
+            return View(consultationModel);
         }
 
 
@@ -102,22 +104,20 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            return View();
+            return View(consultationModel);
         }
 
         // POST: ConsultationForms/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ConsultationID," +
-            "FirstName,LastName,EmailAddress,FormDescription,PhoneNumber," +
-            "ServiceType")] Consultation consultation)
+        public IActionResult Create(ConsultationModel consultationModel)
         {
             if (ModelState.IsValid)
             {
-                new Email(consultation).SendEmail();
+                new Email(consultationModel.Consultation).SendEmail();
                 try
                 {
-                    consultationRepo.Create(consultation);
+                    consultationRepo.Create(consultationModel.Consultation);
                     TempData["Message"] = "Your consultation request has been sent successfully.";
                     TempData["Success"] = true;
                 }
@@ -136,7 +136,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            return View(consultation);
+            return View(consultationModel.Consultation);
         }
 
         public async Task<IActionResult> Delete(int? id)
