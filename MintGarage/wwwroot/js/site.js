@@ -5,20 +5,20 @@
 var slideIndex = 1;
 showSlides(slideIndex);
 
-function plusSlides(n) {
-    showSlides(slideIndex += n);
+function plusSlides(num) {
+    showSlides(slideIndex += num);
 }
 
-function currentSlide(n) {
-    showSlides(slideIndex = n);
+function currentSlide(num) {
+    showSlides(slideIndex = num);
 }
 
-function showSlides(n) {
+function showSlides(num) {
     var i;
     var slides = document.getElementsByClassName("mySlides");
     var dots = document.getElementsByClassName("dot");
-    if (n > slides.length) { slideIndex = 1 }
-    if (n < 1) { slideIndex = slides.length }
+    if (num > slides.length) { slideIndex = 1 }
+    if (num < 1) { slideIndex = slides.length }
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }

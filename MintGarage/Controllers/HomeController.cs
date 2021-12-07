@@ -28,7 +28,7 @@ namespace MintGarage.Controllers
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
             "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
         private IWebHostEnvironment hostEnv;
-        private string imageFolder = "/Images/";
+        private string imageFolder = "/Images/home/";
 
         public HomeController(IRepository<Partner> partnerRepository, IRepository<Card> cardRepository, 
                                             IRepository<Review> reviewRepository, IRepository<Supplier> supplierRepository,
