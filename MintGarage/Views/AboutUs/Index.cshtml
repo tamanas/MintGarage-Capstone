@@ -2,40 +2,36 @@
 
 @{
     Layout = Layout;
-
 }
 
-<head>
-    <link rel="stylesheet" href="~/css/AboutUs.css" />
-</head>
-
 <div class="img-container">
-    <img src="~/Images/construction.jpg" alt="~/Images/construction.jpg" class="img-thumbnail card-img-top" />
+    <img src="@(Model.ImageFile+Model.TabImage)" alt="@Model.TabImage" class="img-thumbnail card-img-top" asp-append-version="true" />
     <div class="img-text">
-        <p>STORAGE WITH A DIFFERENCE</p>
-        <p>Mint Garage Puts The Focus Back on Exceptional Service</p>
+        <h4>@Model.TabImageSlogon</h4>
     </div>
 </div>
 
-<div class="row mt-5 mb-5">
-    <div class="col-5">
+<div class="mt-5 mb-5">
+    <div class="text-center mb-3">
         <h3> <span style="color: #41ca57;"> Decades of </span> <span>passion & experience in </span> <span style="color: #41ca57;">Mint</span> <span> Garage Inc.</span> </h3>
-        <p>
-            For those of you who don’t know me well, I am an extremely organized person.
-            Those of you who do know me well would say, “extremely” is an understatement!
-            I would simply say that I am passionate about knowing where things are when
-            I need them and things just look better when they are in order, wouldn’t you agree?
-        </p>
-            <img src="~/Images/james.jpg" alt="~/Images/james.jpg" class="img-thumbnail card-img-top" style="width:250px;" />
-            <p> James Secondino <br> CEO & FOUNDER </p>
     </div>
-    <div class="col-7">
-        <img src="~/Images/floorpic.jpg" alt="~/Images/floorpic.jpg" class="img-thumbnail card-img-top" style="width:680px" />
+    <div class="row">
+        <div class="col-7">
+            <p> @Model.CEODesc </p>
+            <div class="text-center">
+                <img src="@(Model.ImageFile+Model.CEOImage)" alt="@Model.CEOImage" class="w-25" asp-append-version="true"  />
+                <p>@Model.CEOName <br> @Model.CEO</p>
+            </div>
+        </div>
+        <div class="col-5 text-right">
+            <img src="@(Model.ImageFile+Model.FloorImage)" alt="floorpic.jpg" style="width:440px" asp-append-version="true"  />
+        </div>
     </div>
 </div>
 
 <div class="text-center mt-5 mb-5">
-    <h1 >Transforming Inspiring Spaces</h1>
+    <h3>@Model.AboutBusiness</h3>
+    <hr class="underline">
     <p>
         Are you tired of getting home from work and having to get out of your car to move things out of the way in your garage before you can park inside? Are you frustrated by being the only one who “knows” where things go in your garage? Isn’t it time you made a permanent and professional overhaul to of the most underutilized spaces in your home? <span style="color: #41ca57;">
             LET US HELP!
@@ -51,22 +47,23 @@
 
 
 <div class="mt-5 mb-5 text-center">
-    <h2>Our Core Values</h2>
-    <h6 class="font-weight-bolder">At Mint Garage we believe in transforming spaces to the needs, desires and wants of our clients. Making sure no 2 garages are a like.</h6>
+    <h3>@Model.ValueTitle</h3>
+    <hr  class="underline">
+    <p>@Model.ValueDesc</p>
     <div class="row">
         @foreach (Value item in Model.Values)
         {
             <!--Gallary Item-->
             <div class="col-3">
-                    <img src="~/Images/@item.ValueImage" alt="@item.ValueImage" class="card-img-top" style="height:100px; width:200px" />
-                    <div class="mt-3">
-                        <div>
-                            <h5><u>@item.ValueTitle</u></h5>
-                        </div>
-                        <div>
-                            <p>@item.ValueDescription</p>
-                        </div>
+                <img src="@(Model.ImageFile+item.ValueImage)" alt="@item.ValueImage" class="card-img-top" style="height:100px; width:150px" asp-append-version="true"  />
+                <div class="mt-3">
+                    <div style="color: #41ca57">
+                        <h6><u>@item.ValueTitle</u></h6>
                     </div>
+                    <div>
+                        <p>@item.ValueDescription</p>
+                    </div>
+                </div>
             </div>
             <!--Gallary Item End-->
         }
@@ -74,8 +71,9 @@
 </div>
 
 <div class="mt-5 mb-5 text-center">
-    <h2>Meet Our Team</h2>
-    <h6 class="font-weight-bolder">Our team consists of highly qualified, experienced and knowledgeable professionals who are dedicated to help our customers in any tranforming or storage projects!</h6>
+    <h3>@Model.TeamTitle</h3>
+    <hr class="underline">
+    <p>@Model.TeamDesc</p>
     <div class="row">
         @foreach (TeamMember member in Model.TeamMembers)
         {
@@ -83,10 +81,10 @@
                 <div class="card">
                     <div class="d-flex align-items-center justify-content-around">
                         <div class=" pt-2 pb-2">
-                            <img src="~/Images/@member.MemberImage" alt="@member.MemberImage" style="width:100px">
+                            <img src="@(Model.ImageFile + member.MemberImage)" alt="@member.MemberImage" style="width:100px" asp-append-version="true" >
                         </div>
                         <div class=" pt-2 pb-2">
-                            <h4>@member.MemberName</h4>
+                            <p style="color: #41ca57"><u>@member.MemberName</u></p>
                             <p class="title">@member.MemberRole</p>
                         </div>
                     </div>

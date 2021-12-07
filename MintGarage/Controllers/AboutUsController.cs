@@ -24,7 +24,7 @@ namespace MintGarage.Controllers
         private IRepository<Value> valueRepo;
 
         private IWebHostEnvironment hostEnv;
-        private string imageFolder = "/Images/";
+        private string imageFolder = "/Images/aboutus/";
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
@@ -46,6 +46,8 @@ namespace MintGarage.Controllers
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
+            ViewBag.AboutData = AboutUs;
+
             AboutUsModel aboutUs = new AboutUsModel()
             
             {

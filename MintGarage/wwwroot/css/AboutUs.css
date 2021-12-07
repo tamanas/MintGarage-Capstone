@@ -1,60 +1,37 @@
 ﻿/* Image container */
 .img-container {
     position: relative;
-    text-align: center;
-    color: white;
     margin-bottom: 50px;
 }
 
-    .img-container img {
-        width: 100%;
-    }
-
-    /* Image text */
-    .img-container .img-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 28px;
-        width: 100%;
-    }
-
-        .img-container .img-text p {
-            font-size: 44px;
-            background: rgba(0, 0, 0, 0.5);
-            margin: 30px 200px;
-            font-weight: bold;
-        }
-
-    .img-container .img-test .img-btn {
-        position: absolute;
-        top: 30%;
-        left: 50%;
-        background-color: #555;
-        color: white;
-        padding: 12px 24px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-        .img-container .img-test .img-btn:hover {
-            background-color: dimgray;
-        }
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
+.img-container img{
+    height: 500px;
 }
 
-html {
-    box-sizing: border-box;
+/* Image text */
+.img-container .img-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-*, *:before, *:after {
-    box-sizing: inherit;
+.img-container .img-text h4 {
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    color: white;
+    padding: 10px 50px;
 }
+
+
+.underline{
+    width: 15%;
+    height: 2px;
+    border-radius: 2px;
+    color: limegreen;
+    background-color: limegreen;
+}
+
 
 .column {
     float: left;
@@ -68,42 +45,12 @@ html {
     margin: 8px;
 }
 
-.about-section {
-    padding: 50px;
-    text-align: center;
-    background-color: #FFFFFF;
-    color: #000000;
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
-.container {
-    padding: 0 16px;
-}
-
-    .container::after, .row::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-
-.title {
-    color: grey;
-}
-
-.button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #000;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-}
-
-    .button:hover {
-        background-color: #555;
-    }
 
 @media screen and (max-width: 650px) {
     .column {
@@ -111,38 +58,3 @@ html {
         display: block;
     }
 }
-
-img {
-    border-radius: 50%;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-/* Create two unequal columns that floats next to each other */
-.column1 {
-    float: left;
-    padding: 0px;
-    height: 300px; /* Should be removed. Only for demonstration */
-}
-
-.left {
-    width: 35%;
-}
-
-.right {
-    width: 65%;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-/*.values-container {
-    padding-left: 115px;
-}
-*/
