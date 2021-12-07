@@ -11,3 +11,7 @@
 .footer-img {
     width: 200px;
 }
+
+.footer-ontop {
+    z-index: 2000;
+}

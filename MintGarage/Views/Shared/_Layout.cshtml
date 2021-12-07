@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MintGarage</title>
+    <title>MintGarage @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/icons">
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css">
@@ -65,7 +65,7 @@
         </main>
     </div>
 
-    <footer class="bg-success text-white pb-3">
+    <footer class="bg-success text-white pb-3 footer-ontop">
         <div class="container">
             <div style="display: flex; flex-wrap: wrap;">
                 <div class="col-8 text-wrap">
@@ -93,7 +93,7 @@
             <p class="text-center justify-content-between footer-links">
                 @foreach (var social in ViewBag.SocialMedias)
                 {
-                    <span class="px-3"><i class=@social.SocialMediaIcon></i> <a href="@social.SocialMediaUrl">@social.Name</a></span>
+                    <span class="px-3"><a href="@social.SocialMediaUrl"><i class=@social.SocialMediaIcon></i></a></span>
                 }
             </p>
             <hr />

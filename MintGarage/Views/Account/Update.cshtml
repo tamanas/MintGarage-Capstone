@@ -1,17 +1,18 @@
 ﻿@model UpdatePassword
 
 @{
-    ViewData["Title"] = "Update Login";
+    ViewData["Title"] = "- Account - Admin";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
     <div class="my-4">
         <h4 class="text-center">Change Password</h4>
+        <hr class="underline">
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="text-center">
+        <div class="col-md-4 border border-secondary rounded">
+            <div class="text-center mt-3">
                 @if (ViewBag.Success != null && ViewBag.Success)
                 {
                     <h6 class="text-success">@ViewBag.Message</h6>
@@ -24,15 +25,15 @@
             <form asp-action="Update" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <input asp-for="CurrectPassword" class="form-control" placeholder="Current Password..."/>
+                    <input asp-for="CurrectPassword" class="form-control" placeholder="Current Password..." />
                     <span asp-validation-for="CurrectPassword" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input asp-for="NewPassword" class="form-control" placeholder="New Password..."/>
+                    <input asp-for="NewPassword" class="form-control" placeholder="New Password..." />
                     <span asp-validation-for="NewPassword" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm New Password..."/>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm New Password..." />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="form-group">
