@@ -12,19 +12,18 @@
 </div>
 
 <div class="mt-5 mb-5">
-    <div class="text-center mb-3">
-        <h3> <span style="color: #41ca57;"> Decades of </span> <span>passion & experience in </span> <span style="color: #41ca57;">Mint</span> <span> Garage Inc.</span> </h3>
-    </div>
+    <h3 class="text-center mb-3">@Model.CEODivTitle</h3>
+    <hr class="underline"/>
     <div class="row">
         <div class="col-7">
-            <p> @Model.CEODesc </p>
+            <p> @Model.CEODivDesc </p>
             <div class="text-center">
                 <img src="@(Model.ImageFile+Model.CEOImage)" alt="@Model.CEOImage" class="w-25" asp-append-version="true"  />
                 <p>@Model.CEOName <br> @Model.CEO</p>
             </div>
         </div>
         <div class="col-5 text-right">
-            <img src="@(Model.ImageFile+Model.FloorImage)" alt="floorpic.jpg" style="width:440px" asp-append-version="true"  />
+            <img src="@(Model.ImageFile+Model.CEODivImage)" alt="@Model.CEODivImage" style="width:440px" asp-append-version="true"  />
         </div>
     </div>
 </div>

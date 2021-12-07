@@ -9,7 +9,7 @@ namespace MintGarage.Models
         public Gallery Gallery { get; set; }
         public string ImageFile { get; } = "~/Images/gallery/";
         public string TabImage { get; } = "construction.jpg";
-        public string TabImageSlogon = "IT'S TIME TO MINT YOUR GARAGE";
+        public string TabImageSlogon = "STORAGE WITH A DIFFERENCE!";
         public string GalleryTitle { get; } = "INSPIRED BY MODERN LIVING & CUTTING-EDGE CONSTRUCTION TECHNOLOGIES";
     }
 }
