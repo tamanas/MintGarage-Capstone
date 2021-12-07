@@ -24,7 +24,7 @@ namespace MintGarage.Controllers
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
             "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
-        private string imageFolder = "/Images/";
+        private string imageFolder = "/Images/gallery/";
 
 
 
@@ -45,7 +45,8 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            return View(galleryRepo.Items);
+            galleryModel.Galleries = galleryRepo.Items;
+            return View(galleryModel);
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)

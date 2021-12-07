@@ -7,5 +7,9 @@ namespace MintGarage.Models
     {
         public IEnumerable<Gallery> Galleries { get; set; }
         public Gallery Gallery { get; set; }
+        public string ImageFile { get; } = "~/Images/gallery/";
+        public string TabImage { get; } = "construction.jpg";
+        public string TabImageSlogon = "IT'S TIME TO MINT YOUR GARAGE";
+        public string GalleryTitle { get; } = "INSPIRED BY MODERN LIVING & CUTTING-EDGE CONSTRUCTION TECHNOLOGIES";
     }
 }

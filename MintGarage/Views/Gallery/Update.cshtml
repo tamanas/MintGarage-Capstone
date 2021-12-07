@@ -46,12 +46,12 @@
             <input asp-for="@Model.Gallery.GalleryID" hidden />
             <div class="row">
                 <div class="col-5">
-                    <img src="@("~/Images/" + Model.Gallery.BeforeImage)" width="90" height="60" asp-append-version="true" />
+                    <img src="@(Model.ImageFile+Model.Gallery.BeforeImage)" width="90" height="60" asp-append-version="true" />
                     <input asp-for="@Model.Gallery.BeforeImage" hidden />
                     <input asp-for="@Model.Gallery.BeforeImageFile" accept="image/*" />
                 </div>
                 <div class="col-5">
-                    <img src="@("~/Images/" + Model.Gallery.AfterImage)" width="90" height="60" asp-append-version="true" />
+                    <img src="@(Model.ImageFile+Model.Gallery.AfterImage)" width="90" height="60" asp-append-version="true" />
                     <input asp-for="@Model.Gallery.AfterImage" hidden />
                     <input asp-for="@Model.Gallery.AfterImageFile" accept="image/*" />
                 </div>
@@ -72,11 +72,11 @@
             <div class="row">
                 <div class="col-5">
                     <input asp-for="@Model.Gallery.BeforeImage" hidden />
-                    <img src="@("~/Images/" + Model.Gallery.BeforeImage)" width="100" height="70" asp-append-version="true" />
+                    <img src="@(Model.ImageFile+Model.Gallery.BeforeImage)" width="100" height="70" asp-append-version="true" />
                 </div>
                 <div class="col-5">
                     <input asp-for="@Model.Gallery.AfterImage" hidden />
-                    <img src="@("~/Images/" + Model.Gallery.AfterImage)" width="100" height="70" asp-append-version="true" />
+                    <img src="@(Model.ImageFile+Model.Gallery.AfterImage)" width="100" height="70" asp-append-version="true" />
                 </div>
                 <div class="col-2 text-right">
                     <input type="submit" value="Delete" class="btn btn-danger" />
@@ -104,8 +104,8 @@
             count++;
         <tr class="d-flex">
             <th class="col-1">@count</th>
-            <td class="col-5"><img src="@("~/Images/"+item.BeforeImage)" width="100" height="70" asp-append-version="true" /></td>
-            <td class="col-4"><img src="@("~/Images/"+item.AfterImage)" width="100" height="70" asp-append-version="true" /></td>
+            <td class="col-5"><img src="@(Model.ImageFile+item.BeforeImage)" width="100" height="70" asp-append-version="true" /></td>
+            <td class="col-4"><img src="@(Model.ImageFile+item.AfterImage)" width="100" height="70" asp-append-version="true" /></td>
             <td class="col-1 text-right"><a asp-action="Update" asp-controller="Gallery" asp-route-id="@item.GalleryID" asp-route-operation="edit" asp-route-show=true>Edit <i class="bi bi-pencil-fill"></i></a></td>
             <td class="col-1 text-right"><a asp-action="Update" asp-controller="Gallery" asp-route-id="@item.GalleryID" asp-route-operation="delete" asp-route-show=true>Delete <i class="bi bi-trash-fill"></i></a></td>
         </tr>
