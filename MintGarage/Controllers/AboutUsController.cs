@@ -47,7 +47,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            //HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
 
             AboutUsModel aboutUs = new AboutUsModel()
             

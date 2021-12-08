@@ -101,7 +101,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            //HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
             return View(consultationModel);
         }
 
@@ -110,7 +110,7 @@ namespace MintGarage.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(ConsultationModel consultationModel)
         {
-            //HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
 
             if (ModelState.IsValid)
             {
