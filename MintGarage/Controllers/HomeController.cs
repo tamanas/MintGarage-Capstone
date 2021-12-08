@@ -330,17 +330,6 @@ namespace MintGarage.Controllers
             }
         }
 
-        public IActionResult Privacy()
-        {
-            ViewBag.Partners = partnerRepo.Items;
-            ViewBag.SocialMedias = socialMediaRepo.Items;
-            ViewBag.Contacts = contactInfoRepo.Items;
-            ViewBag.AboutData = AboutUs;
-
-            return View();
-        }
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
