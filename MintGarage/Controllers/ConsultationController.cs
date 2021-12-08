@@ -46,7 +46,7 @@ namespace MintGarage.Controllers
             ViewBag.AboutData = AboutUs;
             ViewData["CurrentFilter"] = searchString;
 
-            // Serach Function
+            // Search Function
             if (!String.IsNullOrEmpty(searchString))
             {
                 forms = forms.Where(s => s.LastName.Contains(searchString)

@@ -38,16 +38,14 @@
         {
             count++;
             <tr>
-                <td  class="col-1">@count</td>
-                <td  class="col-1">@item.FirstName</td>
-                <td  class="col-1">@item.LastName</td>
-                <td  class="col-2">@item.EmailAddress</td>
-                <td class="col-1">
-                    (@item.PhoneNumber.Substring(0, 3))-@item.PhoneNumber.Substring(3, 3)-@item.PhoneNumber.Substring(6)
-                </td>
-                <td  class="col-2">@item.ServiceType</td>
-                <td  class="col-3 text-breakable">@item.FormDescription</td>
-                <td  class="col-1 text-right"><a asp-action="Delete" asp-controller="Consultation" asp-route-id="@item.ConsultationID" onclick="return confirm('Are you sure you to delete this?')">Delete <i class="bi bi-trash"></i></a></td>
+                <td class="col-1">@count</td>
+                <td class="col-1">@item.FirstName</td>
+                <td class="col-1">@item.LastName</td>
+                <td class="col-2">@item.EmailAddress</td>
+                <td class="col-1">@item.PhoneNumber</td>
+                <td class="col-2">@item.ServiceType</td>
+                <td class="col-3 text-breakable">@item.FormDescription</td>
+                <td class="col-1 text-right"><a asp-action="Delete" asp-controller="Consultation" asp-route-id="@item.ConsultationID" onclick="return confirm('Are you sure you to delete this?')">Delete <i class="bi bi-trash"></i></a></td>
             </tr>
         }
     </tbody>
