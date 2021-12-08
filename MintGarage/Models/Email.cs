@@ -39,7 +39,7 @@ namespace MintGarage.Controllers
             MailMessage mail = new MailMessage();
             mail.From = from;
             mail.To.Add(to);
-            mail.Subject = "Do Not Reply - Mint Construction Consultation Request: " + service;
+            mail.Subject = "Consultation Request from: " + firstName + " " + lastName;
             mail.Body = messageBody;
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
