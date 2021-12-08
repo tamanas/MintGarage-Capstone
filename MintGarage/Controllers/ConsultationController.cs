@@ -54,6 +54,7 @@ namespace MintGarage.Controllers
                                        || s.LastName.Contains(searchString)
                                        || s.EmailAddress.Contains(searchString)
                                        || s.PhoneNumber.Contains(searchString)
+                                       || s.ServiceType.Contains(searchString)
                                        || s.FormDescription.Contains(searchString) );
             }
 
@@ -63,37 +64,27 @@ namespace MintGarage.Controllers
             switch (sortCol)
             {
                 case "fname":
-                    if(sort) forms = forms.OrderByDescending(s => s.FirstName);
+                    if (sort) forms = forms.OrderByDescending(s => s.FirstName);
                     else forms = forms.OrderBy(s => s.FirstName);
                     break;
-                case "fname_asc":
-                    forms = forms.OrderBy(s => s.FirstName);
+                case "lname":
+                    if (sort) forms = forms.OrderByDescending(s => s.LastName);
+                    else forms = forms.OrderBy(s => s.LastName);
                     break;
-                case "lname_desc":
-                    forms = forms.OrderByDescending(s => s.LastName);
+                case "email":
+                    if (sort) forms = forms.OrderByDescending(s => s.EmailAddress);
+                    else forms = forms.OrderBy(s => s.EmailAddress);
                     break;
-                case "lname_asc":
-                    forms = forms.OrderBy(s => s.LastName);
+                case "service":
+                    if (sort) forms = forms.OrderByDescending(s => s.ServiceType);
+                    else forms = forms.OrderBy(s => s.ServiceType);
                     break;
-                case "email_desc":
-                    forms = forms.OrderByDescending(s => s.EmailAddress);
-                    break;
-                case "email_asc":
-                    forms = forms.OrderBy(s => s.EmailAddress);
-                    break;
-                case "service_desc":
-                    forms = forms.OrderByDescending(s => s.ServiceType);
-                    break;
-                case "service_asc":
-                    forms = forms.OrderBy(s => s.ServiceType);
-                    break;
-                case "desc_desc":
-                    forms = forms.OrderByDescending(s => s.FormDescription);
-                    break;
-                case "desc_asc":
-                    forms = forms.OrderBy(s => s.FormDescription);
+                case "description":
+                    if (sort) forms = forms.OrderByDescending(s => s.FormDescription);
+                    else forms = forms.OrderBy(s => s.FormDescription);
                     break;
                 default:
+                    forms = forms.OrderBy(s => s.FirstName);
                     break;
             }
             consultationModel.Consultations = forms;
@@ -110,7 +101,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            //HttpContext.Session.SetString("isAdminLoggedIn", "false");
             return View(consultationModel);
         }
 
@@ -119,7 +110,7 @@ namespace MintGarage.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(ConsultationModel consultationModel)
         {
-            HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            //HttpContext.Session.SetString("isAdminLoggedIn", "false");
 
             if (ModelState.IsValid)
             {
