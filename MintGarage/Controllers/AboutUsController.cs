@@ -47,6 +47,7 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
 
             AboutUsModel aboutUs = new AboutUsModel()
             
@@ -59,6 +60,10 @@ namespace MintGarage.Controllers
 
         public IActionResult Update(int? id, string? operation, bool? show, string? table)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -99,6 +104,10 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditValue(AboutUsModel aboutUsModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -126,6 +135,10 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> AddMember(AboutUsModel aboutUsModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -149,6 +162,10 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditMember(AboutUsModel aboutUsModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -176,6 +193,10 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteMember(AboutUsModel aboutUsModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;

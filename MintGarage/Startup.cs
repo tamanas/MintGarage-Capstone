@@ -33,6 +33,12 @@ namespace MintGarage
         {
             // Adding session services to Razor Pages
             services.AddSession();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
             services.AddMemoryCache();
             services.AddMvc();
 

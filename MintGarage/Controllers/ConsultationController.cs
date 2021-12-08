@@ -8,6 +8,7 @@ using MintGarage.Models.PartnerT;
 using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MintGarage.Controllers
 {
@@ -33,6 +34,11 @@ namespace MintGarage.Controllers
 
         public IActionResult Update(string sortCol, bool sort, string searchString)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var forms = consultationRepo.Items;
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -104,14 +110,17 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
             return View(consultationModel);
         }
 
         // POST: ConsultationForms/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ConsultationModel consultationModel)
+        public IActionResult Index(ConsultationModel consultationModel)
         {
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
+
             if (ModelState.IsValid)
             {
                 new Email(consultationModel.Consultation).SendEmail();
@@ -136,11 +145,16 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            return View(consultationModel.Consultation);
+            return View(consultationModel);
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return NotFound();
