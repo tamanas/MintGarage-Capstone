@@ -49,8 +49,9 @@ namespace MintGarage.Controllers
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
             HomeModel homeModel = new HomeModel()
             {
                 Cards = cardRepo.Items,
@@ -62,6 +63,11 @@ namespace MintGarage.Controllers
 
         public IActionResult Update(int? id, string? operation, bool? show, string? table)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.message = TempData["message"];
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -102,6 +108,10 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> CreateCard(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -131,6 +141,10 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditCard(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -160,6 +174,10 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteCard(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -172,6 +190,10 @@ namespace MintGarage.Controllers
 
         public IActionResult CreateReview(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -196,6 +218,10 @@ namespace MintGarage.Controllers
 
         public IActionResult EditReview(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -220,6 +246,10 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteReview(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -233,6 +263,10 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> CreateSupplier(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -261,6 +295,10 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditSupplier(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -289,6 +327,10 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteSupplier(HomeModel homeModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;

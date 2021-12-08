@@ -46,11 +46,17 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             galleryModel.Galleries = galleryRepo.Items;
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
             return View(galleryModel);
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.message = TempData["message"];
             ViewBag.SocialMedias = socialMediaRepo.Items;
@@ -85,6 +91,11 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> Create(GalleryModel galleryModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -113,6 +124,11 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> Edit(GalleryModel galleryModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -144,6 +160,11 @@ namespace MintGarage.Controllers
 
         public IActionResult Delete(GalleryModel galleryModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;

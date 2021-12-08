@@ -6,6 +6,7 @@ using MintGarage.Models.PartnerT;
 using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MintGarage.Controllers
 {
@@ -36,6 +37,7 @@ namespace MintGarage.Controllers
             ViewBag.AboutData = AboutUs;
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
             return View();
         }
 
@@ -52,6 +54,7 @@ namespace MintGarage.Controllers
                 Account acc = accoutRepo.Items.FirstOrDefault();
                 if (acc.Username == account.Username && acc.Password == account.Password)
                 {
+                    HttpContext.Session.SetString("isAdminLoggedIn", "true");
                     return RedirectToAction("Update", "Home");
                 }
                 ModelState.AddModelError("error", "Invalid username or password. Please try again!");
@@ -61,40 +64,54 @@ namespace MintGarage.Controllers
 
         public IActionResult Update()
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            ViewBag.Message = TempData["Message"];
-            ViewBag.Success = TempData["Success"];
             return View();
         }
 
         [HttpPost]
         public IActionResult Update(UpdatePassword updatePassword)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            if (ModelState.IsValid)
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("true"))
             {
-                Account acc = accoutRepo.Items.FirstOrDefault();
+                if (ModelState.IsValid)
+                {
+                    Account acc = accoutRepo.Items.FirstOrDefault();
                 
-                if (!acc.Password.Equals(updatePassword.CurrectPassword))
-                {
-                    TempData["Message"] = "Incorrect current password. Please try again!";
-                    TempData["Success"] = false;
+                    if (!acc.Password.Equals(updatePassword.CurrectPassword))
+                    {
+                        TempData["Message"] = "Incorrect current password. Please try again!";
+                        TempData["Success"] = false;
+                    }
+                    if (acc.Password.Equals(updatePassword.CurrectPassword))
+                    {
+                        acc.Password = updatePassword.NewPassword;
+                        accoutRepo.Update(acc);
+                        TempData["Message"] = "Password updated successfully.";
+                        TempData["Success"] = true;
+                    }
+                    return RedirectToAction("Update");
                 }
-                if (acc.Password.Equals(updatePassword.CurrectPassword))
-                {
-                    acc.Password = updatePassword.NewPassword;
-                    accoutRepo.Update(acc);
-                    TempData["Message"] = "Password updated successfully.";
-                    TempData["Success"] = true;
-                }
-                return RedirectToAction("Update");
+            } else
+            {
+                return RedirectToAction("Index", "Home");
             }
+
             return View();
         }
 
@@ -104,7 +121,8 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            return RedirectToAction("index", "Home");
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MintGarage.Controllers
 {
@@ -28,6 +29,11 @@ namespace MintGarage.Controllers
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -63,6 +69,11 @@ namespace MintGarage.Controllers
 
         public IActionResult Create(PartnerModel partnerModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -83,6 +94,11 @@ namespace MintGarage.Controllers
 
         public IActionResult Edit(PartnerModel partnerModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
@@ -104,6 +120,11 @@ namespace MintGarage.Controllers
 
         public IActionResult Delete(PartnerModel partnerModel)
         {
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.Partners = partnerRepo.Items;
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
