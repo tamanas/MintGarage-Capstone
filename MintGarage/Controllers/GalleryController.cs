@@ -46,7 +46,7 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             galleryModel.Galleries = galleryRepo.Items;
-            HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            //HttpContext.Session.SetString("isAdminLoggedIn", "false");
             return View(galleryModel);
         }
 

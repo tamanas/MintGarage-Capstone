@@ -51,7 +51,7 @@ namespace MintGarage.Controllers
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            //HttpContext.Session.SetString("isAdminLoggedIn", "false");
             HomeModel homeModel = new HomeModel()
             {
                 Cards = cardRepo.Items,
