@@ -5,10 +5,10 @@
 
 .img-comp-container {
     position: relative;
-    height: 200px; /*should be the same height as the images*/
-    margin: 50px 25px;
+    height: 350px; /*should be the same height as the images*/
+    margin: 20px 35px;
     float: left;
-    width: 300px;
+    width: 480px;
 }
 
 .img-comp-img {
@@ -18,12 +18,12 @@
     overflow: hidden;
 }
 
-    .img-comp-img img {
-        display: block;
-        vertical-align: middle;
-        width: 300px;
-        height: 200px;
-    }
+.img-comp-img img {
+    display: block;
+    vertical-align: middle;
+    width: 480px;
+    height: 350px;
+}
 
 .img-comp-slider {
     position: absolute;
@@ -37,6 +37,3 @@
     border-radius: 50%;
 }
 
-.img-gallery {
-    margin-bottom: 600px;
-}

@@ -1,19 +1,19 @@
 ﻿@model AboutUsModel
 
 @{
-    ViewData["Title"] = "About us";
+    ViewData["Title"] = "- About Us - Admin";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     string value = "value";
     string team = "team";
     var count = 0;
 }
 
-<div class="bg-success font-weight-bold text-center text-white">
+<div class="bg-success font-weight-bold text-center text-white mt-5">
     <span>@ViewBag.Message</span>
 </div>
 
 <div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
-    <p class="h3 p-1">Values</p>
+    <p class="h4 p-1">Values</p>
 </div>
 @if (ViewBag.table == value)
 {
@@ -36,11 +36,11 @@
                         <input asp-for="@Model.Value.ValueDescription" class="form-control" placeholder="Value Description"/>
                     </div>
                     <div class="col-2">
-                        <img src="@("~/Images/"+Model.Value.ValueImage)" width="100" height="70" asp-append-version="true" />
+                        <img src="@(Model.ImageFile+Model.Value.ValueImage)" width="100" height="70" asp-append-version="true" />
                         <input asp-for="@Model.Value.ValueImage" hidden />
                         <input asp-for="@Model.Value.ImageFile" accept="image/*" />
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 text-right">
                         <input type="submit" value="Edit" class="btn btn-warning" />
                         <a class="btn btn-info" asp-action="Update">Cancel</a>
                     </div>
@@ -57,7 +57,7 @@
                 <th class="col-3">Value Title</th>
                 <th class="col-5">Value Description</th>
                 <th class="col-2">Value Image</th>
-                <th class="col-1"></th>
+                <th class="col-1">Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -69,8 +69,8 @@
                     <td class="col-1">@count</td>
                     <td class="col-3">@item.ValueTitle</td>
                     <td class="col-5">@item.ValueDescription</td>
-                    <td class="col-2"><img src="@("~/Images/"+item.ValueImage)" width="100" height="70" asp-append-version="true" /></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.ValueID" asp-route-operation="edit" asp-route-show=true asp-route-table="value">Edit</a></td>
+                    <td class="col-2"><img src="@(Model.ImageFile+item.ValueImage)" width="100" height="70" asp-append-version="true" /></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.ValueID" asp-route-operation="edit" asp-route-show=true asp-route-table="value">Edit <i class="bi bi-pencil-fill"></i></a></td>
                 </tr>
             }
         </tbody>
@@ -78,7 +78,7 @@
 </div>
 
 <div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
-    <p class="h3 p-1">Team Members</p>
+    <p class="h4 p-1">Team Members</p>
 </div>
 @if (ViewBag.table == team)
 {
@@ -91,15 +91,15 @@
             <form asp-action="AddMember" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-3">
-                        <input asp-for="@Model.Team.MemberName" class="form-control" placeholder="Member Name"/>
+                        <input asp-for="@Model.TeamMember.MemberName" class="form-control" placeholder="Member Name"/>
                     </div>
                     <div class="col-4">
-                        <input asp-for="@Model.Team.MemberRole" class="form-control" placeholder="Member Role"/>
+                        <input asp-for="@Model.TeamMember.MemberRole" class="form-control" placeholder="Member Role"/>
                     </div>
                     <div class="col-3">
-                        <input asp-for="@Model.Team.ImageFile" accept="image/*" />
+                        <input asp-for="@Model.TeamMember.ImageFile" accept="image/*" />
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 text-right">
                         <input type="submit" value="Add" class="btn btn-success" />
                         <a class="btn btn-info" asp-action="Update">Cancel</a>
                     </div>
@@ -112,18 +112,18 @@
     {
         <div class="mt-2 mb-2">
             <form asp-action="EditMember" method="post" enctype="multipart/form-data">
-                <input asp-for="@Model.Team.MemberID" hidden />
+                <input asp-for="@Model.TeamMember.MemberID" hidden />
                 <div class="row">
                     <div class="col-3">
-                        <input asp-for="@Model.Team.MemberName" class="form-control" placeholder="Member Name" />
+                        <input asp-for="@Model.TeamMember.MemberName" class="form-control" placeholder="Member Name" />
                     </div>
                     <div class="col-4">
-                        <input asp-for="@Model.Team.MemberRole" class="form-control" placeholder="Member Role" />
+                        <input asp-for="@Model.TeamMember.MemberRole" class="form-control" placeholder="Member Role" />
                     </div>
                     <div class="col-3">
-                        <img src="@("~/Images/"+Model.Team.MemberImage)" width="100" height="70" asp-append-version="true" />
-                        <input asp-for="@Model.Team.MemberImage" hidden />
-                        <input asp-for="@Model.Team.ImageFile" accept="image/*" />
+                        <img src="@(Model.ImageFile+Model.TeamMember.MemberImage)" width="100" height="70" asp-append-version="true" />
+                        <input asp-for="@Model.TeamMember.MemberImage" hidden />
+                        <input asp-for="@Model.TeamMember.ImageFile" accept="image/*" />
                     </div>
                     <div class="col-2">
                         <input type="submit" value="Edit" class="btn btn-warning" />
@@ -138,17 +138,17 @@
     {
         <div class="mt-2 mb-2">
             <form asp-action="DeleteMember" method="post">
-                <input asp-for="@Model.Team.MemberID" hidden />
+                <input asp-for="@Model.TeamMember.MemberID" hidden />
                 <div class="row">
                     <div class="col-3">
-                        <input asp-for="@Model.Team.MemberName" class="form-control" readonly />
+                        <input asp-for="@Model.TeamMember.MemberName" class="form-control" readonly />
                     </div>
                     <div class="col-4">
-                        <input asp-for="@Model.Team.MemberRole" class="form-control" readonly />
+                        <input asp-for="@Model.TeamMember.MemberRole" class="form-control" readonly />
                     </div>
                     <div class="col-3">
-                        <input asp-for="@Model.Team.MemberImage" hidden />
-                        <img src="@("~/Images/"+Model.Team.MemberImage)" width="100" height="70" asp-append-version="true" />
+                        <input asp-for="@Model.TeamMember.MemberImage" hidden />
+                        <img src="@(Model.ImageFile+Model.TeamMember.MemberImage)" width="100" height="70" asp-append-version="true" />
                     </div>
                     <div class="col-2">
                         <input type="submit" value="Delete" class="btn btn-danger" />
@@ -168,21 +168,21 @@
                 <th class="col-4">Member Role</th>
                 <th class="col-3">Member Image</th>
                 <th class="col-1"></th>
-                <th class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-operation="add" asp-route-show=true asp-route-table="team">Add</a></th>
+                <th class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-operation="add" asp-route-show=true asp-route-table="team">Add <i class="bi bi-plus-circle"></i></a></th>
             </tr>
         </thead>
         <tbody>
             @{ count = 0; } 
-            @foreach (var item in Model.Teams)
+            @foreach (var item in Model.TeamMembers)
             {
                 count++;
                 <tr class="d-flex">
                     <td class="col-1">@count</td>
                     <td class="col-2">@item.MemberName</td>
                     <td class="col-4">@item.MemberRole</td>
-                    <td class="col-3"><img src="@("~/Images/"+item.MemberImage)" width="100" height="70" asp-append-version="true" /></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="edit" asp-route-show=true asp-route-table="team">Edit</a></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="delete" asp-route-show=true asp-route-table="team">Delete</a></td>
+                    <td class="col-3"><img src="@(Model.ImageFile+item.MemberImage)" width="100" height="70" asp-append-version="true" /></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="edit" asp-route-show=true asp-route-table="team">Edit <i class="bi bi-pencil-fill"></a></td>
+                    <td class="col-1"><a asp-action="Update" asp-controller="AboutUs" asp-route-id="@item.MemberID" asp-route-operation="delete" asp-route-show=true asp-route-table="team">Delete <i class="bi bi-trash-fill"></a></td>
                 </tr>
             }
         </tbody>

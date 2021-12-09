@@ -3,20 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MintGarage</title>
+    <title>MintGarage @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/icons">
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/footer.css" />
-    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="~/css/AboutUs.css" />
     <link rel="stylesheet" href="~/css/gallery.css" />
+    <link rel="stylesheet" href="~/css/consultation.css" />
+    <link rel="stylesheet" href="~/css/partnersDropdown.css" />
     <script src="~/js/_layout.js"></script>
     <script src="~/js/gallery.js"></script>
 </head>
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success box-shadow mb-3 fixed-top">
             <div class="container">
                 <a class="navbar-brand text-white font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">Mint Garage</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -29,72 +34,73 @@
                             <a class=" nav-link text-white font-weight-bold" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class=" nav-link text-white font-weight-bold" asp-controller="ConsultationForms" asp-action="Create">Consultation</a>
+                            <a class=" nav-link text-white font-weight-bold" asp-controller="Consultation" asp-action="Index">Consultation</a>
                         </li>
                         <li class="nav-item">
                             <a class=" nav-link text-white font-weight-bold" asp-controller="Gallery" asp-action="Index">Gallery</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class=" nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                @foreach (var partner in ViewBag.Partners)
-                                {
-                                    <li><a href=@partner.PartnerUrl>@partner.PartnerName</a></li>
-                                }
-                            </ul>
-                        </li>
                         <li class="nav-item">
                             <a class=" nav-link text-white font-weight-bold" asp-controller="AboutUs" asp-action="Index">About Us</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-white font-weight-bold dropdown-toggle" data-toggle="dropdown" asp-controller="Partners" asp-action="Index">Partners<b class="caret"></b></a>
+                            <ul id="partners-dropdown" class="dropdown-menu">
+                                @foreach (var partner in ViewBag.Partners)
+                                {
+                                    <li class="partner-list-item"><a href=@partner.PartnerUrl>@partner.PartnerName</a></li>
+                                }
+                            </ul>
+                        </li>
+
                     </ul>
                 </div>
             </div>
         </nav>
+        @RenderSection("sidemenu", false)
     </header>
-    <div class="container mb-5">
+    <br />
+    <div class="container mb-5 pt-5">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top bg-success text-white mb-0 footer">
+    <footer class="bg-success text-white pb-3 footer-ontop">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-6">
-                    <img src="~/Images/mintlogo.png" alt="Mint Logo" />
+            <div style="display: flex; flex-wrap: wrap;">
+                <div class="col-8 text-wrap">
+                    <img class="footer-img" src="~/Images/mintlogo.png" alt="Mint Logo" />
                     <p class="text-justify">@ViewBag.AboutData</p>
                 </div>
 
-                <div class="col-xs-6 col-md-3">
-                    <h6>Links</h6>
-                    <ul class="footer-links">
-                        <li><a asp-controller="ConsultationForms" asp-action="Create">Consultation</a></li>
-                        <li><a asp-controller="Product" asp-action="Index">Products</a></li>
-                        <li><a asp-controller="Portfolio" asp-action="Index">Portfolio</a></li>
-                        <li><a asp-controller="AboutUs" asp-action="Index">About Us</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-xs-6 col-md-3">
-                    <h6>Contact Information</h6>
-                    <ul class="footer-links">
-                        @foreach (var social in ViewBag.SocialMedias)
-                        {
-                            <li><a href="@social.SocialMediaUrl">@social.Name</a></li>
-                        }
+                <div class="col-4 pt-3">
+                    <h6><u>Contact Information</u></h6>
+                    <div>
                         @foreach (var contact in ViewBag.Contacts)
                         {
-                            <li>@contact.EmailAddress</li>
-                            <li>@contact.PhoneNumber</li>
+                             <span><i class="bi bi-geo-alt"></i>  @contact.Address</span><br />
+                            <span><i class="bi bi-envelope"></i>  @contact.EmailAddress</span><br />
+                            <span>
+                                <i class=" bi bi-telephone-forward"></i>
+                                +1 (@contact.PhoneNumber.Substring(0, 3))-@contact.PhoneNumber.Substring(3, 3)-@contact.PhoneNumber.Substring(6)
+                            </span><br />
+                            <span><i class="bi bi-clock"></i>  @contact.WorkingHour</span><br />
                         }
-                    </ul>
+                    </div>
                 </div>
             </div>
-            <hr>
-            <div class="text-center">
-                <div>
+            <hr />
+            <p class="text-center justify-content-between footer-links">
+                @foreach (var social in ViewBag.SocialMedias)
+                {
+                    <span class="px-3"><a href="@social.SocialMediaUrl"><i class=@social.SocialMediaIcon></i></a></span>
+                }
+            </p>
+            <hr />
+            <div class="text-center text-wrap">
+                <div class="footer-links">
                     Copyright &copy; 2010 - 2021   |   Mint Garage Inc.   |   All Rights Reserved   |   Powered by
-                    <a href="https://safeguardhosting.ca/">SafeGuard Hosting</a>
+                    <a href="https://safeguardhosting.ca/"><u>SafeGuard Hosting</u></a>
                 </div>
             </div>
         </div>

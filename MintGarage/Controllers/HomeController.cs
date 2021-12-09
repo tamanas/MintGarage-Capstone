@@ -1,74 +1,77 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MintGarage.Models;
-using MintGarage.Models.Partners;
+using MintGarage.Models.PartnerT;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using MintGarage.Models.HomeTab.HomeContents;
-using MintGarage.Models.HomeTab.Reviews;
-using MintGarage.Models.HomeTab.Suppliers;
+using MintGarage.Models.HomeT.Cards;
+using MintGarage.Models.HomeT.Reviews;
+using MintGarage.Models.HomeT.Suppliers;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.FooterContents.FooterContactInfo;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MintGarage.Models.FooterT.SocialMedias;
+using MintGarage.Models.FooterT.ContactInformation;
 
 namespace MintGarage.Controllers
 {
     public class HomeController : Controller
     {
-        public IPartnerRepository partnerRepository;
-        private IHomeContentRepository homeContentRepo;
-        private IReviewRepository reviewRepo;
-        private ISupplierRepository supplierRepo;
-        private IFooterContactInfoRepository footerContactInfoRepo;
-        private IFooterSocialMediaRepository footerSocialMediaRepo;
+        public IRepository<Partner> partnerRepo;
+        private IRepository<Card> cardRepo;
+        private IRepository<Review> reviewRepo;
+        private IRepository<Supplier> supplierRepo;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
             "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
         private IWebHostEnvironment hostEnv;
-        private string imageFolder = "/Images/";
+        private string imageFolder = "/Images/home/";
 
-        public HomeController(IPartnerRepository partnerRepo, IHomeContentRepository homeContentRepository, 
-                                            IReviewRepository reviewRepository, ISupplierRepository supplierRepository,
-                                            IWebHostEnvironment hostEnvironment, IFooterSocialMediaRepository socialMediaRepository,
-                                            IFooterContactInfoRepository contactRepository)
+        public HomeController(IRepository<Partner> partnerRepository, IRepository<Card> cardRepository, 
+                                            IRepository<Review> reviewRepository, IRepository<Supplier> supplierRepository,
+                                            IWebHostEnvironment hostEnvironment, IRepository<SocialMedia> mediaRepository,
+                                            IRepository<ContactInfo> contactRepository)
         {
-            partnerRepository = partnerRepo;
-            homeContentRepo = homeContentRepository;
+            partnerRepo = partnerRepository;
+            cardRepo = cardRepository;
             reviewRepo = reviewRepository;
             supplierRepo = supplierRepository;
-            footerSocialMediaRepo = socialMediaRepository;
-            footerContactInfoRepo = contactRepository;
+            socialMediaRepo = mediaRepository;
+            contactInfoRepo = contactRepository;
             hostEnv = hostEnvironment;
         }
 
         public IActionResult Index()
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
             HomeModel homeModel = new HomeModel()
             {
-                HomeContents = homeContentRepo.HomeContents,
-                Reviews = reviewRepo.Reviews,
-                Suppliers = supplierRepo.Suppliers,
+                Cards = cardRepo.Items,
+                Reviews = reviewRepo.Items,
+                Suppliers = supplierRepo.Items,
             };
             return View(homeModel);
         }
 
         public IActionResult Update(int? id, string? operation, bool? show, string? table)
         {
-            ViewBag.Partners = partnerRepository.Partners;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.message = TempData["message"];
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             SetViewBag(false, false, false, "");
             if (operation != null && show != null && table != "")
@@ -90,106 +93,122 @@ namespace MintGarage.Controllers
 
 
             HomeModel homeModel = new HomeModel();
-            homeModel.HomeContents = homeContentRepo.HomeContents;
-            homeModel.Reviews = reviewRepo.Reviews;
-            homeModel.Suppliers = supplierRepo.Suppliers;
+            homeModel.Cards = cardRepo.Items;
+            homeModel.Reviews = reviewRepo.Items;
+            homeModel.Suppliers = supplierRepo.Items;
 
             if (id != null && operation != "add")
             {
-                homeModel.HomeContent = homeContentRepo.HomeContents.FirstOrDefault(s => s.HomeContentsID == id);
-                homeModel.Review = reviewRepo.Reviews.FirstOrDefault(s => s.ReviewsID == id);
-                homeModel.Supplier = supplierRepo.Suppliers.FirstOrDefault(s => s.SuppliersID == id);
+                homeModel.Card = cardRepo.Items.FirstOrDefault(s => s.CardID == id);
+                homeModel.Review = reviewRepo.Items.FirstOrDefault(s => s.ReviewsID == id);
+                homeModel.Supplier = supplierRepo.Items.FirstOrDefault(s => s.SuppliersID == id);
             }
             return View(homeModel);
         }
 
-        public async Task<IActionResult> CreateHomeContent(HomeModel homeModel)
+        public async Task<IActionResult> CreateCard(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid && homeModel.HomeContent.ImageFile != null)
+            if (ModelState.IsValid && homeModel.Card.ImageFile != null)
             {
-                homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
-                homeContentRepo.AddHomeContents(homeModel.HomeContent);
-                TempData["message"] = "Successfully added new Home Content.";
+                homeModel.Card.Image = await SaveImage(homeModel.Card.ImageFile);
+                cardRepo.Create(homeModel.Card);
+                TempData["message"] = "Successfully added new Card.";
             }
             else
             {
-                if(homeModel.HomeContent.ImageFile == null)
+                if(homeModel.Card.ImageFile == null)
                 {
                     ModelState.AddModelError("image", "Image is required");
                 }
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
-                SetViewBag(true, false, false, "homecontent");
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
+                SetViewBag(true, false, false, "card");
 
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
         }
 
-        public async Task<IActionResult> EditHomeContent(HomeModel homeModel)
+        public async Task<IActionResult> EditCard(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
-                if(homeModel.HomeContent.ImageFile != null)
+                if(homeModel.Card.ImageFile != null)
                 {
-                    DeleteImage(homeModel.HomeContent.Image);
-                    homeModel.HomeContent.Image = await SaveImage(homeModel.HomeContent.ImageFile);
+                    DeleteImage(homeModel.Card.Image);
+                    homeModel.Card.Image = await SaveImage(homeModel.Card.ImageFile);
                 }
-                homeContentRepo.UpdateHomeContents(homeModel.HomeContent);
-                TempData["message"] = "Successfully edited Home Content.";
+                cardRepo.Update(homeModel.Card);
+                TempData["message"] = "Successfully edited Card.";
             }
             if(!ModelState.IsValid)
             {
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
 
-                SetViewBag(false, true, false, "homecontent");
+                SetViewBag(false, true, false, "card");
                 return View("Update", homeModel);
             }
             return RedirectToAction("Update");
         }
 
-        public IActionResult DeleteHomeContent(HomeModel homeModel)
+        public IActionResult DeleteCard(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            DeleteImage(homeModel.HomeContent.Image);
-            homeContentRepo.DeleteHomeContents(homeModel.HomeContent);
-            TempData["message"] = "Successfully deleted Home Content.";
+            DeleteImage(homeModel.Card.Image);
+            cardRepo.Delete(homeModel.Card);
+            TempData["message"] = "Successfully deleted Card.";
             return RedirectToAction("Update");
         }
 
         public IActionResult CreateReview(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
-                reviewRepo.AddReviews(homeModel.Review);
+                reviewRepo.Create(homeModel.Review);
                 TempData["message"] = "Successfully added new Review.";
             }
             else
             {
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
 
                 SetViewBag(true, false, false, "review");
                 return View("Update", homeModel);
@@ -199,21 +218,25 @@ namespace MintGarage.Controllers
 
         public IActionResult EditReview(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
-                reviewRepo.UpdateReviews(homeModel.Review);
+                reviewRepo.Update(homeModel.Review);
                 TempData["message"] = "Successfully edited Review.";
             }
             else
             {
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
 
                 SetViewBag(false, true, false, "review");
                 return View("Update", homeModel);
@@ -223,12 +246,16 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteReview(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            reviewRepo.DeleteReviews(homeModel.Review);
+            reviewRepo.Delete(homeModel.Review);
             TempData["message"] = "Successfully deleted Review.";
             return RedirectToAction("Update");
         }
@@ -236,15 +263,19 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> CreateSupplier(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             
             if (ModelState.IsValid && homeModel.Supplier.ImageFile != null)
             {
                 homeModel.Supplier.SupplierLogo = await SaveImage(homeModel.Supplier.ImageFile);
-                supplierRepo.AddSuppliers(homeModel.Supplier);
+                supplierRepo.Create(homeModel.Supplier);
                 TempData["message"] = "Successfully added new Supplier.";
             }
             else
@@ -253,9 +284,9 @@ namespace MintGarage.Controllers
                 {
                     ModelState.AddModelError("Image", "Image is required");
                 }
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
                 SetViewBag(true, false, false, "supplier");
                 return View("Update", homeModel);
             }
@@ -264,9 +295,13 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditSupplier(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
@@ -274,16 +309,16 @@ namespace MintGarage.Controllers
                 if (homeModel.Supplier.ImageFile != null)
                 {
                     DeleteImage(homeModel.Supplier.SupplierLogo);
-                    homeModel.HomeContent.Image = await SaveImage(homeModel.Supplier.ImageFile);
+                    homeModel.Supplier.SupplierLogo = await SaveImage(homeModel.Supplier.ImageFile);
                 }
-                supplierRepo.UpdateSuppliers(homeModel.Supplier);
+                supplierRepo.Update(homeModel.Supplier);
                 TempData["message"] = "Successfully edited Supplier.";
             }
             else
             {
-                homeModel.HomeContents = homeContentRepo.HomeContents;
-                homeModel.Reviews = reviewRepo.Reviews;
-                homeModel.Suppliers = supplierRepo.Suppliers;
+                homeModel.Cards = cardRepo.Items;
+                homeModel.Reviews = reviewRepo.Items;
+                homeModel.Suppliers = supplierRepo.Items;
                 SetViewBag(false, true, false, "supplier");
                 return View("Update", homeModel);
             }
@@ -292,13 +327,17 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteSupplier(HomeModel homeModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             DeleteImage(homeModel.Supplier.SupplierLogo);
-            supplierRepo.DeleteSuppliers(homeModel.Supplier);
+            supplierRepo.Delete(homeModel.Supplier);
             TempData["message"] = "Successfully deleted Supplier.";
             return RedirectToAction("Update");
         }
@@ -333,33 +372,16 @@ namespace MintGarage.Controllers
             }
         }
 
-        public IActionResult Privacy()
-        {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
-            ViewBag.AboutData = AboutUs;
-
-            return View();
-        }
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
             
     }
-
 }
-
-
-
-
-

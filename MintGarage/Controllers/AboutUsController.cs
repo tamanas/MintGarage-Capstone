@@ -1,19 +1,14 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models;
-using MintGarage.Models.AboutUsTab.Teams;
-using MintGarage.Models.AboutUsTab.Values;
-using MintGarage.Models.FooterContents.FooterContactInfo;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.HomeTab.HomeContents;
-using MintGarage.Models.Partners;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.AboutUsT.TeamMembers;
+using MintGarage.Models.AboutUsT.Values;
+using MintGarage.Models.FooterT.ContactInformation;
+using MintGarage.Models.FooterT.SocialMedias;
+using MintGarage.Models.PartnerT;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
@@ -22,49 +17,56 @@ namespace MintGarage.Controllers
 {
     public class AboutUsController : Controller
     {
-        private IPartnerRepository partnerRepo;
-        private IFooterContactInfoRepository footerContactInfoRepo;
-        private IFooterSocialMediaRepository footerSocialMediaRepo;
-        private ITeamRepository teamRepo;
-        private IValueRepository valueRepo;
+        private IRepository<Partner> partnerRepo;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
+        private IRepository<TeamMember> teamMemberRepo;
+        private IRepository<Value> valueRepo;
 
         private IWebHostEnvironment hostEnv;
-        private string imageFolder = "/Images/";
+        private string imageFolder = "/Images/aboutus/";
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public AboutUsController(IPartnerRepository partnerRepository, IFooterContactInfoRepository footerContactInfoRepository,
-            IFooterSocialMediaRepository footerSocialMediaRepository, ITeamRepository teamRepository, IValueRepository valueRepository,
+        public AboutUsController(IRepository<Partner> partnerRepository, IRepository<ContactInfo> contactRepository,
+            IRepository<SocialMedia> mediaRepository, IRepository<TeamMember> teamMemberRepository, IRepository<Value> valueRepository,
             IWebHostEnvironment hostEnvironment)
         {
             partnerRepo = partnerRepository;
-            footerContactInfoRepo = footerContactInfoRepository;
-            footerSocialMediaRepo = footerSocialMediaRepository;
-            teamRepo = teamRepository;
+            contactInfoRepo = contactRepository;
+            socialMediaRepo = mediaRepository;
+            teamMemberRepo = teamMemberRepository;
             valueRepo = valueRepository;
             hostEnv = hostEnvironment;
         }
 
         public IActionResult Index()
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
+            ViewBag.AboutData = AboutUs;
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
+
             AboutUsModel aboutUs = new AboutUsModel()
             
             {
-                Teams = teamRepo.Teams,
-                Values = valueRepo.Values,
+                TeamMembers = teamMemberRepo.Items,
+                Values = valueRepo.Items,
             };
             return View(aboutUs);
         }
 
         public IActionResult Update(int? id, string? operation, bool? show, string? table)
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             ViewBag.message = TempData["message"];
 
@@ -88,13 +90,13 @@ namespace MintGarage.Controllers
             }
 
             AboutUsModel aboutUsModel = new AboutUsModel();
-            aboutUsModel.Values = valueRepo.Values;
-            aboutUsModel.Teams = teamRepo.Teams;
+            aboutUsModel.Values = valueRepo.Items;
+            aboutUsModel.TeamMembers = teamMemberRepo.Items;
 
             if (id != null && operation != "add")
             {
-                aboutUsModel.Value = valueRepo.Values.FirstOrDefault(s => s.ValueID == id);
-                aboutUsModel.Team = teamRepo.Teams.FirstOrDefault(s => s.MemberID == id);
+                aboutUsModel.Value = valueRepo.Items.FirstOrDefault(s => s.ValueID == id);
+                aboutUsModel.TeamMember = teamMemberRepo.Items.FirstOrDefault(s => s.MemberID == id);
             }
 
             return View(aboutUsModel);
@@ -102,9 +104,13 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditValue(AboutUsModel aboutUsModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
@@ -119,8 +125,8 @@ namespace MintGarage.Controllers
             }
             else
             {
-                aboutUsModel.Values = valueRepo.Values;
-                aboutUsModel.Teams = teamRepo.Teams;
+                aboutUsModel.Values = valueRepo.Items;
+                aboutUsModel.TeamMembers = teamMemberRepo.Items;
                 setViewBag(false, true, false, "value");
                 return View("Update", aboutUsModel);
             }
@@ -129,21 +135,25 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> AddMember(AboutUsModel aboutUsModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid && aboutUsModel.Team.ImageFile != null)
+            if (ModelState.IsValid && aboutUsModel.TeamMember.ImageFile != null)
             {
-                aboutUsModel.Team.MemberImage = await SaveImage(aboutUsModel.Team.ImageFile);
-                teamRepo.Add(aboutUsModel.Team);
+                aboutUsModel.TeamMember.MemberImage = await SaveImage(aboutUsModel.TeamMember.ImageFile);
+                teamMemberRepo.Create(aboutUsModel.TeamMember);
                 TempData["message"] = "Successfully added Team Member.";
             }
             else
             {
-                aboutUsModel.Values = valueRepo.Values;
-                aboutUsModel.Teams = teamRepo.Teams;
+                aboutUsModel.Values = valueRepo.Items;
+                aboutUsModel.TeamMembers = teamMemberRepo.Items;
                 setViewBag(true, false, false, "team");
                 return View("Update", aboutUsModel);
             }
@@ -152,25 +162,29 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> EditMember(AboutUsModel aboutUsModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
-                if (aboutUsModel.Team.ImageFile != null)
+                if (aboutUsModel.TeamMember.ImageFile != null)
                 {
-                    DeleteImage(aboutUsModel.Team.MemberImage);
-                    aboutUsModel.Team.MemberImage = await SaveImage(aboutUsModel.Team.ImageFile);
+                    DeleteImage(aboutUsModel.TeamMember.MemberImage);
+                    aboutUsModel.TeamMember.MemberImage = await SaveImage(aboutUsModel.TeamMember.ImageFile);
                 }
-                teamRepo.Update(aboutUsModel.Team);
+                teamMemberRepo.Update(aboutUsModel.TeamMember);
                 TempData["message"] = "Successfully edited Team Member.";
             }
             else
             {
-                aboutUsModel.Values = valueRepo.Values;
-                aboutUsModel.Teams = teamRepo.Teams;
+                aboutUsModel.Values = valueRepo.Items;
+                aboutUsModel.TeamMembers = teamMemberRepo.Items;
                 setViewBag(false, true, false, "team");
                 return View("Update", aboutUsModel);
             }
@@ -179,13 +193,17 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteMember(AboutUsModel aboutUsModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            DeleteImage(aboutUsModel.Team.MemberImage);
-            teamRepo.Delete(aboutUsModel.Team);
+            DeleteImage(aboutUsModel.TeamMember.MemberImage);
+            teamMemberRepo.Delete(aboutUsModel.TeamMember);
             TempData["message"] = "Successfully deleted Team Member.";
             return RedirectToAction("Update");
         }

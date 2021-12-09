@@ -5,38 +5,41 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
-using MintGarage.Models.ConsultationForms;
+using MintGarage.Models.ConsultationT;
 
 namespace MintGarage.Controllers
 {
     public class Email
     {
-        private ConsultationForm consultationForm;
+        private Consultation consultation;
 
-        public Email(ConsultationForm c)
+        public Email(Consultation c)
         {
-            consultationForm = c;
+            consultation = c;
         }
 
         public void SendEmail()
         {
-            string firstName = consultationForm.FirstName;
-            string lastName = consultationForm.LastName;
-            string email = consultationForm.EmailAddress;
-            string description = consultationForm.FormDescription;
-            string service = consultationForm.ServiceType;
-            string messageBody = consultationForm.FormDescription;
-            messageBody = "Hello Mint Construction Team,\n\n" +
+            string firstName = consultation.FirstName;
+            string lastName = consultation.LastName;
+            string email = consultation.EmailAddress;
+            string phoneNumber = consultation.PhoneNumber;
+            string description = consultation.FormDescription;
+            string service = consultation.ServiceType;
+            string messageBody = consultation.FormDescription;
+            messageBody = "Hello Mint Garage,\n\n" +
                 "This is a consultation request from:\nName: " + firstName + " " + lastName +
                 "\nEmail: " + email + 
+                "\nPhone #: " + phoneNumber +
                 "\nService: " + service + 
-                "\n\nDO NOT REPLY: Sent as automated email";
-            MailAddress to = new MailAddress("anon.maltese@gmail.com");
-            MailAddress from = new MailAddress("anon.maltese@gmail.com");
+                "\n\nDescription:\n" + description +
+                "\n\n\nThis is an automated email.";
+            MailAddress to = new MailAddress("info.mintgarage@gmail.com");
+            MailAddress from = new MailAddress("info.mintgarage@gmail.com");
             MailMessage mail = new MailMessage();
             mail.From = from;
             mail.To.Add(to);
-            mail.Subject = "Do Not Reply - Mint Construction Consultation Request: " + service;
+            mail.Subject = "Consultation Request from: " + firstName + " " + lastName;
             mail.Body = messageBody;
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
@@ -45,7 +48,6 @@ namespace MintGarage.Controllers
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential(from.Address, "an0n1234");
 
-            //mail.IsBodyHtml = true;
             try
             {
                 client.Send(mail);

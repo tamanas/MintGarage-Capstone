@@ -1,29 +1,32 @@
-﻿@model IEnumerable<MintGarage.Models.GalleryTab.Gallery>
+﻿@model GalleryModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "- Gallery";
 }
 
-<!--Change button to text and add styling-->
 <div class="img-container">
-    <img src="~/Images/construction.jpg" alt="construction.jpg" class="img-thumbnail card-img-top" />
+    <img src="@(Model.ImageFile+Model.TabImage)" alt="@Model.TabImage" class="img-thumbnail card-img-top" asp-append-version="true" />
     <div class="img-text">
-        <p class="text-title">IT'S TIME TO MINT YOUR GARAGE!</p>
-        <p class="text-slogan">Inspired by Modern Living & Cutting-Edge Construction Techniques</p>
+        <h4>@Model.TabImageSlogon</h4>
     </div>
 </div>
 
-<div class="img-gallery">
-    @foreach (var item in Model)
-    {
-        <div class="img-comp-container">
-            <div class="img-comp-img">
-                <img src="~/Images/@item.AfterImage" alt="@item.AfterImage" />
+<div>
+    <div class="text-center my-4">
+        <h4>@Model.GalleryTitle</h4>
+    </div>
+    <hr class="underline">
+    <div>
+        @foreach (var item in Model.Galleries)
+        {
+            <div class="img-comp-container">
+                <div class="img-comp-img">
+                    <img src="@(Model.ImageFile+item.AfterImage)" alt="@item.AfterImage" asp-append-version="true" />
+                </div>
+                <div class="img-comp-img img-comp-overlay">
+                    <img src="@(Model.ImageFile+item.BeforeImage)" alt="@item.BeforeImage" asp-append-version="true"/>
+                </div>
             </div>
-            <div class="img-comp-img img-comp-overlay">
-                <img src="~/Images/@item.BeforeImage" alt="@item.BeforeImage" />
-            </div>
-        </div>
-    }
+        }
+    </div>
 </div>
-

@@ -2,68 +2,89 @@
 
 @{
     Layout = Layout;
+    ViewData["Title"] = "- Home";
 }
 
 <div class="img-container">
-    <img src="~/Images/construction.jpg" alt="construction.jpg" class="img-thumbnail card-img-top" />
+    <img src="@(Model.ImageFile + Model.TabImage)" alt="@Model.TabImage" class="img-thumbnail card-img-top" asp-append-version="true" />
     <div class="img-text">
-        <p>IT'S TIME TO MINT YOUR GARAGE!</p>
-        <button class="image-btn">BOOK AN IN-HOME CONSULTATION</button>
+        <h4>@Model.TabImageSlogon</h4>
     </div>
 </div>
 
-<div class="flex-card-container">
-    @foreach (HomeContent home in Model.HomeContents)
-    {
-        <div class="flip-card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <img src="~/Images/@home.Image" alt="@home.Image" class="img-thumbnail card-img-top" />
-                    <h4>@home.Title</h4>
-                </div>
-                <div class="card-back">
-                    <h4>@home.Title</h4>
-                    <p>@home.Description</p>
-                    <button class="card-button">Get a quote!</button>
+
+<div class="my-5">
+    <div class="text-center">
+        <h3>@Model.CardTitle</h3>
+    </div>
+    <hr class="underline" />
+    <div class="flex-card-container">
+        @foreach (Card item in Model.Cards)
+        {
+            <div class="flip-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="@(Model.ImageFile+item.Image)" alt="@item.Image" class="img-thumbnail card-img-top" asp-append-version="true" />
+                        <h5>@item.Title</h5>
+                    </div>
+                    <div class="card-back mt-4">
+                        <h5><u>@item.Title</u></h5>
+                        <p>@item.Description</p>
+                        <a class="btn btn-light" asp-action="Index" asp-controller="Consultation">GET A QUOTE</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
 
-<div class="slideshow-container">
-    <h2>Reviews</h2>
-    @foreach (Review review in Model.Reviews)
-    {
-        <!-- Full-width slides/quotes -->
-        <div class="mySlides">
-            <p>@review.CustomerName</p>
-            <p>@review.Description</p>
-        </div>
-    }
-    <!-- Next/prev buttons -->
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+<div class="my-5">
+    <div class="text-center">
+        <h3>@Model.ReviewTitle</h3>
+    </div>
+    <hr class="underline" />
+    <div class="slideshow-container">
+        @foreach (Review review in Model.Reviews)
+        {
+            <!-- Full-width slides/quotes -->
+            <div class="mySlides">
+                <h5 style="color: #41ca57"><u>@review.CustomerName</u></h5>
+                <p>@review.Description</p>
+            </div>
+        }
+        <!-- Next/prev buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <!-- Dots/bullets/indicators -->
+    <div class="dot-container">
+        @{ var Index = 0; }
+        @foreach (Review review in Model.Reviews)
+        {
+            Index++;
+            <span class="dot" onclick="currentSlide(index)"></span>
+        }
+    </div>
 </div>
 
-<!-- Dots/bullets/indicators -->
-<div class="dot-container">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-    <span class="dot" onclick="currentSlide(4)"></span>
-    <span class="dot" onclick="currentSlide(5)"></span>
-</div>
 
-<h2 class="supplier-text">Our Trusted Suppliers</h2>
-<div class="supplier-container">
-    @foreach (Supplier supplier in Model.Suppliers)
-    {
-        <div class="supplier-image">
-            <img src="~/Images/@supplier.SupplierLogo" alt="@supplier.SupplierLogo" class="img-thumbnail card-img-top" />
-        </div>
-    }
+<div class="my-5">
+    <div class="text-center">
+        <h3>@Model.SuppllerTitle</h3>
+    </div>
+    <hr class="underline" />
+    <div class="row justify-content-center">
+        @foreach (Supplier supplier in Model.Suppliers)
+        {
+            <div class="supplier-image">
+                <img src="@(Model.ImageFile+supplier.SupplierLogo)"
+                     alt="@supplier.SupplierLogo"
+                     class="img-thumbnail card-img-top"
+                     asp-append-version="true" />
+            </div>
+        }
+    </div>
 </div>
-
 
 

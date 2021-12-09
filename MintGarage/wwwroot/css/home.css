@@ -1,54 +1,19 @@
-﻿/* Image container */
-.img-container {
-    position: relative;
-    text-align: center;
+﻿
+.img-container .img-text .img-btn {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    background-color: #555;
     color: white;
-    margin-bottom: 50px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-    .img-container img {
-        width: 100%;
-    }
-
-    /* Image text */
-    .img-container .img-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 28px;
-        width: 100%;
-    }
-
-        .img-container .img-text p {
-            background: rgba(0, 0, 0, 0.5);
-            margin: 30px 200px;
-            font-weight: bold;
-        }
-
-        .img-container .img-text .text-title {
-            font-size: 44px;
-        }
-
-        .img-container .img-text .text-slogan {
-            font-size: 28px;
-        }
-
-    .img-container .img-test .img-btn {
-        position: absolute;
-        top: 30%;
-        left: 50%;
-        background-color: #555;
-        color: white;
-        padding: 12px 24px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-        .img-container .img-test .img-btn:hover {
-            background-color: dimgray;
-        }
+.img-container .img-text .img-btn:hover {
+    background-color: dimgray;
+}
 
 /* Card container */
 .flex-card-container {
@@ -57,9 +22,9 @@
     justify-content: center;
 }
 
-    .flex-card-container > * + * {
-        margin-left: 5%;
-    }
+.flex-card-container > * + * {
+    margin-left: 5%;
+}
 
 
 .flip-card {
@@ -99,15 +64,15 @@
     color: black;
 }
 
-    .card-front img {
-        height: 50px;
-        width: 50px;
-        margin-top: 25px;
-    }
+.card-front img {
+    height: 50px;
+    width: 50px;
+    margin-top: 25px;
+}
 
-    .card-front h4 {
-        padding-top: 10px;
-    }
+.card-front h5 {
+    padding-top: 10px;
+}
 
 /* Style the back side */
 .card-back {
@@ -117,27 +82,21 @@
     padding: 10px;
 }
 
-    .card-back h4 {
-        padding-top: 10px;
-        color: black;
-    }
+.card-back h5 {
+    padding-top: 10px;
+    color: black;
+}
 
 /* Slideshow container */
 .slideshow-container {
     position: relative;
     background: #f1f1f1f1;
-    margin-top: 50px;
 }
-
-    .slideshow-container h2 {
-        text-align: center;
-        padding-top: 25px;
-    }
 
 /* Slides */
 .mySlides {
     display: none;
-    padding: 80px;
+    padding: 50px;
     text-align: center;
 }
 
@@ -163,18 +122,23 @@
     border-radius: 3px 0 0 3px;
 }
 
-    /* On hover, add a black background color with a little bit see-through */
-    .prev:hover, .next:hover {
-        background-color: rgba(0,0,0,0.8);
-        color: white;
-    }
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+}
 
 /* The dot/bullet/indicator container */
 .dot-container {
     text-align: center;
     padding: 5px;
     background: #ddd;
-    margin-bottom: 50px;
+}
+
+.reviews-container {
+    text-align: center;
+    padding: 5px;
+    background: #ddd;
 }
 
 /* The dots/bullets/indicators */
@@ -189,42 +153,16 @@
     transition: background-color 0.6s ease;
 }
 
-    /* Add a background color to the active dot/circle */
-    .active, .dot:hover {
-        background-color: #717171;
-    }
-
-/* Add an italic font style to all quotes */
-q {
-    font-style: italic;
+/* Add a background color to the active dot/circle */
+.active, .dot:hover {
+    background-color: #717171;
 }
 
-/* Add a blue color to the author */
-.author {
-    color: cornflowerblue;
+.supplier-image img {
+    display: block;
+    width: 200px;
+    height: 250px;
 }
-
-/* Suppliers */
-.supplier-text {
-    text-align: center;
-}
-
-.supplier-container {
-    display: table;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.supplier-image {
-    display: table-cell;
-    vertical-align: top;
-}
-
-    .supplier-image img {
-        display: block;
-        width: 200px;
-        height: 250px;
-    }
 
 .img-thumbnail {
     border: none;

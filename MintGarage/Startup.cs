@@ -4,22 +4,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MintGarage.Database;
-using MintGarage.Models.Categories;
-using MintGarage.Models.Products;
-using MintGarage.Models.ConsultationForms;
 using MintGarage.Models;
-using MintGarage.Models.Accounts;
-using MintGarage.Models.HomeTab.Contacts;
-using MintGarage.Models.HomeTab.HomeContents;
-using MintGarage.Models.HomeTab.Reviews;
-using MintGarage.Models.HomeTab.SocialMedias;
-using MintGarage.Models.HomeTab.Suppliers;
-using MintGarage.Models.FooterContents.FooterContactInfo;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.Partners;
-using MintGarage.Models.AboutUsTab.Teams;
-using MintGarage.Models.AboutUsTab.Values;
-using MintGarage.Models.GalleryTab;
+using MintGarage.Models.AccountT;
+using MintGarage.Models.HomeT.Cards;
+using MintGarage.Models.HomeT.Reviews;
+using MintGarage.Models.HomeT.Suppliers;
+using MintGarage.Models.ConsultationT;
+using MintGarage.Models.FooterT.ContactInformation;
+using MintGarage.Models.FooterT.SocialMedias;
+using MintGarage.Models.PartnerT;
+using MintGarage.Models.AboutUsT.TeamMembers;
+using MintGarage.Models.AboutUsT.Values;
+using MintGarage.Models.GalleryT;
 
 namespace MintGarage
 {
@@ -37,6 +33,12 @@ namespace MintGarage
         {
             // Adding session services to Razor Pages
             services.AddSession();
+
+/*            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });*/
             services.AddMemoryCache();
             services.AddMvc();
 
@@ -46,27 +48,17 @@ namespace MintGarage
                 options.UseSqlServer(Configuration["ConnectionStrings:MintGarageConnStr"]);
             });
 
-            // Products
-            //services.AddScoped<IMintGarageDBInitializer, MintGarageDBInitializer>();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            // Customer Form
-            services.AddScoped<IConsultationFormRepository, ConsultationFormRepository>();
-            services.AddScoped<IAccountRepository, AccountRepository>();
-
-            //New
-            services.AddScoped<IContactRepository, ContactsRepository>();
-            services.AddScoped<IHomeContentRepository, HomeContentRepository>();
-            services.AddScoped<IReviewRepository, ReviewRepository>();
-            services.AddScoped<ISocialMediaRepository, SocialMediaRepository>();
-            services.AddScoped<ISupplierRepository, SupplierRepository>();
-            services.AddScoped<IFooterContactInfoRepository, FooterContactInfoRepository>();
-            services.AddScoped<IFooterSocialMediaRepository, FooterSocialMediaRepository>();
-
-            services.AddScoped<IPartnerRepository, PartnerRepository>();
-            services.AddScoped<ITeamRepository, TeamRepository>();
-            services.AddScoped<IValueRepository, ValueRepository>();
-            services.AddScoped<IGalleryRepository, GalleryRepository>();
+            services.AddScoped<IRepository<Consultation>, ConsultationRepository>();
+            services.AddScoped<IRepository<Account>, AccountRepository>();
+            services.AddScoped<IRepository<Card>, CardRepository>();
+            services.AddScoped<IRepository<Review>, ReviewRepository>();
+            services.AddScoped<IRepository<Supplier>, SupplierRepository>();
+            services.AddScoped<IRepository<ContactInfo>, ContactInfoRepository>();
+            services.AddScoped<IRepository<SocialMedia>, SocialMediaRepository>();
+            services.AddScoped<IRepository<Partner>, PartnerRepository>();
+            services.AddScoped<IRepository<TeamMember>, TeamMemberRepository>();
+            services.AddScoped<IRepository<Value>, ValueRepository>();
+            services.AddScoped<IRepository<Gallery>, GalleryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

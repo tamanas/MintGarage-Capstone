@@ -1,17 +1,20 @@
 ﻿@model FooterModel
 
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "- Footer - Admin";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
     var count = 0;
 }
 
-<div class="bg-success font-weight-bold text-center text-white">
+<link rel="stylesheet" href="~/css/footer.css" />
+
+<div class="bg-success font-weight-bold text-center text-white mt-5">
     <span>@ViewBag.Message</span>
 </div>
 
 <div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
-    <p class="h3 p-1">Contact Information</p>
+    <p class="h4 p-1">Contact Information</p>
 </div>
 
 @if (ViewBag.contactEdit)
@@ -21,15 +24,21 @@
     </div>
     <div class="mt-2 mb-2">
         <form asp-action="EditFooterContactInfo" method="post">
-            <input asp-for="@Model.FooterContact.FooterContactInfoID" hidden />
+            <input asp-for="@Model.ContactInfo.ContactInfoID" hidden />
             <div class="row">
-                <div class="col-4">
-                    <input asp-for="@Model.FooterContact.PhoneNumber" class="form-control" placeholder="Phone Number" />
+                <div class="col-2">
+                    <input asp-for="@Model.ContactInfo.Address" class="form-control" placeholder="Addtress" />
                 </div>
-                <div class="col-6">
-                    <input asp-for="@Model.FooterContact.EmailAddress" class="form-control" placeholder="Email" />
+                <div class="col-3">
+                    <input asp-for="@Model.ContactInfo.EmailAddress" class="form-control" placeholder="Email" />
                 </div>
                 <div class="col-2">
+                    <input asp-for="@Model.ContactInfo.PhoneNumber" class="form-control" placeholder="Phone Number" />
+                </div>
+                <div class="col-3">
+                    <input asp-for="@Model.ContactInfo.WorkingHour" class="form-control" placeholder="Working Hour" />
+                </div>
+                <div class="col-2 text-right">
                     <input type="submit" value="Edit" class="btn btn-warning" />
                     <a class="btn btn-info" asp-action="Update">Cancel</a>
                 </div>
@@ -39,34 +48,39 @@
 }
 
 <div>
-    <span>@ViewBag.contactInfoMessage</span>
     <table class="table table-hover">
         <thead>
             <tr>
                 <th class="col-1">No.</th>
-                <th class="col-4">Phone Number</th>
-                <th class="col-6">Email Address</th>
-                <th class="col-1"></th>
+                <th class="col-2">Address</th>
+                <th class="col-3">Email Address</th>
+                <th class="col-2">Phone Number</th>
+                <th class="col-3">Working Hour</th>
+                <th class="col-1 text-right">Edit</i></th>
             </tr>
         </thead>
         <tbody>
             @{count = 0;}
-            @foreach (var item in Model.FooterContactInfo)
+            @foreach (var item in Model.ContactInfos)
             {
                 count++;
-                <tr>
-                    <th class="col-1">@count</th>
-                    <td class="col-4">@item.PhoneNumber</td>
-                    <td class="col-6">@item.EmailAddress</td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterContactInfoID" asp-route-operation="contactEdit" asp-route-show=true>Edit</a></td>
-                </tr>
+            <tr>
+                <td class="col-1">@count</td>
+                <td class="col-2">@item.Address</td>
+                <td class="col-3">@item.EmailAddress</td>
+                <td class="col-2">
+                    +1 (@item.PhoneNumber.Substring(0, 3))-@item.PhoneNumber.Substring(3, 3)-@item.PhoneNumber.Substring(6)
+                </td>
+                <td class="col-3">@item.WorkingHour</td>
+                <td class="col-1 text-right"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.ContactInfoID" asp-route-operation="contactEdit" asp-route-show=true>Edit <i class="bi bi-pencil-fill"></i></a></td>
+            </tr>
             }
         </tbody>
     </table>
 </div>
 
 <div class="bg-dark text-white text-center font-weight-bold mt-5 mb-2">
-    <p class="h3 p-1">Social Media</p>
+    <p class="h4 p-1">Social Media</p>
 </div>
 
 <div>
@@ -79,15 +93,15 @@
         <form asp-action="AddSocialMedia" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-2">
-                    <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" placeholder="Name" />
+                    <input asp-for="@Model.SocialMedia.Name" class="form-control" placeholder="Name" />
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" placeholder="URL"/>
+                    <input asp-for="@Model.SocialMedia.SocialMediaUrl" class="form-control" placeholder="URL"/>
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="image/*"/>
+                    <input asp-for="@Model.SocialMedia.SocialMediaIcon" class="form-control" placeholder="Icon name - Ex. bi-facebook" />
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-right">
                     <input type="submit" value="Add" class="btn btn-success" />
                     <a class="btn btn-info" asp-action="Update">Cancel</a>
                 </div>
@@ -100,20 +114,18 @@
 {
     <div class="mt-2 mb-2">
         <form asp-action="EditSocialMedia" method="post" enctype="multipart/form-data">
-            <input asp-for="@Model.FooterSocialMedia.FooterSocialMediaID" hidden />
+            <input asp-for="@Model.SocialMedia.SocialMediaID" hidden />
             <div class="row">
                 <div class="col-2">
-                    <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" placeholder="Social Media Name" />
+                    <input asp-for="@Model.SocialMedia.Name" class="form-control" placeholder="Social Media Name" />
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" placeholder="Social Media URL" />
+                    <input asp-for="@Model.SocialMedia.SocialMediaUrl" class="form-control" placeholder="Social Media URL" />
                 </div>
                 <div class="col-4">
-                    <img src="@("~/Images/" + Model.FooterSocialMedia.SocialMediaLogo)" width="100" height="70" asp-append-version="true" />
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaLogo" hidden />
-                    <input asp-for="@Model.FooterSocialMedia.ImageFile" accept="image/*" />
+                    <input asp-for="@Model.SocialMedia.SocialMediaIcon" class="form-control" placeholder="Icon name - Ex. bi-facebook" />
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-right">
                     <input type="submit" value="Edit" class="btn btn-warning" />
                     <a class="btn btn-info" asp-action="Update">Cancel</a>
                 </div>
@@ -126,19 +138,18 @@
 {
     <div>
         <form asp-action="DeleteSocialMedia" method="post">
-            <input asp-for="@Model.FooterSocialMedia.FooterSocialMediaID" hidden />
+            <input asp-for="@Model.SocialMedia.SocialMediaID" hidden />
             <div class="row">
                 <div class="col-2">
-                    <input asp-for="@Model.FooterSocialMedia.Name" class="form-control" readonly />
+                    <input asp-for="@Model.SocialMedia.Name" class="form-control" readonly />
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaUrl" class="form-control" readonly />
+                    <input asp-for="@Model.SocialMedia.SocialMediaUrl" class="form-control" readonly />
                 </div>
                 <div class="col-4">
-                    <input asp-for="@Model.FooterSocialMedia.SocialMediaLogo" hidden />
-                    <img src="@("~/Images/" + Model.FooterSocialMedia.SocialMediaLogo)" width="100" height="70" asp-append-version="true" />
+                    <input asp-for="@Model.SocialMedia.SocialMediaIcon" class="form-control" readonly />
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-right">
                     <input type="submit" value="Delete" class="btn btn-danger" />
                     <a class="btn btn-info" asp-action="Update">Cancel</a>
                 </div>
@@ -155,24 +166,24 @@
                 <th class="col-1">No.</th>
                 <th class="col-2">Social Media Name</th>
                 <th class="col-5">Social Media URL</th>
-                <th class="col-2">Social Media Logo</th>
+                <th class="col-2">Social Media Icon</th>
                 <th class="col-1"></th>
-                <th class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-operation="add" asp-route-show=true>Add</a></th>
+                <th class="col-1 text-right"><a asp-action="Update" asp-controller="Footer" asp-route-operation="add" asp-route-show=true>Add <i class="bi bi-plus-circle"></i></a></th>
             </tr>
         </thead>
         <tbody>
             @{count = 0;}
-            @foreach (var item in Model.FooterSocialMedias)
+            @foreach (var item in Model.SocialMedias)
             {
                 count++;
-                <tr>
-                    <th class="col-1">@count</th>
-                    <td class="col-2">@item.Name</td>
-                    <td class="col-5">@item.SocialMediaUrl</td>
-                    <td class="col-2"><img src="@("~/Images/"+item.SocialMediaLogo)" width="100" height="70" asp-append-version="true" /></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-operation="edit" asp-route-show=true>Edit</a></td>
-                    <td class="col-1"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.FooterSocialMediaID" asp-route-operation="delete" asp-route-show=true>Delete</a></td>
-                </tr>
+            <tr>
+                <th class="col-1">@count</th>
+                <td class="col-2">@item.Name</td>
+                <td class="col-5">@item.SocialMediaUrl</td>
+                <td class="col-2">@item.SocialMediaIcon</td>
+                <td class="col-1 text-right"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.SocialMediaID" asp-route-operation="edit" asp-route-show=true>Edit <i class="bi bi-pencil-fill"></i></a></td>
+                <td class="col-1 text-right"><a asp-action="Update" asp-controller="Footer" asp-route-id="@item.SocialMediaID" asp-route-operation="delete" asp-route-show=true>Delete <i class="bi bi-trash-fill"></i></a></td>
+            </tr>
             }
         </tbody>
     </table>

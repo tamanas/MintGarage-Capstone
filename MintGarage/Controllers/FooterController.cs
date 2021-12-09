@@ -1,46 +1,47 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.FooterContents.FooterContactInfo;
+using MintGarage.Models.FooterT.SocialMedias;
+using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using MintGarage.Models.PartnerT;
 using Microsoft.AspNetCore.Http;
-using MintGarage.Models.Partners;
 
 namespace MintGarage.Controllers
 {
     public class FooterController : Controller
     {
-
-        private IFooterContactInfoRepository footerContactInfoRepository;
-        private IFooterSocialMediaRepository footerSocialMediaRepository;
-        public IPartnerRepository partnerRepository;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
+        public IRepository<Partner> partnerRepo;
         private IWebHostEnvironment hostEnv;
-        private string imageFolder = "/Images/";
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
         "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
 
-        public FooterController(IFooterContactInfoRepository footerContactInfoRepo,
-            IFooterSocialMediaRepository footerSocialMediaRepo, IWebHostEnvironment hostEnvironment,
-            IPartnerRepository partnerRepo)
+        public FooterController(IRepository<ContactInfo> contactRepo,
+            IRepository<SocialMedia> mediaRepo, IWebHostEnvironment hostEnvironment,
+            IRepository<Partner> partnerRepository)
         {
-            footerContactInfoRepository = footerContactInfoRepo;
-            footerSocialMediaRepository = footerSocialMediaRepo;
-            partnerRepository = partnerRepo;
+            contactInfoRepo = contactRepo;
+            socialMediaRepo = mediaRepo;
+            partnerRepo = partnerRepository;
             hostEnv = hostEnvironment;
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
+            ViewBag.message = TempData["message"];
 
             ViewBag.contactInfoMessage = TempData["AdminFooterContactInfoMessage"];
             ViewBag.socialMediaMessage = TempData["AdminFooterSocialMediaMessage"];
@@ -66,12 +67,12 @@ namespace MintGarage.Controllers
             }
 
             FooterModel footerModel = new FooterModel();
-            footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
-            footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+            footerModel.ContactInfos = contactInfoRepo.Items;
+            footerModel.SocialMedias = socialMediaRepo.Items;
             if (id != null && operation != "add")
             {
-                footerModel.FooterContact = footerContactInfoRepository.FooterContactInfo.FirstOrDefault(s => s.FooterContactInfoID == id);
-                footerModel.FooterSocialMedia = footerSocialMediaRepository.FooterSocialMedias.FirstOrDefault(s => s.FooterSocialMediaID == id);
+                footerModel.ContactInfo = contactInfoRepo.Items.FirstOrDefault(s => s.ContactInfoID == id);
+                footerModel.SocialMedia = socialMediaRepo.Items.FirstOrDefault(s => s.SocialMediaID == id);
             }
 
             return View(footerModel);
@@ -79,74 +80,80 @@ namespace MintGarage.Controllers
 
         public IActionResult EditFooterContactInfo(FooterModel footerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
            
             if (ModelState.IsValid)
             {
-                footerContactInfoRepository.Update(footerModel.FooterContact);
-                TempData["AdminFooterContactInfoMessage"] = "Successfully edited Contact Info.";
+                contactInfoRepo.Update(footerModel.ContactInfo);
+                TempData["message"] = "Successfully edited Contact Info.";
             }
             else
             {
-                footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
-                footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+                footerModel.ContactInfos = contactInfoRepo.Items;
+                footerModel.SocialMedias = socialMediaRepo.Items;
                 SetViewBag(true, false, false, false);
                 return View("Update", footerModel);
             }
             return RedirectToAction("Update");
         }
 
-        public async Task<IActionResult> AddSocialMedia(FooterModel footerModel)
+        public IActionResult AddSocialMedia(FooterModel footerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid && footerModel.FooterSocialMedia.ImageFile != null)
+            if (ModelState.IsValid)
             {
-                footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
-                footerSocialMediaRepository.Create(footerModel.FooterSocialMedia);
-                TempData["AdminFooterSocialMediaMessage"] = "Successfully added Social Media.";
+                socialMediaRepo.Create(footerModel.SocialMedia);
+                TempData["message"] = "Successfully added Social Media.";
             }
             else
             {
-                if (footerModel.FooterSocialMedia.ImageFile == null)
-                {
-                    ModelState.AddModelError("image", "Image is required");
-                }
-                footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
-                footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+  
+                footerModel.ContactInfos = contactInfoRepo.Items;
+                footerModel.SocialMedias = socialMediaRepo.Items;
                 SetViewBag(false, true, false, false);
                 return View("Update", footerModel);
             }
             return RedirectToAction("Update");
         }
 
-        public async Task<IActionResult> EditSocialMedia(FooterModel footerModel)
+        public IActionResult EditSocialMedia(FooterModel footerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
             {
-                if (footerModel.FooterSocialMedia.ImageFile != null)
-                {
-                    DeleteImage(footerModel.FooterSocialMedia.SocialMediaLogo);
-                    footerModel.FooterSocialMedia.SocialMediaLogo = await SaveImage(footerModel.FooterSocialMedia.ImageFile);
-                }
-                footerSocialMediaRepository.Edit(footerModel.FooterSocialMedia);
-                TempData["AdminFooterSocialMediaMessage"] = "Successfully edited Social Media.";
+                socialMediaRepo.Update(footerModel.SocialMedia);
+                TempData["message"] = "Successfully edited Social Media.";
             }
             else
             {
-                footerModel.FooterContactInfo = footerContactInfoRepository.FooterContactInfo;
-                footerModel.FooterSocialMedias = footerSocialMediaRepository.FooterSocialMedias;
+                footerModel.ContactInfos = contactInfoRepo.Items;
+                footerModel.SocialMedias = socialMediaRepo.Items;
                 SetViewBag(false, false, true, false);
                 return View("Update", footerModel);
             }
@@ -155,14 +162,18 @@ namespace MintGarage.Controllers
 
         public IActionResult DeleteSocialMedia(FooterModel footerModel)
         {
-            ViewBag.Partners = partnerRepository.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepository.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepository.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            DeleteImage(footerModel.FooterSocialMedia.SocialMediaLogo);
-            footerSocialMediaRepository.Delete(footerModel.FooterSocialMedia);
-            TempData["AdminFooterSocialMediaMessage"] = "Successfully deleted Social Media.";
+            socialMediaRepo.Delete(footerModel.SocialMedia);
+            TempData["message"] = "Successfully deleted Social Media.";
             return RedirectToAction("Update");
         }
 
@@ -172,28 +183,6 @@ namespace MintGarage.Controllers
             ViewBag.add = add;
             ViewBag.edit = edit;
             ViewBag.delete = delete;
-        }
-
-        public async Task<string> SaveImage(IFormFile imageFile)
-        {
-            string imageName = Path.GetFileNameWithoutExtension(imageFile.FileName) +
-                                        DateTime.Now.ToString("yyMMddssffff") +
-                                        Path.GetExtension(imageFile.FileName);
-            string imagePath = Path.Combine(hostEnv.WebRootPath + imageFolder, imageName);
-            using (var fileStream = new FileStream(imagePath, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(fileStream);
-            }
-            return imageName;
-        }
-
-        public void DeleteImage(string imageName)
-        {
-            string imagePath = Path.Combine(hostEnv.WebRootPath + imageFolder, imageName);
-            if (System.IO.File.Exists(imagePath))
-            {
-                System.IO.File.Delete(imagePath);
-            }
         }
     }
 }

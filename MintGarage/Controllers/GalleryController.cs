@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MintGarage.Models;
-using MintGarage.Models.FooterContents.FooterContactInfo;
-using MintGarage.Models.FooterContents.FooterSocialMedias;
-using MintGarage.Models.GalleryTab;
-using MintGarage.Models.Partners;
+using MintGarage.Models.FooterT.ContactInformation;
+using MintGarage.Models.FooterT.SocialMedias;
+using MintGarage.Models.GalleryT;
+using MintGarage.Models.PartnerT;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,45 +15,52 @@ namespace MintGarage.Controllers
 {
     public class GalleryController : Controller
     {
-        private IGalleryRepository galleryRepo;
-        public IPartnerRepository partnerRepo;
-        private IFooterContactInfoRepository footerContactInfoRepo;
-        private IFooterSocialMediaRepository footerSocialMediaRepo;
+        private IRepository<Gallery> galleryRepo;
+        public IRepository<Partner> partnerRepo;
+        private IRepository<ContactInfo> contactInfoRepo;
+        private IRepository<SocialMedia> socialMediaRepo;
         private IWebHostEnvironment hostEnv;
         GalleryModel galleryModel = new GalleryModel();
 
         private const String AboutUs = "We are specialists in transforming and organizing any room. " +
             "We take pride in delivering outstanding quality and unique designs for our clients Across Canada & North America.";
-        private string imageFolder = "/Images/";
+        private string imageFolder = "/Images/gallery/";
 
 
 
-        public GalleryController(IGalleryRepository galleryRepository, IPartnerRepository partnerRepository,
-                                                IFooterContactInfoRepository contactInfoRepository, IFooterSocialMediaRepository socialMediaRepository,
+        public GalleryController(IRepository<Gallery> galleryRepository, IRepository<Partner> partnerRepository,
+                                                IRepository<ContactInfo> contactInfoRepository, IRepository<SocialMedia> socialMediaRepository,
                                                 IWebHostEnvironment hostEnvironment)
         {
             galleryRepo = galleryRepository;
             partnerRepo = partnerRepository;
-            footerContactInfoRepo = contactInfoRepository;
-            footerSocialMediaRepo = socialMediaRepository;
+            contactInfoRepo = contactInfoRepository;
+            socialMediaRepo = socialMediaRepository;
             hostEnv = hostEnvironment;
         }
 
         public IActionResult Index()
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
-            return View(galleryRepo.Galleries);
+            galleryModel.Galleries = galleryRepo.Items;
+            HttpContext.Session.SetString("isAdminLoggedIn", "false");
+            return View(galleryModel);
         }
 
         public IActionResult Update(int? id, string? operation, bool? show)
         {
-            ViewBag.Partners = partnerRepo.Partners;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
             ViewBag.message = TempData["message"];
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
             SetViewBag(false, false, false);
             if (operation != null && show != null)
@@ -73,11 +79,11 @@ namespace MintGarage.Controllers
                 }
             }
 
-            galleryModel.Galleries = galleryRepo.Galleries;
+            galleryModel.Galleries = galleryRepo.Items;
 
             if (id != null && operation != "add")
             {
-                galleryModel.Gallery = galleryRepo.Galleries.FirstOrDefault(s => s.GalleryID == id);
+                galleryModel.Gallery = galleryRepo.Items.FirstOrDefault(s => s.GalleryID == id);
             }
             return View(galleryModel);
         }
@@ -85,17 +91,22 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> Create(GalleryModel galleryModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
-            if (ModelState.IsValid && galleryModel.Gallery.BeforeImageFile != null && galleryModel.Gallery.AfterImageFile != null)
+            if (galleryModel.Gallery.BeforeImageFile != null && galleryModel.Gallery.AfterImageFile != null)
             {
                 galleryModel.Gallery.BeforeImage = await SaveImage(galleryModel.Gallery.BeforeImageFile);
                 galleryModel.Gallery.AfterImage = await SaveImage(galleryModel.Gallery.AfterImageFile);
 
-                galleryRepo.Add(galleryModel.Gallery);
+                galleryRepo.Create(galleryModel.Gallery);
                 TempData["message"] = "Successfully added new Gallery Images.";
             }
             else
@@ -104,7 +115,7 @@ namespace MintGarage.Controllers
                 {
                     ModelState.AddModelError("Image", "Before and After images are required");
                 }
-                galleryModel.Galleries = galleryRepo.Galleries;
+                galleryModel.Galleries = galleryRepo.Items;
                 SetViewBag(true, false, false);
                 return View("Update", galleryModel);
             }
@@ -113,9 +124,14 @@ namespace MintGarage.Controllers
 
         public async Task<IActionResult> Edit(GalleryModel galleryModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             if (ModelState.IsValid)
@@ -135,7 +151,7 @@ namespace MintGarage.Controllers
             }
             else
             {
-                galleryModel.Galleries = galleryRepo.Galleries;
+                galleryModel.Galleries = galleryRepo.Items;
                 SetViewBag(false, true, false);
                 return View("Update", galleryModel);
             }
@@ -144,9 +160,14 @@ namespace MintGarage.Controllers
 
         public IActionResult Delete(GalleryModel galleryModel)
         {
-            ViewBag.Partners = partnerRepo.Partners;
-            ViewBag.SocialMedias = footerSocialMediaRepo.FooterSocialMedias;
-            ViewBag.Contacts = footerContactInfoRepo.FooterContactInfo;
+            if (HttpContext.Session.GetString("isAdminLoggedIn").Equals("false"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Partners = partnerRepo.Items;
+            ViewBag.SocialMedias = socialMediaRepo.Items;
+            ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
 
             DeleteImage(galleryModel.Gallery.BeforeImage);
