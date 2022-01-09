@@ -7,8 +7,8 @@ using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
 using Microsoft.AspNetCore.Http;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Diagnostics;
+using BC = BCrypt.Net.BCrypt;
 
 namespace MintGarage.Controllers
 {
@@ -40,6 +40,15 @@ namespace MintGarage.Controllers
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
             HttpContext.Session.SetString("isAdminLoggedIn", "false");
+
+            Account acc = accoutRepo.Items.FirstOrDefault();
+            // Hash password
+            if (acc.Password.Length <= 32)
+            {
+                string hashPassword = BCrypt.Net.BCrypt.HashPassword(acc.Password);
+                acc.Password = hashPassword;
+                accoutRepo.Update(acc);
+            }
             return View();
         }
 
@@ -51,10 +60,14 @@ namespace MintGarage.Controllers
             ViewBag.SocialMedias = socialMediaRepo.Items;
             ViewBag.Contacts = contactInfoRepo.Items;
             ViewBag.AboutData = AboutUs;
+
             if (ModelState.IsValid)
             {
                 Account acc = accoutRepo.Items.FirstOrDefault();
-                if (acc.Username == account.Username && acc.Password == account.Password)
+
+                bool verifyPassword = BCrypt.Net.BCrypt.Verify(account.Password, acc.Password);
+
+                if (acc.Username == account.Username && verifyPassword)
                 {
                     HttpContext.Session.SetString("isAdminLoggedIn", "true");
                     return RedirectToAction("Update", "Home");
@@ -94,15 +107,18 @@ namespace MintGarage.Controllers
                 if (ModelState.IsValid)
                 {
                     Account acc = accoutRepo.Items.FirstOrDefault();
-                
-                    if (!acc.Password.Equals(updatePassword.CurrectPassword))
+
+                    bool verifyPassword = BCrypt.Net.BCrypt.Verify(updatePassword.CurrectPassword, acc.Password);
+
+                    if (!verifyPassword)
                     {
                         TempData["Message"] = "Incorrect current password. Please try again!";
                         TempData["Success"] = false;
                     }
-                    if (acc.Password.Equals(updatePassword.CurrectPassword))
+                    if (verifyPassword)
                     {
-                        acc.Password = updatePassword.NewPassword;
+                        string hashPassword = BCrypt.Net.BCrypt.HashPassword(updatePassword.NewPassword);
+                        acc.Password = hashPassword;
                         accoutRepo.Update(acc);
                         TempData["Message"] = "Password updated successfully.";
                         TempData["Success"] = true;
