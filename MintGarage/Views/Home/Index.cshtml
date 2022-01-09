@@ -77,11 +77,13 @@
     <div class="row justify-content-center">
         @foreach (Supplier supplier in Model.Suppliers)
         {
-            <div class="supplier-image">
-                <img src="@(Model.ImageFile+supplier.SupplierLogo)"
-                     alt="@supplier.SupplierLogo"
-                     class="img-thumbnail card-img-top"
-                     asp-append-version="true" />
+            <div class="card">
+                <div class="supplier-image">
+                    <img src="@(Model.ImageFile+supplier.SupplierLogo)"
+                         alt="@supplier.SupplierLogo"
+                         class="img-thumbnail card-img-top"
+                         asp-append-version="true" />
+                </div>
             </div>
         }
     </div>
