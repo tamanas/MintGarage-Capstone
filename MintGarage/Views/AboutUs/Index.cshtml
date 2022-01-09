@@ -54,7 +54,7 @@
         @foreach (Value item in Model.Values)
         {
             <!--Gallary Item-->
-            <div class="col-3">
+            <div class="col-3 glow">
                 <img src="@(Model.ImageFile+item.ValueImage)" alt="@item.ValueImage" class="card-img-top" style="height:100px; width:150px" asp-append-version="true"  />
                 <div class="mt-3">
                     <div style="color: #41ca57">
@@ -77,7 +77,7 @@
     <div class="row">
         @foreach (TeamMember member in Model.TeamMembers)
         {
-            <div class="column">
+            <div class="column glowcards">
                 <div class="card">
                     <div class="d-flex align-items-center justify-content-around">
                         <div class=" pt-2 pb-2">

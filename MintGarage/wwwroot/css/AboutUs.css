@@ -51,6 +51,18 @@
     display: table;
 }
 
+.glow img:hover {
+    -webkit-box-shadow: 0px 0px 20px rgba(65,202,87,0.8);
+    -moz-box-shadow: 0px 0px 20px rgba(65,202,87,0.8);
+    box-shadow: 0px 0px 20px rgba(65,202,87,0.8);
+}
+
+.glowcards .card:hover {
+    -webkit-box-shadow: 0px 0px 20px rgba(65,202,87,0.8);
+    -moz-box-shadow: 0px 0px 20px rgba(65,202,87,0.8);
+    box-shadow: 0px 0px 20px rgba(65,202,87,0.8);
+}
+
 
 @media screen and (max-width: 650px) {
     .column {
