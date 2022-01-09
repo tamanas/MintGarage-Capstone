@@ -7,6 +7,8 @@ using MintGarage.Models.FooterT.SocialMedias;
 using MintGarage.Models.FooterT.ContactInformation;
 using MintGarage.Models;
 using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace MintGarage.Controllers
 {
